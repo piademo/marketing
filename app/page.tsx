@@ -5,11 +5,12 @@ import CTA from '@/components/sections/CTA';
 import ComingSoon from '@/components/sections/ComingSoon';
 
 interface HomeProps {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
-export default function Home({ searchParams }: HomeProps) {
-  const preview = searchParams.preview === 'true';
+export default async function Home({ searchParams }: HomeProps) {
+  const params = await searchParams;
+  const preview = params.preview === 'true';
 
   if (!preview) {
     return <ComingSoon />;
