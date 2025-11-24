@@ -10,8 +10,10 @@ export const metadata: Metadata = {
   description: 'Artículo del blog de BookFast',
 };
 
-export default function BlogPostPage({ params }: { params: { slug: string } }) {
+export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
   // TODO: Fetch post data based on slug
+  console.log('Blog slug:', slug);
   return (
     <>
       <section className="section-lg bg-gradient-to-b from-neutral-50 to-white">
