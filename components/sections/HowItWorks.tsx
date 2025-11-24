@@ -1,76 +1,78 @@
 import React from 'react';
-import { UserPlus, Settings, Share2, TrendingUp } from 'lucide-react';
+import { Settings, Link2, MousePointer2 } from 'lucide-react';
 import Container from '@/components/ui/Container';
+import BookingWidgetPreview from '@/components/ui/BookingWidgetPreview';
+import { cn } from '@/lib/utils';
 
 const steps = [
   {
-    number: '01',
-    icon: UserPlus,
-    title: 'Crea tu cuenta',
-    description:
-      'Regístrate en menos de 2 minutos. Configura tu negocio, horarios y servicios de forma sencilla.',
-  },
-  {
-    number: '02',
     icon: Settings,
-    title: 'Configura tu equipo',
-    description:
-      'Añade profesionales, define servicios y precios. Personaliza tu agenda según tus necesidades.',
+    title: 'Configura una vez',
+    description: 'Define servicios, precios y horarios en menos de 10 minutos. No necesitas ser "tecnológico".',
   },
   {
-    number: '03',
-    icon: Share2,
-    title: 'Conecta tus canales',
-    description:
-      'Integra WhatsApp, Instagram, tu web y más. Recibe reservas desde cualquier lugar.',
+    icon: Link2,
+    title: 'Comparte tu link',
+    description: 'Pega tu enlace en WhatsApp, Instagram o tu web. Tus clientes lo guardan como si fuera un contacto más.',
   },
   {
-    number: '04',
-    icon: TrendingUp,
-    title: 'Crece tu negocio',
-    description:
-      'Gestiona citas, reduce ausencias y analiza resultados. Dedica más tiempo a lo importante.',
+    icon: MousePointer2,
+    title: 'Recibes reservas 24/7',
+    description: 'Ellos eligen servicio y hora. Tú solo ves la agenda llena sin contestar un solo mensaje.',
   },
 ];
 
 export default function HowItWorks() {
   return (
-    <section className="section bg-neutral-50">
+    <section className="bg-neutral-50 py-20">
       <Container>
-        <div className="mx-auto max-w-3xl text-center mb-16">
-          <h2 className="text-display-sm sm:text-display-md mb-4">
-            Empieza en minutos, no en días
-          </h2>
-          <p className="text-lg text-neutral-600">
-            Configurar BookFast es rápido y sencillo. Sin complicaciones técnicas.
-          </p>
-        </div>
+        <div className="grid items-center gap-12 lg:grid-cols-2">
+          {/* Columna izquierda: copy */}
+          <div className="space-y-8">
+            <div className="space-y-4">
+              <h2 className="text-display-sm sm:text-display-md font-semibold tracking-tight text-neutral-900">
+                Tus clientes reservan en segundos, no en minutos.
+              </h2>
+              <p className="text-base sm:text-lg text-neutral-600 max-w-xl">
+                Enséñales un enlace y deja que el sistema se encargue. Sin llamadas, sin notas en papel y sin discusiones
+                de horarios por WhatsApp.
+              </p>
+            </div>
 
-        <div className="grid gap-8 lg:grid-cols-4">
-          {steps.map((step, index) => (
-            <div key={step.number} className="relative">
-              {/* Connector line */}
-              {index < steps.length - 1 && (
-                <div className="absolute left-1/2 top-16 hidden h-0.5 w-full bg-gradient-to-r from-primary-300 to-primary-200 lg:block"></div>
+            <div className="space-y-4">
+              {steps.map((step) => (
+                <div key={step.title} className="flex items-start gap-4">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-primary-600 shadow-sm border border-neutral-200">
+                    <step.icon className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-semibold text-neutral-900 sm:text-base">{step.title}</h3>
+                    <p className="text-xs text-neutral-600 sm:text-sm">{step.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Columna derecha: widget + badge */}
+          <div className="relative flex justify-center lg:justify-end">
+            <div
+              className={cn(
+                'relative w-full max-w-xs sm:max-w-sm',
+                'transform-gpu lg:rotate-3 lg:translate-x-4',
               )}
+            >
+              <BookingWidgetPreview />
 
-              <div className="relative">
-                {/* Number badge */}
-                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-500 to-primary-700 text-2xl font-bold text-white shadow-medium">
-                  {step.number}
-                </div>
-
-                {/* Icon */}
-                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-white text-primary-600 shadow-soft">
-                  <step.icon className="h-6 w-6" />
-                </div>
-
-                {/* Content */}
-                <h3 className="mb-2 text-xl font-semibold text-neutral-900">{step.title}</h3>
-                <p className="text-sm text-neutral-600">{step.description}</p>
+              {/* Badge flotante */}
+              <div className="absolute -top-6 -right-4 sm:-right-10 flex items-center gap-2 rounded-2xl bg-emerald-500 px-3 py-2 text-xs font-semibold text-white shadow-lg shadow-emerald-500/40">
+                <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/10 text-[11px]">
+                  +30%
+                </span>
+                <span>Reservas en 3 meses</span>
               </div>
             </div>
-          ))}
+          </div>
         </div>
       </Container>
     </section>
