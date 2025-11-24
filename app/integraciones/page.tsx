@@ -52,16 +52,16 @@ const integrations = [
 export default function IntegracionesPage() {
   return (
     <>
-      <section className="section-lg bg-gradient-to-b from-neutral-50 to-white">
+      <section className="section-lg">
         <Container>
           <div className="mx-auto max-w-3xl text-center mb-16">
-            <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-primary-100 text-primary-600">
+            <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-primary-500/20 text-primary-200">
               <Zap className="h-8 w-8" />
             </div>
             <h1 className="text-display-md sm:text-display-lg mb-4">
               Integraciones potentes
             </h1>
-            <p className="text-lg text-neutral-600 sm:text-xl">
+            <p className="text-lg text-neutral-300 sm:text-xl">
               Conecta BookFast con las herramientas que ya usas para potenciar tu negocio.
             </p>
           </div>
@@ -75,8 +75,8 @@ export default function IntegracionesPage() {
                     <span
                       className={`inline-block rounded-full px-3 py-1 text-xs font-medium ${
                         integration.status === 'Disponible'
-                          ? 'bg-green-100 text-green-700'
-                          : 'bg-neutral-100 text-neutral-700'
+                          ? 'bg-green-500/15 text-green-300'
+                          : 'bg-neutral-800 text-neutral-200'
                       }`}
                     >
                       {integration.status}
@@ -90,10 +90,10 @@ export default function IntegracionesPage() {
           </div>
 
           <div className="mt-16 text-center">
-            <h2 className="text-2xl font-semibold text-neutral-900 mb-4">
+            <h2 className="text-2xl font-semibold text-white mb-4">
               ¿Necesitas una integración específica?
             </h2>
-            <p className="text-neutral-600 mb-6">
+            <p className="text-neutral-300 mb-6">
               Estamos constantemente añadiendo nuevas integraciones. Cuéntanos qué necesitas.
             </p>
           </div>

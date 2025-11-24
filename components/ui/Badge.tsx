@@ -12,7 +12,7 @@ const variantClasses: Record<BadgeVariant, string> = {
   primary: 'badge-primary',
   success: 'badge-success',
   warning: 'badge-warning',
-  neutral: 'bg-neutral-100 text-neutral-700',
+  neutral: 'badge-neutral',
 };
 
 export default function Badge({ children, variant = 'neutral', className = '' }: BadgeProps) {

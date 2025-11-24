@@ -58,13 +58,13 @@ const resources = [
 export default function RecursosPage() {
   return (
     <>
-      <section className="section-lg bg-gradient-to-b from-neutral-50 to-white">
+      <section className="section-lg">
         <Container>
           <div className="mx-auto max-w-3xl text-center mb-16">
             <h1 className="text-display-md sm:text-display-lg mb-4">
               Recursos y documentación
             </h1>
-            <p className="text-lg text-neutral-600 sm:text-xl">
+            <p className="text-lg text-neutral-300 sm:text-xl">
               Todo lo que necesitas para aprovechar al máximo BookFast y hacer crecer tu negocio.
             </p>
           </div>
@@ -73,11 +73,11 @@ export default function RecursosPage() {
             {resources.map((resource) => (
               <Card key={resource.title} hover>
                 <CardHeader>
-                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-100 text-primary-600">
+                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-500/15 text-primary-300">
                     <resource.icon className="h-6 w-6" />
                   </div>
                   <div className="mb-2">
-                    <span className="inline-block rounded-full bg-neutral-100 px-3 py-1 text-xs font-medium text-neutral-700">
+                    <span className="inline-block rounded-full bg-neutral-800 px-3 py-1 text-xs font-medium text-neutral-200">
                       {resource.type}
                     </span>
                   </div>
@@ -95,13 +95,13 @@ export default function RecursosPage() {
         </Container>
       </section>
 
-      <section className="section bg-neutral-50">
+      <section className="section">
         <Container size="narrow">
           <div className="text-center">
-            <h2 className="text-3xl font-semibold text-neutral-900 mb-4">
+            <h2 className="text-3xl font-semibold text-white mb-4">
               ¿No encuentras lo que buscas?
             </h2>
-            <p className="text-lg text-neutral-600 mb-8">
+            <p className="text-lg text-neutral-300 mb-8">
               Nuestro equipo de soporte está aquí para ayudarte con cualquier duda.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

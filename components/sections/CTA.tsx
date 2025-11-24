@@ -25,10 +25,10 @@ export default function CTA({
       <Container>
         <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary-600 via-primary-700 to-secondary-700 px-8 py-16 sm:px-16 lg:px-24 lg:py-20">
           {/* Decorative elements */}
-          <div className="absolute -right-16 -top-16 h-64 w-64 rounded-full bg-white opacity-10 blur-3xl" />
-          <div className="absolute -bottom-16 -left-16 h-64 w-64 rounded-full bg-white opacity-10 blur-3xl" />
+          <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-white/15 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-white/12 blur-3xl" />
           {/* Optional noise layer for SaaS premium feel */}
-          <div className="pointer-events-none absolute inset-0 opacity-[0.12] mix-blend-soft-light bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+          <div className="pointer-events-none absolute inset-0 opacity-[0.14] mix-blend-soft-light bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
 
           <div className="relative mx-auto max-w-3xl text-center">
             <h2 className="text-display-sm sm:text-display-md mb-4 text-white text-balance">{title}</h2>

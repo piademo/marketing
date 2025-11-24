@@ -34,15 +34,15 @@ export default function Header() {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-neutral-200 bg-white/80 backdrop-blur-md">
+    <header className="sticky top-0 z-50 w-full bg-transparent">
       <Container>
-        <nav className="flex h-16 items-center justify-between lg:h-20">
+        <nav className="mt-0.5 mb-1 flex items-center justify-between rounded-2xl border border-white/10 bg-neutral-900/60 px-4 py-2 shadow-[0_18px_45px_rgba(0,0,0,0.55)] backdrop-blur-xl lg:mt-1 lg:mb-2 lg:px-6">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary-500 to-primary-700 text-white font-bold text-lg">
               B
             </div>
-            <span className="text-xl font-bold text-neutral-900">BookFast</span>
+            <span className="text-xl font-bold text-white">BookFast</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -55,18 +55,18 @@ export default function Header() {
                     onMouseEnter={() => setOpenDropdown(item.name)}
                     onMouseLeave={() => setOpenDropdown(null)}
                   >
-                    <button className="flex items-center gap-1 text-sm font-medium text-neutral-700 hover:text-neutral-900 transition-colors py-2">
+                    <button className="flex items-center gap-1 text-sm font-medium text-neutral-300 hover:text-white transition-colors py-2">
                       {item.name}
                       <ChevronDown className="h-4 w-4" />
                     </button>
                     {openDropdown === item.name && (
                       <div className="absolute left-0 top-full pt-2">
-                        <div className="w-56 rounded-xl border border-neutral-200 bg-white p-2 shadow-strong">
+                        <div className="w-56 rounded-xl border border-neutral-800 bg-neutral-900 p-2 shadow-strong">
                           {item.items.map((subItem) => (
                             <Link
                               key={subItem.name}
                               href={subItem.href}
-                              className="block rounded-lg px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 hover:text-neutral-900 transition-colors"
+                              className="block rounded-lg px-4 py-2.5 text-sm text-neutral-200 hover:bg-neutral-800 hover:text-white transition-colors"
                             >
                               {subItem.name}
                             </Link>
@@ -78,7 +78,7 @@ export default function Header() {
                 ) : (
                   <Link
                     href={item.href!}
-                    className="text-sm font-medium text-neutral-700 hover:text-neutral-900 transition-colors"
+                    className="text-sm font-medium text-neutral-300 hover:text-white transition-colors"
                   >
                     {item.name}
                   </Link>
@@ -106,7 +106,7 @@ export default function Header() {
           {/* Mobile menu button */}
           <button
             type="button"
-            className="lg:hidden rounded-lg p-2 text-neutral-700 hover:bg-neutral-100"
+            className="lg:hidden inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-neutral-900/70 text-neutral-200 shadow-sm hover:bg-neutral-800/80 transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -115,7 +115,7 @@ export default function Header() {
 
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
-          <div className="lg:hidden border-t border-neutral-200 py-4">
+          <div className="lg:hidden mb-4 mt-1 rounded-2xl border border-white/10 bg-neutral-900/90 px-3 py-4 shadow-[0_18px_45px_rgba(0,0,0,0.55)] backdrop-blur-xl">
             <div className="space-y-1">
               {navigation.map((item) => (
                 <div key={item.name}>
@@ -125,7 +125,7 @@ export default function Header() {
                         onClick={() =>
                           setOpenDropdown(openDropdown === item.name ? null : item.name)
                         }
-                        className="flex w-full items-center justify-between rounded-lg px-4 py-2.5 text-sm font-medium text-neutral-700 hover:bg-neutral-50"
+                        className="flex w-full items-center justify-between rounded-lg px-4 py-2.5 text-sm font-medium text-neutral-200 hover:bg-neutral-800"
                       >
                         {item.name}
                         <ChevronDown
@@ -138,7 +138,7 @@ export default function Header() {
                             <Link
                               key={subItem.name}
                               href={subItem.href}
-                              className="block rounded-lg px-4 py-2 text-sm text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900"
+                              className="block rounded-lg px-4 py-2 text-sm text-neutral-400 hover:bg-neutral-800 hover:text-white"
                               onClick={() => setMobileMenuOpen(false)}
                             >
                               {subItem.name}
@@ -150,7 +150,7 @@ export default function Header() {
                   ) : (
                     <Link
                       href={item.href!}
-                      className="block rounded-lg px-4 py-2.5 text-sm font-medium text-neutral-700 hover:bg-neutral-50"
+                      className="block rounded-lg px-4 py-2.5 text-sm font-medium text-neutral-200 hover:bg-neutral-800"
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       {item.name}
@@ -159,7 +159,7 @@ export default function Header() {
                 </div>
               ))}
             </div>
-            <div className="mt-4 space-y-2 border-t border-neutral-200 pt-4">
+            <div className="mt-4 space-y-2 border-t border-neutral-800 pt-4">
               <Button
                 as="link"
                 href="https://pro.bookfast.es"

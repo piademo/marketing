@@ -154,11 +154,11 @@ export default function ContactoPage() {
                 </div>
               </div>
 
-              <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-6">
-                <h3 className="font-semibold text-neutral-900 mb-2">
+              <div className="rounded-2xl border border-neutral-800 bg-neutral-900/70 p-6">
+                <h3 className="font-semibold text-white mb-2">
                   ¿Prefieres una demostración?
                 </h3>
-                <p className="text-sm text-neutral-600 mb-4">
+                <p className="text-sm text-neutral-400 mb-4">
                   Agenda una videollamada con nuestro equipo y te mostramos BookFast en acción.
                 </p>
                 <Button as="link" href="/como-funciona" variant="outline" fullWidth>

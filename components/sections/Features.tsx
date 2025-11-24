@@ -10,11 +10,7 @@ import GlassCard from '@/components/ui/GlassCard';
 
 const Features = () => {
   return (
-    <section className="py-24 bg-neutral-950 text-white relative overflow-hidden">
-      {/* Ambient Glows */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary-500/20 rounded-full blur-[128px] pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-secondary-500/20 rounded-full blur-[128px] pointer-events-none" />
-
+    <section className="relative -mt-8 pt-24 pb-24 text-white overflow-hidden">
       <Container>
         <div className="mb-16 text-center max-w-3xl mx-auto">
           <h2 className="text-display-sm sm:text-display-md mb-6 font-bold tracking-tight">
@@ -45,7 +41,7 @@ const Features = () => {
               </p>
             </div>
             {/* Visual abstracto de calendario */}
-            <div className="mt-8 -mb-6 -mx-6 bg-neutral-900/50 border-t border-white/10 p-4 rounded-t-xl h-48 relative overflow-hidden">
+            <div className="mt-8 -mb-6 -mx-4 bg-neutral-900/50 border-t border-white/10 p-4 rounded-t-xl h-56 relative overflow-hidden">
               <div className="absolute top-4 left-4 right-4 space-y-2 opacity-60">
                 <div className="h-2 w-full bg-white/10 rounded" />
                 <div className="flex gap-2">

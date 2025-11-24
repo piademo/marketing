@@ -24,16 +24,16 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <section className="bg-neutral-50 py-20">
+    <section className="py-20">
       <Container>
         <div className="grid items-center gap-12 lg:grid-cols-2">
           {/* Columna izquierda: copy */}
           <div className="space-y-8">
             <div className="space-y-4">
-              <h2 className="text-display-sm sm:text-display-md font-semibold tracking-tight text-neutral-900">
+              <h2 className="text-display-sm sm:text-display-md font-semibold tracking-tight text-white">
                 Tus clientes reservan en segundos, no en minutos.
               </h2>
-              <p className="text-base sm:text-lg text-neutral-600 max-w-xl">
+              <p className="text-base sm:text-lg text-neutral-300 max-w-xl">
                 Enséñales un enlace y deja que el sistema se encargue. Sin llamadas, sin notas en papel y sin discusiones
                 de horarios por WhatsApp.
               </p>
@@ -42,12 +42,12 @@ export default function HowItWorks() {
             <div className="space-y-4">
               {steps.map((step) => (
                 <div key={step.title} className="flex items-start gap-4">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-primary-600 shadow-sm border border-neutral-200">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-neutral-700 bg-neutral-900 text-primary-400 shadow-sm">
                     <step.icon className="h-5 w-5" />
                   </div>
                   <div>
-                    <h3 className="text-sm font-semibold text-neutral-900 sm:text-base">{step.title}</h3>
-                    <p className="text-xs text-neutral-600 sm:text-sm">{step.description}</p>
+                    <h3 className="text-sm font-semibold text-neutral-50 sm:text-base">{step.title}</h3>
+                    <p className="text-xs text-neutral-400 sm:text-sm">{step.description}</p>
                   </div>
                 </div>
               ))}
