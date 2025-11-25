@@ -13,6 +13,8 @@
 
   html {
     @apply scroll-smooth;
+    /* Mejora el scroll snap para que las secciones se alineen */
+    scroll-snap-type: y proximity;
   }
 
   body {
@@ -38,22 +40,25 @@
     @apply mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8;
   }
 
-  /* Secciones: siempre al menos un viewport de alto */
+  /* Secciones: ajustadas a viewport height */
   .section {
-    @apply py-16 sm:py-20 lg:py-24 min-h-[100dvh];
+    @apply py-8 sm:py-12 lg:py-16 h-[100dvh] flex flex-col justify-center;
+    scroll-snap-align: start;
   }
 
   .section-sm {
-    @apply py-12 sm:py-16 lg:py-20 min-h-[100dvh];
+    @apply py-6 sm:py-10 lg:py-14 h-[100dvh] flex flex-col justify-center;
+    scroll-snap-align: start;
   }
 
   .section-lg {
-    @apply py-20 sm:py-24 lg:py-32 min-h-[100dvh];
+    @apply py-10 sm:py-14 lg:py-20 h-[100dvh] flex flex-col justify-center;
+    scroll-snap-align: start;
   }
 
   /* Botones base */
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-950 disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 sm:px-6 py-2.5 sm:py-3 text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-950 disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
   .btn-primary {
@@ -73,16 +78,16 @@
   }
 
   .btn-lg {
-    @apply px-8 py-4 text-base;
+    @apply px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base;
   }
 
   .btn-sm {
-    @apply px-4 py-2 text-xs;
+    @apply px-3 sm:px-4 py-1.5 sm:py-2 text-xs;
   }
 
   /* Cards (Adaptadas a Dark Mode) */
   .card {
-    @apply rounded-2xl border border-neutral-800 bg-neutral-900/20 p-6 shadow-none transition-all duration-200;
+    @apply rounded-xl sm:rounded-2xl border border-neutral-800 bg-neutral-900/20 p-4 sm:p-6 shadow-none transition-all duration-200;
   }
 
   .card-hover {
@@ -91,20 +96,20 @@
 
   /* Inputs (Adaptados a Dark Mode) */
   .input {
-    @apply w-full rounded-xl border border-neutral-800 bg-neutral-900 px-4 py-3 text-sm text-white placeholder:text-neutral-500 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 transition-colors;
+    @apply w-full rounded-lg sm:rounded-xl border border-neutral-800 bg-neutral-900 px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-white placeholder:text-neutral-500 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 transition-colors;
   }
 
   .textarea {
-    @apply input min-h-[120px] resize-y;
+    @apply input min-h-[100px] sm:min-h-[120px] resize-y;
   }
 
   .label {
-    @apply mb-2 block text-sm font-medium text-neutral-300;
+    @apply mb-1.5 sm:mb-2 block text-xs sm:text-sm font-medium text-neutral-300;
   }
 
   /* Badges */
   .badge {
-    @apply inline-flex items-center rounded-full px-3 py-1 text-xs font-medium;
+    @apply inline-flex items-center rounded-full px-2.5 sm:px-3 py-0.5 sm:py-1 text-xs font-medium;
   }
 
   .badge-primary {
@@ -146,5 +151,19 @@
   /* Utilidad para textos balanceados */
   .text-balance {
     text-wrap: balance;
+  }
+
+  /* Utilidades responsive para ocultar/mostrar */
+  .mobile-only {
+    @apply block sm:hidden;
+  }
+  
+  .desktop-only {
+    @apply hidden sm:block;
+  }
+
+  /* Snap scroll para secciones */
+  .snap-section {
+    scroll-snap-align: start;
   }
 }
