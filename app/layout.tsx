@@ -102,7 +102,7 @@ export default function RootLayout({
       <body className="flex min-h-screen flex-col">
         <SpotlightBackground />
         <Header />
-        <main className="flex-1 relative z-10 pt-20 sm:pt-24">{children}</main>
+        <main className="flex-1 relative z-10 pt-20 sm:pt-24 lg:pt-28">{children}</main>
         <Footer />
       </body>
     </html>
