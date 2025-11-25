@@ -33,9 +33,9 @@ export default function Header() {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-transparent">
+    <header className="fixed top-0 left-0 right-0 z-50 w-full bg-transparent pt-3 sm:pt-4 lg:pt-5">
       <Container>
-        <nav className="mt-3 mb-2 flex items-center justify-between rounded-full border border-white/10 bg-neutral-900/60 px-4 py-2 shadow-[0_18px_45px_rgba(0,0,0,0.55)] backdrop-blur-xl lg:mt-4 lg:mb-3 lg:px-6">
+        <nav className="flex items-center justify-between rounded-full border border-white/10 bg-neutral-900/70 px-4 py-2.5 shadow-[0_8px_32px_rgba(0,0,0,0.4)] backdrop-blur-xl sm:px-5 sm:py-3 lg:px-6">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary-500 to-primary-700 text-white font-bold text-lg">
