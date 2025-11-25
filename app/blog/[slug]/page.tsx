@@ -11,17 +11,14 @@ export const metadata: Metadata = {
   description: 'Artículo del blog de BookFast',
 };
 
-interface BlogPostPageProps {
-  params: { slug: string };
-}
-
 export function generateStaticParams() {
   const posts = getAllPosts();
   return posts.map((post) => ({ slug: post.slug }));
 }
 
-export default function BlogPostPage({ params }: BlogPostPageProps) {
-  const post = getPostBySlug(params.slug);
+export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const post = getPostBySlug(slug);
 
   if (!post) {
     return null;
