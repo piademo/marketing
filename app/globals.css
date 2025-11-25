@@ -13,8 +13,6 @@
 
   html {
     @apply scroll-smooth;
-    /* Mejora el scroll snap para que las secciones se alineen */
-    scroll-snap-type: y proximity;
   }
 
   body {
@@ -40,20 +38,17 @@
     @apply mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8;
   }
 
-  /* Secciones: ajustadas a viewport height */
+  /* Secciones: padding optimizado sin altura fija */
   .section {
-    @apply py-8 sm:py-12 lg:py-16 h-[100dvh] flex flex-col justify-center;
-    scroll-snap-align: start;
+    @apply py-16 sm:py-20 lg:py-24;
   }
 
   .section-sm {
-    @apply py-6 sm:py-10 lg:py-14 h-[100dvh] flex flex-col justify-center;
-    scroll-snap-align: start;
+    @apply py-12 sm:py-16 lg:py-20;
   }
 
   .section-lg {
-    @apply py-10 sm:py-14 lg:py-20 h-[100dvh] flex flex-col justify-center;
-    scroll-snap-align: start;
+    @apply py-20 sm:py-24 lg:py-32;
   }
 
   /* Botones base */

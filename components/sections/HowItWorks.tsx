@@ -1,5 +1,8 @@
+'use client';
+
 import React from 'react';
 import { Settings, Link2, MousePointer2 } from 'lucide-react';
+import { motion } from 'framer-motion';
 import Container from '@/components/ui/Container';
 import BookingWidgetPreview from '@/components/ui/BookingWidgetPreview';
 import { cn } from '@/lib/utils';
@@ -22,13 +25,41 @@ const steps = [
   },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, x: -20 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.5,
+      ease: [0.21, 0.47, 0.32, 0.98],
+    },
+  },
+};
+
 export default function HowItWorks() {
   return (
-    <section className="h-[100dvh] flex flex-col justify-center py-8 sm:py-12 lg:py-16">
+    <section className="py-16 sm:py-20 lg:py-24">
       <Container>
-        <div className="grid items-center gap-6 sm:gap-8 lg:gap-12 lg:grid-cols-2">
+        <div className="grid items-center gap-8 sm:gap-10 lg:gap-14 lg:grid-cols-2">
           {/* Columna izquierda: copy */}
-          <div className="space-y-4 sm:space-y-6 lg:space-y-8">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ duration: 0.6 }}
+            className="space-y-5 sm:space-y-6 lg:space-y-8"
+          >
             <div className="space-y-2 sm:space-y-3">
               <h2 className="text-xl sm:text-display-sm lg:text-display-md font-semibold tracking-tight text-white">
                 Tus clientes reservan en segundos, no en minutos.
@@ -38,9 +69,15 @@ export default function HowItWorks() {
               </p>
             </div>
 
-            <div className="space-y-3 sm:space-y-4">
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: '-50px' }}
+              className="space-y-3 sm:space-y-4"
+            >
               {steps.map((step) => (
-                <div key={step.title} className="flex items-start gap-3 sm:gap-4">
+                <motion.div key={step.title} variants={itemVariants} className="flex items-start gap-3 sm:gap-4">
                   <div className="flex h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-lg sm:rounded-xl border border-neutral-700 bg-neutral-900 text-primary-400 shadow-sm shrink-0">
                     <step.icon className="h-4 w-4 sm:h-5 sm:w-5" />
                   </div>
@@ -48,13 +85,19 @@ export default function HowItWorks() {
                     <h3 className="text-sm sm:text-base font-semibold text-neutral-50">{step.title}</h3>
                     <p className="text-[11px] sm:text-xs lg:text-sm text-neutral-400">{step.description}</p>
                   </div>
-                </div>
+                </motion.div>
               ))}
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* Columna derecha: widget + badge */}
-          <div className="relative flex justify-center lg:justify-end">
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="relative flex justify-center lg:justify-end"
+          >
             <div
               className={cn(
                 'relative w-full max-w-[280px] sm:max-w-xs lg:max-w-sm',
@@ -71,7 +114,7 @@ export default function HowItWorks() {
                 <span>Reservas en 3 meses</span>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </Container>
     </section>
