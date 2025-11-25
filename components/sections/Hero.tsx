@@ -22,17 +22,19 @@ export default function Hero() {
             </Badge>
           </div>
 
-          {/* H1: Value Proposition (Clear & Bold) */}
+          {/* H1: Value Proposition (SEO + CRO) */}
           <h1 className="mb-6 max-w-4xl text-display-md font-bold tracking-tight text-white sm:text-display-lg animate-in fade-in slide-in-from-bottom-6 duration-700 delay-100 text-balance">
-            Tu agenda llena,{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-secondary-400">cero llamadas perdidas</span> y adiós al papel.
+            Tu negocio en piloto automático.
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-secondary-400">
+              Tu agenda siempre llena.
+            </span>
           </h1>
 
-          {/* Subhead: Pain Points resolution */}
+          {/* Subhead: Phone / Reservations 24-7 */}
           <p className="mb-10 max-w-2xl text-lg text-neutral-300 sm:text-xl animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200 text-balance">
-            BookFast automatiza tus citas y recordatorios por WhatsApp para que dejes de perder el 20% de tus ingresos en "no-shows". Configuración en 5 minutos.
-            Software profesional de gestión de citas para peluquerías, barberías y centros de
-            estética. Ahorra tiempo, reduce ausencias y mantén tu agenda siempre llena.
+            Deja de perder horas al teléfono. BookFast permite que tus clientes reserven 24/7 desde
+            su móvil mientras tú te centras en el servicio. Sin comisiones por reserva y con
+            recordatorios automáticos por WhatsApp para reducir los no-shows.
           </p>
 
           {/* CTAs */}
@@ -60,12 +62,25 @@ export default function Hero() {
               <span>Soporte en español</span>
             </div>
           </div>
+
+          {/* Logos strip */}
+          <div className="mt-8 w-full border-t border-white/5 pt-6">
+            <p className="mb-4 text-xs uppercase tracking-[0.2em] text-neutral-500 text-center">
+              Confían en nosotros
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-neutral-600">
+              <span className="font-semibold text-neutral-400">Barbería Central</span>
+              <span className="font-semibold text-neutral-500">Glow Studio</span>
+              <span className="font-semibold text-neutral-500">Linea Fade Club</span>
+              <span className="font-semibold text-neutral-600">Estética 360</span>
+            </div>
+          </div>
         </div>
 
         {/* Hero Image / Mockup */}
         <div className="mt-16 lg:mt-20">
           <div className="relative mx-auto max-w-5xl">
-            <div className="aspect-video rounded-2xl border border-white/10 bg-gradient-to-br from-neutral-900 via-neutral-950 to-neutral-900 shadow-strong overflow-hidden">
+            <div className="aspect-video rounded-2xl border border-white/10 bg-gradient-to-br from-neutral-900/40 via-neutral-950/60 to-neutral-900/20 shadow-strong overflow-hidden">
               <div className="flex h-full items-center justify-center text-neutral-400">
                 {/* Placeholder para screenshot del producto */}
                 <div className="text-center">

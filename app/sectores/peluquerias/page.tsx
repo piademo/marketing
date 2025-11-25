@@ -6,66 +6,74 @@ import Card, { CardHeader, CardTitle, CardDescription } from '@/components/ui/Ca
 import CTA from '@/components/sections/CTA';
 
 export const metadata: Metadata = {
-  title: 'Software para Peluquerías',
+  title: 'Software de Gestión para Peluquerías y Salones de Belleza',
   description:
-    'Software de gestión de citas diseñado específicamente para peluquerías. Agenda online, recordatorios automáticos y CRM de clientes.',
+    'Agenda digital para salones de belleza que gestionan color, tratamientos y clientes exigentes. El software de gestión para peluquerías que cuida cada detalle.',
 };
 
 const problems = [
   {
-    title: 'Llamadas constantes para reservar',
-    solution: 'Reservas online 24/7 desde tu web, Instagram o WhatsApp',
+    title: 'Llamadas y WhatsApps a todas horas para reservar',
+    solution:
+      'Convierte tu agenda en una agenda digital de salón de belleza: tus clientas reservan sola desde Instagram o Google sin interrumpir el servicio.',
   },
   {
-    title: 'Clientes que no se presentan',
-    solution: 'Recordatorios automáticos que reducen ausencias hasta un 70%',
+    title: 'No recuerdas qué tinte usaste la última vez',
+    solution:
+      'Historial de cliente con color, mechas, tratamientos y notas para que cada visita sea perfecta y consistente.',
   },
   {
-    title: 'Agenda desorganizada',
-    solution: 'Calendario inteligente con vista por estilista y servicio',
+    title: 'Agenda llena, pero ticket medio bajo',
+    solution:
+      'Sugiere servicios extra (tratamientos, brillo, peinados) durante la reserva online para aumentar el valor de cada visita.',
   },
   {
-    title: 'Pérdida de datos de clientes',
-    solution: 'CRM completo con historial de servicios y preferencias',
+    title: 'Equipo descoordinado entre sillas y cabinas',
+    solution:
+      'Vista por estilista y por servicio para asignar tiempos, evitar solapes y mantener el salón siempre fluido.',
   },
 ];
 
 const features = [
   {
     icon: Calendar,
-    title: 'Agenda por estilista',
-    description: 'Gestiona múltiples estilistas con calendarios independientes y sincronizados.',
+    title: 'Agenda por silla y estilista',
+    description:
+      'Visualiza en segundos qué silla está libre, quién atiende a quién y cuánto durará cada servicio de color o corte.',
   },
   {
     icon: Users,
-    title: 'Gestión de servicios',
-    description: 'Corte, tinte, mechas, tratamientos... Organiza todos tus servicios con precios y duraciones.',
+    title: 'Historial de cliente detallado',
+    description:
+      'Recuerda siempre qué tinte, mezcla y tratamiento usaste en la última visita. Nunca más un “no recuerdo qué hicimos”.',
   },
   {
     icon: MessageSquare,
-    title: 'Recordatorios inteligentes',
-    description: 'Envía recordatorios automáticos por WhatsApp, SMS o email antes de cada cita.',
+    title: 'Recordatorios que cuidan la experiencia',
+    description:
+      'Recordatorios por WhatsApp que informan sin molestar y reducen ausencias para mantener tu agenda estable.',
   },
   {
     icon: TrendingUp,
-    title: 'Estadísticas del salón',
-    description: 'Analiza qué servicios son más rentables y qué estilistas tienen mejor rendimiento.',
+    title: 'Ticket medio en crecimiento',
+    description:
+      'Detecta servicios que mejor funcionan juntos y ofrécelos como extras durante la reserva online.',
   },
 ];
 
 export default function PeluqueriasPage() {
   return (
     <>
-      <section className="section-lg bg-gradient-to-b from-neutral-50 to-white">
+      <section className="section-lg">
         <Container>
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
             <div>
               <h1 className="text-display-md sm:text-display-lg mb-6">
-                Software de gestión para <span className="gradient-text">peluquerías</span>
+                Gestión premium para salones que <span className="gradient-text">marcan tendencia</span>.
               </h1>
-              <p className="text-lg text-neutral-600 mb-8">
-                Diseñado específicamente para salones de peluquería. Gestiona tu agenda, equipo y
-                clientes desde una sola plataforma. Ahorra tiempo y aumenta tus ingresos.
+              <p className="text-lg text-neutral-300 mb-8">
+                Software de gestión para peluquerías que cuidan el detalle: agenda digital, historial de color y tratamientos, y una
+                experiencia a la altura de tus clientas más exigentes.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button as="link" href="/contacto" size="lg">
@@ -77,8 +85,8 @@ export default function PeluqueriasPage() {
               </div>
             </div>
 
-            <div className="aspect-square rounded-2xl border border-neutral-200 bg-gradient-to-br from-neutral-100 to-neutral-50 shadow-strong overflow-hidden flex items-center justify-center">
-              <div className="text-center text-neutral-400">
+            <div className="aspect-square rounded-2xl border border-neutral-800 bg-gradient-to-br from-neutral-900/30 via-neutral-950/40 to-neutral-900/10 shadow-strong overflow-hidden flex items-center justify-center">
+              <div className="text-center text-neutral-300">
                 <div className="text-8xl mb-4">💇</div>
                 <p className="text-sm">Gestión para peluquerías</p>
               </div>
@@ -87,13 +95,13 @@ export default function PeluqueriasPage() {
         </Container>
       </section>
 
-      <section className="section bg-white">
+      <section className="section">
         <Container>
           <div className="mx-auto max-w-3xl text-center mb-16">
             <h2 className="text-display-sm sm:text-display-md mb-4">
               Resolvemos los problemas reales de tu peluquería
             </h2>
-            <p className="text-lg text-neutral-600">
+            <p className="text-lg text-neutral-300">
               Sabemos los desafíos del día a día. BookFast está diseñado para solucionarlos.
             </p>
           </div>
@@ -102,12 +110,12 @@ export default function PeluqueriasPage() {
             {problems.map((problem) => (
               <div
                 key={problem.title}
-                className="rounded-2xl border border-neutral-200 bg-neutral-50 p-6"
+                className="rounded-2xl border border-neutral-800 bg-neutral-900/60 p-6"
               >
-                <h3 className="text-lg font-semibold text-neutral-900 mb-2">
+                <h3 className="text-lg font-semibold text-white mb-2">
                   ❌ {problem.title}
                 </h3>
-                <p className="text-neutral-600 flex items-start gap-2">
+                <p className="text-neutral-300 flex items-start gap-2">
                   <CheckCircle2 className="h-5 w-5 flex-shrink-0 text-green-500 mt-0.5" />
                   <span>{problem.solution}</span>
                 </p>
@@ -117,13 +125,13 @@ export default function PeluqueriasPage() {
         </Container>
       </section>
 
-      <section className="section bg-neutral-50">
+      <section className="section">
         <Container>
           <div className="mx-auto max-w-3xl text-center mb-16">
             <h2 className="text-display-sm sm:text-display-md mb-4">
               Funcionalidades para peluquerías
             </h2>
-            <p className="text-lg text-neutral-600">
+            <p className="text-lg text-neutral-300">
               Todo lo que necesitas para gestionar tu salón de forma profesional.
             </p>
           </div>
@@ -132,7 +140,7 @@ export default function PeluqueriasPage() {
             {features.map((feature) => (
               <Card key={feature.title} hover>
                 <CardHeader>
-                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-100 text-primary-600">
+                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-500/15 text-primary-300">
                     <feature.icon className="h-6 w-6" />
                   </div>
                   <CardTitle>{feature.title}</CardTitle>

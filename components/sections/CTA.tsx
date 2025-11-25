@@ -23,7 +23,7 @@ export default function CTA({
   return (
     <section className="section">
       <Container>
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary-600 via-primary-700 to-secondary-700 px-8 py-16 sm:px-16 lg:px-24 lg:py-20">
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary-600/35 via-primary-700/35 to-secondary-700/35 px-8 py-16 sm:px-16 lg:px-24 lg:py-20">
           {/* Decorative elements */}
           <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-white/15 blur-3xl" />
           <div className="pointer-events-none absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-white/12 blur-3xl" />

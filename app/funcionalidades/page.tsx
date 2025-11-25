@@ -18,15 +18,16 @@ import Card, { CardHeader, CardTitle, CardDescription } from '@/components/ui/Ca
 import CTA from '@/components/sections/CTA';
 
 export const metadata: Metadata = {
-  title: 'Funcionalidades',
+  title: 'Características del Sistema de Reservas BookFast',
   description:
-    'Descubre todas las funcionalidades de BookFast: agenda inteligente, CRM, comunicaciones, pagos y más.',
+    'Conoce las características clave del sistema de reservas BookFast: agenda visual, marketing automático y caja sin errores para tu negocio de belleza.',
 };
 
 const featureCategories = [
   {
     title: 'Gestión de Agenda',
-    description: 'Control total sobre tu calendario y citas',
+    description:
+      'Agenda visual de arrastrar y soltar que te da control total sobre horarios, profesionales y cabinas.',
     features: [
       {
         icon: Calendar,
@@ -68,13 +69,14 @@ const featureCategories = [
   },
   {
     title: 'Comunicación y Clientes',
-    description: 'Mantén el contacto con tus clientes',
+    description:
+      'Automatiza la comunicación con tus clientes para reducir ausencias y mantener la agenda siempre activa.',
     features: [
       {
         icon: MessageSquare,
         title: 'Recordatorios automáticos',
         description:
-          'Envía recordatorios por WhatsApp, SMS o email. Reduce ausencias hasta un 70%.',
+          'Envía recordatorios por WhatsApp o email de forma automática. Reduce ausencias y evita huecos vacíos en la agenda.',
       },
       {
         icon: Bell,
@@ -86,25 +88,26 @@ const featureCategories = [
         icon: Globe,
         title: 'CRM de clientes',
         description:
-          'Historial completo de citas, preferencias, notas y datos de contacto.',
+          'Historial completo de citas, servicios, preferencias y notas para cuidar la relación con cada cliente.',
       },
     ],
   },
   {
     title: 'Pagos y Facturación',
-    description: 'Cobra y factura sin complicaciones',
+    description:
+      'Convierte BookFast en el centro de tu caja: TPV, cierres diarios y control de comisiones en un clic.',
     features: [
       {
         icon: CreditCard,
         title: 'Pagos online',
         description:
-          'Acepta pagos con tarjeta, Bizum y otros métodos. Integración con Stripe.',
+          'Acepta pagos con tarjeta y otros métodos en un entorno seguro. Integra tu TPV físico y online sin fricción.',
       },
       {
         icon: BarChart3,
         title: 'Facturación automática',
         description:
-          'Genera facturas automáticamente y envíalas por email a tus clientes.',
+          'Genera facturas y cierres de caja automáticos. Ten siempre claro cuánto has ingresado y qué servicios más venden.',
       },
     ],
   },
@@ -131,29 +134,29 @@ const featureCategories = [
 export default function FuncionalidadesPage() {
   return (
     <>
-      <section className="section-lg bg-gradient-to-b from-neutral-50 to-white">
+      <section className="section-lg">
         <Container>
           <div className="mx-auto max-w-3xl text-center mb-16">
             <h1 className="text-display-md sm:text-display-lg mb-4">
               Todo lo que necesitas en un solo lugar
             </h1>
-            <p className="text-lg text-neutral-600 sm:text-xl">
+            <p className="text-lg text-neutral-300 sm:text-xl">
               Funcionalidades profesionales diseñadas para hacer crecer tu negocio de belleza.
             </p>
           </div>
 
           <div className="space-y-20">
             {featureCategories.map((category, index) => (
-              <div key={category.title}>
-                <div className="mb-10 text-center">
-                  <h2 className="text-3xl font-semibold text-neutral-900 mb-2">
+              <div key={category.title} className={index % 2 === 1 ? 'md:flex md:flex-row-reverse md:items-center md:gap-12' : 'md:flex md:items-center md:gap-12'}>
+                <div className="mb-10 md:mb-0 md:w-1/3 text-center md:text-left">
+                  <h2 className="text-3xl font-semibold text-white mb-2">
                     {category.title}
                   </h2>
-                  <p className="text-neutral-600">{category.description}</p>
+                  <p className="text-neutral-400">{category.description}</p>
                 </div>
 
                 <div
-                  className={`grid gap-8 ${
+                  className={`mt-10 md:mt-0 grid gap-8 md:w-2/3 ${
                     category.features.length === 2
                       ? 'md:grid-cols-2'
                       : 'sm:grid-cols-2 lg:grid-cols-3'
@@ -162,7 +165,7 @@ export default function FuncionalidadesPage() {
                   {category.features.map((feature) => (
                     <Card key={feature.title} hover>
                       <CardHeader>
-                        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-100 text-primary-600">
+                        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-neutral-800 text-primary-300 shadow-[0_0_25px_rgba(14,165,233,0.35)]">
                           <feature.icon className="h-6 w-6" />
                         </div>
                         <CardTitle>{feature.title}</CardTitle>

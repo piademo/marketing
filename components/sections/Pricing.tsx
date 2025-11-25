@@ -42,35 +42,35 @@ export default function Pricing() {
       <Container>
         <div className="mx-auto mb-12 max-w-3xl text-center">
           <h2 className="text-display-sm sm:text-display-md font-semibold tracking-tight text-white text-balance">
-            Una inversión que recuperas con una sola cita salvada.
+            Una inversión que recuperas salvando UNA sola cita al mes.
           </h2>
           <p className="mt-4 text-base sm:text-lg text-neutral-300">
-            El coste de un "no-show" suele ser mayor que tu suscripción mensual. BookFast se paga solo evitando un único hueco vacío.
+            El coste de un "no-show" suele ser mayor que tu suscripción mensual. Con BookFast, evitar un hueco vacío ya compensa el plan.
           </p>
         </div>
 
         <div className="grid gap-6 md:grid-cols-3 md:items-stretch">
-          {/* Plan Solo */}
+          {/* Plan Starter (resumen del plan Starter de /precios) */}
           <div className="relative flex flex-col rounded-3xl border border-neutral-800 bg-neutral-900/70 p-6 shadow-sm">
-            <div className="mb-2 text-sm font-semibold text-neutral-50">Solo</div>
+            <div className="mb-2 text-sm font-semibold text-neutral-50">Starter</div>
             <div className="mb-4 flex items-baseline gap-1">
               <span className="text-3xl font-semibold text-white">29€</span>
               <span className="text-sm text-neutral-400">/mes</span>
             </div>
-            <p className="mb-6 text-sm text-neutral-400">Ideal si estás empezando o trabajas solo y quieres dejar atrás la libreta.</p>
+            <p className="mb-6 text-sm text-neutral-400">Perfecto para empezar: ideal para 1-2 profesionales que quieren dejar atrás la libreta.</p>
             <ul className="mb-6 space-y-2">
               {soloFeatures.map((item) => (
                 <FeatureItem key={item} label={item} />
               ))}
             </ul>
             <div className="mt-auto">
-              <Button as="link" href="/registro" variant="outline" className="w-full">
-                Empezar con Solo
+              <Button as="link" href="/contacto" variant="outline" className="w-full">
+                Empezar con Starter
               </Button>
             </div>
           </div>
 
-          {/* Plan Pro (destacado) */}
+          {/* Plan Professional (destacado, alineado con /precios) */}
           <GlassCard
             gradient="subtle"
             className={cn(
@@ -82,13 +82,13 @@ export default function Pricing() {
               <span className="h-2 w-2 rounded-full bg-primary-400" />
               Más Popular
             </div>
-            <div className="mb-2 text-sm font-semibold text-neutral-50">Pro</div>
+            <div className="mb-2 text-sm font-semibold text-neutral-50">Professional</div>
             <div className="mb-4 flex items-baseline gap-1">
-              <span className="text-3xl font-semibold text-white">59€</span>
+              <span className="text-3xl font-semibold text-white">79€</span>
               <span className="text-sm text-neutral-400">/mes</span>
             </div>
             <p className="mb-6 text-sm text-neutral-200">
-              Para barberías que ya están llenas y quieren profesionalizar reservas y reducir ausencias sin contratar a otra persona.
+              Para negocios en crecimiento que quieren profesionalizar reservas, reducir ausencias y tener un control real de clientes y métricas.
             </p>
             <ul className="mb-6 space-y-2">
               {proFeatures.map((item) => (
@@ -96,17 +96,17 @@ export default function Pricing() {
               ))}
             </ul>
             <div className="mt-auto">
-              <Button as="link" href="/registro" variant="primary" className="w-full">
-                Elegir plan Pro
+              <Button as="link" href="/contacto" variant="primary" className="w-full">
+                Elegir plan Professional
               </Button>
             </div>
           </GlassCard>
 
-          {/* Plan Enterprise */}
+          {/* Plan Enterprise (personalizado, alineado con /precios) */}
           <div className="relative flex flex-col rounded-3xl border border-neutral-800 bg-neutral-900/70 p-6 shadow-sm">
             <div className="mb-2 text-sm font-semibold text-neutral-50">Enterprise</div>
             <div className="mb-4 flex items-baseline gap-1">
-              <span className="text-3xl font-semibold text-white">A medida</span>
+              <span className="text-3xl font-semibold text-white">Personalizado</span>
             </div>
             <p className="mb-6 text-sm text-neutral-400">Pensado para cadenas o grupos con varios locales y equipos.</p>
             <ul className="mb-6 space-y-2">

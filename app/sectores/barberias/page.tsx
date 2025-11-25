@@ -6,66 +6,74 @@ import Card, { CardHeader, CardTitle, CardDescription } from '@/components/ui/Ca
 import CTA from '@/components/sections/CTA';
 
 export const metadata: Metadata = {
-  title: 'Software para Barberías',
+  title: 'Software para Barberías y Barber Shops | Agenda y Citas Online',
   description:
-    'Software de gestión de citas para barberías modernas. Reservas online, recordatorios automáticos y gestión de barberos.',
+    'La app de citas para barberías que elimina los no-shows y organiza tus sillones y walk-ins. Prueba hoy el mejor programa para barberías modernas.',
 };
 
 const problems = [
   {
-    title: 'Clientes sin cita que interrumpen',
-    solution: 'Sistema de reservas online que organiza tu flujo de trabajo',
+    title: 'Clientes que reservan y no aparecen',
+    solution:
+      'Activa el modo Anti No-Show: recordatorios automáticos por WhatsApp antes de cada Corte y Barba para blindar tu facturación.',
   },
   {
-    title: 'Dificultad para gestionar varios barberos',
-    solution: 'Agenda individual por barbero con sincronización automática',
+    title: 'Sillones vacíos mientras el móvil no para de sonar',
+    solution:
+      'Tu app de citas para barbería centraliza todas las reservas online para que no pierdas ni un solo hueco facturable.',
   },
   {
-    title: 'Clientes que olvidan su cita',
-    solution: 'Recordatorios automáticos por WhatsApp que reducen ausencias',
+    title: 'Walk-ins descontrolados que rompen el ritmo',
+    solution:
+      'Combina turnos y citas programadas en una sola agenda visual por sillón y barbero.',
   },
   {
-    title: 'Falta de control sobre ingresos',
-    solution: 'Dashboard con estadísticas de facturación y servicios más solicitados',
+    title: 'No sabes qué servicios te dejan más dinero',
+    solution:
+      'Un panel con métricas claras por servicio (Corte, Barba, Color) y por barbero para tomar decisiones rápidas.',
   },
 ];
 
 const features = [
   {
     icon: Calendar,
-    title: 'Turnos y citas',
-    description: 'Gestiona tanto citas programadas como sistema de turnos para walk-ins.',
+    title: 'Agenda pensada para barberías',
+    description:
+      'Organiza tus sillones por barbero, tipo de servicio y duración. Controla walk-ins y citas programadas desde una sola vista.',
   },
   {
     icon: Users,
-    title: 'Gestión de barberos',
-    description: 'Calendario individual, especialidades y comisiones por barbero.',
+    title: 'Gestión de equipo y comisiones',
+    description:
+      'Define especialidades (fade, corte clásico, barbas premium) y calcula comisiones automáticamente por barbero.',
   },
   {
     icon: MessageSquare,
-    title: 'Recordatorios WhatsApp',
-    description: 'Conecta con tus clientes por su canal favorito y reduce ausencias.',
+    title: 'Anti No-Show con WhatsApp',
+    description:
+      'Recordatorios automáticos por WhatsApp antes de cada cita para reducir al mínimo las faltas sin avisar.',
   },
   {
     icon: TrendingUp,
-    title: 'Control de ingresos',
-    description: 'Analiza qué servicios generan más ingresos y optimiza tu negocio.',
+    title: 'Métricas de un negocio serio',
+    description:
+      'Ve en segundos qué días, barberos y servicios (Corte, Barba, Color) te dejan más caja para ajustar tu estrategia.',
   },
 ];
 
 export default function BarberiasPage() {
   return (
     <>
-      <section className="section-lg bg-gradient-to-b from-neutral-50 to-white">
+      <section className="section-lg">
         <Container>
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
             <div>
               <h1 className="text-display-md sm:text-display-lg mb-6">
-                Software de gestión para <span className="gradient-text">barberías</span>
+                El copiloto digital que tu <span className="gradient-text">Barbería</span> necesita.
               </h1>
-              <p className="text-lg text-neutral-600 mb-8">
-                Diseñado para barberías modernas. Gestiona reservas, barberos y servicios desde una
-                plataforma profesional. Más organización, más clientes, más ingresos.
+              <p className="text-lg text-neutral-300 mb-8">
+                Programa para barberías pensado para el ritmo real de tu Barber Shop: walk-ins, Corte y Barba, clientes fieles y días
+                de locura. Deja que BookFast se encargue de las citas mientras tú marcas estilo en el sillón.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button as="link" href="/contacto" size="lg">
@@ -77,8 +85,8 @@ export default function BarberiasPage() {
               </div>
             </div>
 
-            <div className="aspect-square rounded-2xl border border-neutral-200 bg-gradient-to-br from-neutral-100 to-neutral-50 shadow-strong overflow-hidden flex items-center justify-center">
-              <div className="text-center text-neutral-400">
+            <div className="aspect-square rounded-2xl border border-neutral-800 bg-gradient-to-br from-neutral-900/30 via-neutral-950/40 to-neutral-900/10 shadow-strong overflow-hidden flex items-center justify-center">
+              <div className="text-center text-neutral-300">
                 <div className="text-8xl mb-4">✂️</div>
                 <p className="text-sm">Gestión para barberías</p>
               </div>
@@ -87,13 +95,13 @@ export default function BarberiasPage() {
         </Container>
       </section>
 
-      <section className="section bg-white">
+      <section className="section">
         <Container>
           <div className="mx-auto max-w-3xl text-center mb-16">
             <h2 className="text-display-sm sm:text-display-md mb-4">
               Resolvemos los desafíos de tu barbería
             </h2>
-            <p className="text-lg text-neutral-600">
+            <p className="text-lg text-neutral-300">
               Entendemos cómo funciona una barbería. BookFast está pensado para tu negocio.
             </p>
           </div>
@@ -102,12 +110,12 @@ export default function BarberiasPage() {
             {problems.map((problem) => (
               <div
                 key={problem.title}
-                className="rounded-2xl border border-neutral-200 bg-neutral-50 p-6"
+                className="rounded-2xl border border-neutral-800 bg-neutral-900/60 p-6"
               >
-                <h3 className="text-lg font-semibold text-neutral-900 mb-2">
+                <h3 className="text-lg font-semibold text-white mb-2">
                   ❌ {problem.title}
                 </h3>
-                <p className="text-neutral-600 flex items-start gap-2">
+                <p className="text-neutral-300 flex items-start gap-2">
                   <CheckCircle2 className="h-5 w-5 flex-shrink-0 text-green-500 mt-0.5" />
                   <span>{problem.solution}</span>
                 </p>
@@ -117,13 +125,13 @@ export default function BarberiasPage() {
         </Container>
       </section>
 
-      <section className="section bg-neutral-50">
+      <section className="section">
         <Container>
           <div className="mx-auto max-w-3xl text-center mb-16">
             <h2 className="text-display-sm sm:text-display-md mb-4">
               Funcionalidades para barberías
             </h2>
-            <p className="text-lg text-neutral-600">
+            <p className="text-lg text-neutral-300">
               Herramientas profesionales adaptadas a tu forma de trabajar.
             </p>
           </div>
@@ -132,7 +140,7 @@ export default function BarberiasPage() {
             {features.map((feature) => (
               <Card key={feature.title} hover>
                 <CardHeader>
-                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-100 text-primary-600">
+                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-500/15 text-primary-300">
                     <feature.icon className="h-6 w-6" />
                   </div>
                   <CardTitle>{feature.title}</CardTitle>

@@ -8,14 +8,14 @@ export const metadata: Metadata = {
 
 export default function TerminosPage() {
   return (
-    <section className="section-lg bg-white">
+    <section className="section-lg">
       <Container size="narrow">
-        <h1 className="text-display-sm sm:text-display-md mb-4">Términos y Condiciones</h1>
-        <p className="text-lg text-neutral-600 mb-12">
+        <h1 className="text-display-sm sm:text-display-md mb-4 text-white">Términos y Condiciones</h1>
+        <p className="text-lg text-neutral-400 mb-12">
           Última actualización: Enero 2024
         </p>
 
-        <div className="prose prose-lg max-w-none">
+        <div className="prose prose-invert prose-lg max-w-none prose-p:text-neutral-300 prose-li:text-neutral-300">
           <h2>1. Aceptación de los términos</h2>
           <p>
             Al acceder y utilizar BookFast, aceptas estar sujeto a estos términos y condiciones.

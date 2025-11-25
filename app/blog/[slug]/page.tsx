@@ -4,82 +4,71 @@ import { Calendar, Clock, ArrowLeft } from 'lucide-react';
 import Container from '@/components/ui/Container';
 import Badge from '@/components/ui/Badge';
 import CTA from '@/components/sections/CTA';
+import { getPostBySlug, getAllPosts } from '@/lib/blog-data';
 
 export const metadata: Metadata = {
   title: 'Post del Blog',
   description: 'Artículo del blog de BookFast',
 };
 
-export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
-  // TODO: Fetch post data based on slug
-  console.log('Blog slug:', slug);
+interface BlogPostPageProps {
+  params: { slug: string };
+}
+
+export function generateStaticParams() {
+  const posts = getAllPosts();
+  return posts.map((post) => ({ slug: post.slug }));
+}
+
+export default function BlogPostPage({ params }: BlogPostPageProps) {
+  const post = getPostBySlug(params.slug);
+
+  if (!post) {
+    return null;
+  }
+
   return (
     <>
-      <section className="section-lg bg-gradient-to-b from-neutral-50 to-white">
+      <section className="section-lg">
         <Container size="narrow">
           <Link
             href="/blog"
-            className="inline-flex items-center gap-2 text-sm text-neutral-600 hover:text-neutral-900 mb-8 transition-colors"
+            className="inline-flex items-center gap-2 text-sm text-neutral-400 hover:text-neutral-200 mb-8 transition-colors"
           >
             <ArrowLeft className="h-4 w-4" />
             Volver al blog
           </Link>
 
           <div className="mb-6">
-            <Badge variant="primary">Categoría</Badge>
+            <Badge variant="primary">{post.category}</Badge>
           </div>
 
-          <h1 className="text-display-sm sm:text-display-md mb-4">
-            Título del artículo del blog
-          </h1>
+          <h1 className="text-display-sm sm:text-display-md mb-4 text-white">{post.title}</h1>
 
-          <div className="flex items-center gap-4 text-sm text-neutral-600 mb-8">
+          <div className="flex items-center gap-4 text-sm text-neutral-500 mb-8">
             <div className="flex items-center gap-2">
               <Calendar className="h-4 w-4" />
-              <span>15 de enero, 2024</span>
+              <span>{post.date}</span>
             </div>
             <div className="flex items-center gap-2">
               <Clock className="h-4 w-4" />
-              <span>5 min de lectura</span>
+              <span>{post.readTime}</span>
             </div>
           </div>
 
-          <div className="aspect-video rounded-2xl border border-neutral-200 bg-gradient-to-br from-neutral-100 to-neutral-50 mb-12 flex items-center justify-center text-8xl">
+          <div className="aspect-video rounded-2xl border border-neutral-800 bg-gradient-to-br from-neutral-900 via-neutral-950 to-neutral-900 mb-12 flex items-center justify-center text-5xl text-neutral-600">
             📝
           </div>
 
-          <div className="prose prose-lg max-w-none">
-            <p>
-              Este es un placeholder para el contenido del artículo del blog. Aquí irá el contenido
-              completo del post con formato Markdown o HTML.
-            </p>
-
-            <h2>Subtítulo del artículo</h2>
-
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua.
-            </p>
-
-            <ul>
-              <li>Punto importante número uno</li>
-              <li>Punto importante número dos</li>
-              <li>Punto importante número tres</li>
-            </ul>
-
-            <h2>Otro subtítulo</h2>
-
-            <p>
-              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-              ea commodo consequat.
-            </p>
-          </div>
+          <div
+            className="prose prose-invert prose-lg max-w-none prose-headings:text-white prose-p:text-neutral-300 prose-li:text-neutral-300 prose-strong:text-white"
+            dangerouslySetInnerHTML={{ __html: post.content }}
+          />
         </Container>
       </section>
 
       <CTA
-        title="¿Listo para mejorar la gestión de tu negocio?"
+        title="¿Te ha gustado? Prueba BookFast gratis"
         primaryButtonText="Probar BookFast gratis"
       />
     </>

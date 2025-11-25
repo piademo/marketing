@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import SpotlightBackground from '@/components/ui/SpotlightBackground';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -12,11 +13,11 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: 'BookFast - Gestión de Citas para Peluquerías, Barberías y Centros de Estética',
+    default: 'BookFast | El Software de Reservas nº1 para Barberías y Salones',
     template: '%s | BookFast',
   },
   description:
-    'Software profesional de gestión de citas online para peluquerías, barberías y centros de estética. Agenda inteligente, CRM, recordatorios automáticos y más.',
+    'Automatiza tu agenda, reduce los no-shows un 80% y gestiona tu negocio desde el móvil. Prueba gratis el software de gestión preferido por los profesionales.',
   keywords: [
     'gestión de citas',
     'software peluquería',
@@ -78,8 +79,9 @@ export default function RootLayout({
   return (
     <html lang="es" className={inter.variable}>
       <body className="flex min-h-screen flex-col">
+        <SpotlightBackground />
         <Header />
-        <main className="flex-1">{children}</main>
+        <main className="flex-1 relative z-10">{children}</main>
         <Footer />
       </body>
     </html>

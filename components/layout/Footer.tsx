@@ -51,7 +51,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-neutral-800 bg-neutral-950">
+    <footer className="border-t border-neutral-800 bg-neutral-950/80">
       <Container>
         {/* Main Footer */}
         <div className="py-12 lg:py-16">

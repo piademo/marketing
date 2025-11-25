@@ -64,13 +64,13 @@ const steps = [
 export default function ComoFuncionaPage() {
   return (
     <>
-      <section className="section-lg bg-gradient-to-b from-neutral-50 to-white">
+      <section className="section-lg">
         <Container>
           <div className="mx-auto max-w-3xl text-center mb-16">
             <h1 className="text-display-md sm:text-display-lg mb-4">
               Empieza en minutos, no en días
             </h1>
-            <p className="text-lg text-neutral-600 sm:text-xl">
+            <p className="text-lg text-neutral-300 sm:text-xl">
               Configurar BookFast es rápido y sencillo. Sin complicaciones técnicas, sin formación
               compleja.
             </p>
@@ -90,18 +90,18 @@ export default function ComoFuncionaPage() {
                     {step.number}
                   </div>
 
-                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-100 text-primary-600">
+                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-500/15 text-primary-300">
                     <step.icon className="h-6 w-6" />
                   </div>
 
-                  <h2 className="text-3xl font-semibold text-neutral-900 mb-4">{step.title}</h2>
-                  <p className="text-lg text-neutral-600 mb-6">{step.description}</p>
+                  <h2 className="text-3xl font-semibold text-white mb-4">{step.title}</h2>
+                  <p className="text-lg text-neutral-300 mb-6">{step.description}</p>
 
                   <ul className="space-y-3 mb-8">
                     {step.details.map((detail) => (
                       <li key={detail} className="flex items-start gap-3">
                         <CheckCircle2 className="h-5 w-5 flex-shrink-0 text-green-500 mt-0.5" />
-                        <span className="text-neutral-700">{detail}</span>
+                        <span className="text-neutral-300">{detail}</span>
                       </li>
                     ))}
                   </ul>
@@ -115,8 +115,8 @@ export default function ComoFuncionaPage() {
 
                 {/* Visual */}
                 <div className={index % 2 === 1 ? 'lg:order-1' : ''}>
-                  <div className="aspect-square rounded-2xl border border-neutral-200 bg-gradient-to-br from-neutral-100 to-neutral-50 shadow-medium overflow-hidden flex items-center justify-center">
-                    <div className="text-center text-neutral-400">
+                  <div className="aspect-square rounded-2xl border border-neutral-800 bg-gradient-to-br from-neutral-900/30 via-neutral-950/40 to-neutral-900/10 shadow-medium overflow-hidden flex items-center justify-center">
+                    <div className="text-center text-neutral-300">
                       <div className="text-6xl mb-4">
                         {index === 0 && '👤'}
                         {index === 1 && '⚙️'}
@@ -133,13 +133,13 @@ export default function ComoFuncionaPage() {
         </Container>
       </section>
 
-      <section className="section bg-neutral-50">
+      <section className="section">
         <Container size="narrow">
           <div className="text-center">
-            <h2 className="text-3xl font-semibold text-neutral-900 mb-4">
+            <h2 className="text-3xl font-semibold text-white mb-4">
               ¿Necesitas ayuda para empezar?
             </h2>
-            <p className="text-lg text-neutral-600 mb-8">
+            <p className="text-lg text-neutral-300 mb-8">
               Nuestro equipo está aquí para ayudarte. Ofrecemos formación personalizada y soporte
               durante todo el proceso.
             </p>
