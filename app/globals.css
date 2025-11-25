@@ -38,17 +38,17 @@
     @apply mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8;
   }
 
-  /* Secciones */
+  /* Secciones: siempre al menos un viewport de alto */
   .section {
-    @apply py-16 sm:py-20 lg:py-24;
+    @apply py-16 sm:py-20 lg:py-24 min-h-screen;
   }
 
   .section-sm {
-    @apply py-12 sm:py-16 lg:py-20;
+    @apply py-12 sm:py-16 lg:py-20 min-h-screen;
   }
 
   .section-lg {
-    @apply py-20 sm:py-24 lg:py-32;
+    @apply py-20 sm:py-24 lg:py-32 min-h-screen;
   }
 
   /* Botones base */

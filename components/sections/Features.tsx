@@ -10,7 +10,7 @@ import GlassCard from '@/components/ui/GlassCard';
 
 const Features = () => {
   return (
-    <section className="relative -mt-8 pt-24 pb-24 text-white overflow-hidden">
+    <section className="relative -mt-8 pt-24 pb-24 text-white overflow-hidden min-h-screen">
       <Container>
         <div className="mb-16 text-center max-w-3xl mx-auto">
           <h2 className="text-display-sm sm:text-display-md mb-6 font-bold tracking-tight">

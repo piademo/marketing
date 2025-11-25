@@ -6,11 +6,11 @@ import Badge from '@/components/ui/Badge';
 
 export default function Hero() {
   return (
-    <section className="relative -mt-16 overflow-hidden pt-20 pb-24 lg:-mt-20 lg:pt-24 lg:pb-32 text-white">
+    <section className="relative -mt-16 pt-24 pb-24 text-white overflow-hidden min-h-screen">
       {/* Soft background details */}
-      <div className="pointer-events-none absolute -top-32 -left-24 h-72 w-72 rounded-full bg-primary-500/18 blur-3xl" />
-      <div className="pointer-events-none absolute top-1/4 right-0 h-72 w-72 rounded-full bg-secondary-500/14 blur-3xl" />
-      <div className="pointer-events-none absolute inset-0 opacity-[0.08] mix-blend-soft-light bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+      <div className="pointer-events-none absolute -top-32 -left-24 h-72 w-72 rounded-full bg-primary-500/12 blur-3xl" />
+      <div className="pointer-events-none absolute top-1/4 right-0 h-72 w-72 rounded-full bg-secondary-500/10 blur-3xl" />
+      <div className="pointer-events-none absolute inset-0 opacity-[0.05] mix-blend-soft-light bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
 
       <Container>
         <div className="flex flex-col items-center text-center">

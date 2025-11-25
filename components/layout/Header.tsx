@@ -19,9 +19,7 @@ const navigation = [
   {
     name: 'Soluciones',
     items: [
-      { name: 'Peluquerías', href: '/sectores/peluquerias' },
       { name: 'Barberías', href: '/sectores/barberias' },
-      { name: 'Centros de Estética', href: '/sectores/centros-estetica' },
     ],
   },
   { name: 'Recursos', href: '/recursos' },
@@ -36,7 +34,7 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full bg-transparent">
       <Container>
-        <nav className="mt-0.5 mb-1 flex items-center justify-between rounded-2xl border border-white/10 bg-neutral-900/60 px-4 py-2 shadow-[0_18px_45px_rgba(0,0,0,0.55)] backdrop-blur-xl lg:mt-1 lg:mb-2 lg:px-6">
+        <nav className="mt-3 mb-2 flex items-center justify-between rounded-full border border-white/10 bg-neutral-900/60 px-4 py-2 shadow-[0_18px_45px_rgba(0,0,0,0.55)] backdrop-blur-xl lg:mt-4 lg:mb-3 lg:px-6">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary-500 to-primary-700 text-white font-bold text-lg">

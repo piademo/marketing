@@ -11,23 +11,11 @@ const sectors = [
     label: 'Barberías',
     description: 'Ritmo rápido, walk-ins y agendas llenas. Mantén el flujo sin perder llamadas.',
   },
-  {
-    href: '/sectores/peluquerias',
-    icon: Sparkles,
-    label: 'Peluquerías',
-    description: 'Salones exigentes con tickets medios altos y clientela fiel.',
-  },
-  {
-    href: '/sectores/centros-estetica',
-    icon: Flower2,
-    label: 'Centros de estética',
-    description: 'Tratamientos por bonos, cabinas y citas largas que no se pueden improvisar.',
-  },
 ];
 
 export default function ForWho() {
   return (
-    <section className="section">
+    <section className="section min-h-screen">
       <Container>
         <div className="mx-auto max-w-3xl text-center mb-12">
           <h2 className="text-display-sm sm:text-display-md mb-4 text-white text-balance">

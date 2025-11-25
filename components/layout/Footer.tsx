@@ -16,9 +16,7 @@ const footerLinks = {
   soluciones: {
     title: 'Soluciones',
     links: [
-      { name: 'Peluquerías', href: '/sectores/peluquerias' },
       { name: 'Barberías', href: '/sectores/barberias' },
-      { name: 'Centros de Estética', href: '/sectores/centros-estetica' },
     ],
   },
   recursos: {

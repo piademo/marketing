@@ -24,7 +24,7 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <section className="py-20">
+    <section className="py-20 min-h-screen">
       <Container>
         <div className="grid items-center gap-12 lg:grid-cols-2">
           {/* Columna izquierda: copy */}
