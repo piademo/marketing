@@ -21,20 +21,20 @@ export default function CTA({
   secondaryButtonHref = '/contacto',
 }: CTAProps) {
   return (
-    <section className="section min-h-[100dvh]">
+    <section className="h-[100dvh] flex flex-col justify-center py-8 sm:py-12 lg:py-16">
       <Container>
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary-600/35 via-primary-700/35 to-secondary-700/35 px-8 py-16 sm:px-16 lg:px-24 lg:py-20">
+        <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-primary-600/35 via-primary-700/35 to-secondary-700/35 px-6 py-10 sm:px-12 sm:py-14 lg:px-24 lg:py-16">
           {/* Decorative elements */}
-          <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-white/15 blur-3xl" />
-          <div className="pointer-events-none absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-white/12 blur-3xl" />
+          <div className="pointer-events-none absolute -right-16 sm:-right-24 -top-16 sm:-top-24 h-48 sm:h-72 w-48 sm:w-72 rounded-full bg-white/15 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-16 sm:-bottom-24 -left-16 sm:-left-24 h-48 sm:h-72 w-48 sm:w-72 rounded-full bg-white/12 blur-3xl" />
           {/* Optional noise layer for SaaS premium feel */}
           <div className="pointer-events-none absolute inset-0 opacity-[0.14] mix-blend-soft-light bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
 
           <div className="relative mx-auto max-w-3xl text-center">
-            <h2 className="text-display-sm sm:text-display-md mb-4 text-white text-balance">{title}</h2>
-            <p className="mb-8 text-lg text-primary-50 sm:text-xl text-balance">{description}</p>
+            <h2 className="text-xl sm:text-display-sm lg:text-display-md mb-3 sm:mb-4 text-white text-balance">{title}</h2>
+            <p className="mb-6 sm:mb-8 text-sm sm:text-lg lg:text-xl text-primary-50 text-balance px-2">{description}</p>
 
-            <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <div className="flex flex-col items-center justify-center gap-3 sm:gap-4 sm:flex-row">
               <Button
                 as="link"
                 href={primaryButtonHref}
@@ -42,7 +42,7 @@ export default function CTA({
                 size="lg"
                 icon={ArrowRight}
                 iconPosition="right"
-                className="bg-white text-primary-700 hover:bg-neutral-50"
+                className="bg-white text-primary-700 hover:bg-neutral-50 text-sm sm:text-base"
               >
                 {primaryButtonText}
               </Button>
@@ -51,7 +51,7 @@ export default function CTA({
                 href={secondaryButtonHref}
                 variant="outline"
                 size="lg"
-                className="border-white text-white hover:bg-white/10"
+                className="border-white text-white hover:bg-white/10 text-sm sm:text-base"
               >
                 {secondaryButtonText}
               </Button>
