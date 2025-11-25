@@ -6,7 +6,7 @@ import Badge from '@/components/ui/Badge';
 
 export default function Hero() {
   return (
-    <section className="relative -mt-16 pt-24 pb-24 text-white overflow-hidden min-h-screen">
+    <section className="relative min-h-[100dvh] w-full flex flex-col justify-center overflow-hidden py-24 lg:py-32 text-white">
       {/* Soft background details */}
       <div className="pointer-events-none absolute -top-32 -left-24 h-72 w-72 rounded-full bg-primary-500/12 blur-3xl" />
       <div className="pointer-events-none absolute top-1/4 right-0 h-72 w-72 rounded-full bg-secondary-500/10 blur-3xl" />

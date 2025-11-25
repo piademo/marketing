@@ -21,7 +21,7 @@ export default function CTA({
   secondaryButtonHref = '/contacto',
 }: CTAProps) {
   return (
-    <section className="section min-h-screen">
+    <section className="section min-h-[100dvh]">
       <Container>
         <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary-600/35 via-primary-700/35 to-secondary-700/35 px-8 py-16 sm:px-16 lg:px-24 lg:py-20">
           {/* Decorative elements */}

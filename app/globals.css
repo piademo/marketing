@@ -40,15 +40,15 @@
 
   /* Secciones: siempre al menos un viewport de alto */
   .section {
-    @apply py-16 sm:py-20 lg:py-24 min-h-screen;
+    @apply py-16 sm:py-20 lg:py-24 min-h-[100dvh];
   }
 
   .section-sm {
-    @apply py-12 sm:py-16 lg:py-20 min-h-screen;
+    @apply py-12 sm:py-16 lg:py-20 min-h-[100dvh];
   }
 
   .section-lg {
-    @apply py-20 sm:py-24 lg:py-32 min-h-screen;
+    @apply py-20 sm:py-24 lg:py-32 min-h-[100dvh];
   }
 
   /* Botones base */

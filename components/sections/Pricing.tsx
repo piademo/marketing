@@ -38,7 +38,7 @@ function FeatureItem({ label }: { label: string }) {
 
 export default function Pricing() {
   return (
-    <section className="py-20 min-h-screen">
+    <section className="py-20 min-h-[100dvh]">
       <Container>
         <div className="mx-auto mb-12 max-w-3xl text-center">
           <h2 className="text-display-sm sm:text-display-md font-semibold tracking-tight text-white text-balance">

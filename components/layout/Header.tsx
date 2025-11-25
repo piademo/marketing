@@ -19,6 +19,7 @@ const navigation = [
   {
     name: 'Soluciones',
     items: [
+      { name: 'Peluquerías', href: '/sectores/peluquerias' },
       { name: 'Barberías', href: '/sectores/barberias' },
     ],
   },

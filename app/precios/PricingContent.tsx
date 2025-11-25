@@ -72,21 +72,42 @@ export default function PricingContent() {
         </div>
 
         {/* Toggle mensual / anual */}
-        <div className="mb-10 flex items-center justify-center gap-3 text-sm">
-          <span className={billing === "monthly" ? "text-white" : "text-neutral-400"}>Mensual</span>
-          <button
-            type="button"
-            className="relative flex h-9 w-20 items-center rounded-full bg-neutral-800 p-1 transition-colors"
-            onClick={() => setBilling(isYearly ? "monthly" : "yearly")}
-          >
-            <span
-              className={`inline-flex h-7 w-9 items-center justify-center rounded-full bg-white text-xs font-semibold text-neutral-900 shadow transition-transform ${
-                isYearly ? "translate-x-10" : "translate-x-0"
-              }`}
+        <div className="mb-10 flex flex-col items-center gap-3 text-sm sm:flex-row sm:justify-center">
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setBilling("monthly")}
+              className={
+                billing === "monthly"
+                  ? "text-white font-semibold"
+                  : "text-neutral-400 hover:text-neutral-200"
+              }
             >
-              {isYearly ? "Anual" : "Mes"}
-            </span>
-          </button>
+              Mensual
+            </button>
+            <button
+              type="button"
+              className="relative flex h-9 w-20 items-center rounded-full bg-neutral-800 p-1 transition-colors"
+              onClick={() => setBilling(isYearly ? "monthly" : "yearly")}
+            >
+              <span
+                className={`inline-flex h-7 w-9 items-center justify-center rounded-full bg-white text-xs font-semibold text-neutral-900 shadow transition-transform ${
+                  isYearly ? "translate-x-10" : "translate-x-0"
+                }`}
+              />
+            </button>
+            <button
+              type="button"
+              onClick={() => setBilling("yearly")}
+              className={
+                billing === "yearly"
+                  ? "text-white font-semibold"
+                  : "text-neutral-400 hover:text-neutral-200"
+              }
+            >
+              Anual
+            </button>
+          </div>
           <div className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-300 border border-emerald-500/30">
             <span>2 meses gratis pagando al año</span>
           </div>
@@ -217,8 +238,34 @@ export default function PricingContent() {
           </div>
         </div>
 
-        {/* Tabla comparativa */}
-        <div className="rounded-3xl border border-neutral-800 bg-neutral-900/60 p-6 shadow-sm overflow-x-auto">
+        {/* Comparativa mobile (stacked, sin scroll horizontal) */}
+        <div className="md:hidden space-y-4">
+          {featureRows.map((row) => (
+            <div
+              key={row.label}
+              className="rounded-2xl border border-neutral-800 bg-neutral-900/70 p-4 text-sm space-y-3"
+            >
+              <p className="text-neutral-200 font-medium">{row.label}</p>
+              <div className="grid grid-cols-1 gap-2">
+                <div className="flex items-baseline justify-between gap-3">
+                  <span className="text-xs uppercase tracking-wide text-neutral-500">Starter</span>
+                  <span className="text-neutral-200 text-right">{row.starter}</span>
+                </div>
+                <div className="flex items-baseline justify-between gap-3">
+                  <span className="text-xs uppercase tracking-wide text-neutral-500">Professional</span>
+                  <span className="text-neutral-200 text-right">{row.professional}</span>
+                </div>
+                <div className="flex items-baseline justify-between gap-3">
+                  <span className="text-xs uppercase tracking-wide text-neutral-500">Enterprise</span>
+                  <span className="text-neutral-200 text-right">{row.enterprise}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Tabla comparativa (solo visible en md+ para vista horizontal completa) */}
+        <div className="hidden md:block rounded-3xl border border-neutral-800 bg-neutral-900/60 p-6 shadow-sm overflow-x-auto">
           <table className="min-w-full text-sm text-left text-neutral-200">
             <thead>
               <tr className="border-b border-neutral-800">
