@@ -5,6 +5,7 @@ import { Check } from "lucide-react";
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
 import Badge from "@/components/ui/Badge";
+import { cn } from "@/lib/utils";
 
 type BillingPeriod = "monthly" | "yearly";
 
@@ -13,10 +14,14 @@ const basePrices = {
   professional: 79,
 };
 
-function getPrice(value: number, period: BillingPeriod) {
-  if (period === "yearly") {
+function getPrice(value: number, period: BillingPeriod, plan: "starter" | "professional") {
+  if (period === "yearly" && plan === "professional") {
     // 2 meses gratis: se cobra 10x el precio mensual
     return value * 10;
+  }
+  if (period === "yearly") {
+    // Sin oferta: se cobra 12x el precio mensual
+    return value * 12;
   }
   return value;
 }
@@ -72,7 +77,7 @@ export default function PricingContent() {
         </div>
 
         {/* Toggle mensual / anual */}
-        <div className="mb-10 flex flex-col items-center gap-3 text-sm sm:flex-row sm:justify-center">
+        <div className="mb-10 flex flex-col items-center gap-4 text-sm text-center">
           <div className="flex items-center gap-3">
             <button
               type="button"
@@ -87,12 +92,19 @@ export default function PricingContent() {
             </button>
             <button
               type="button"
-              className="relative flex h-9 w-20 items-center rounded-full bg-neutral-800 p-1 transition-colors"
+              className={cn(
+                "relative flex h-9 w-20 items-center rounded-full p-1 transition-colors shadow-inner",
+                isYearly
+                  ? "bg-emerald-500/40 shadow-[0_0_18px_rgba(16,185,129,0.5)]"
+                  : "bg-neutral-800 shadow-[0_0_12px_rgba(0,0,0,0.7)]",
+              )}
               onClick={() => setBilling(isYearly ? "monthly" : "yearly")}
             >
               <span
-                className={`inline-flex h-7 w-9 items-center justify-center rounded-full bg-white text-xs font-semibold text-neutral-900 shadow transition-transform ${
-                  isYearly ? "translate-x-10" : "translate-x-0"
+                className={`inline-flex h-7 w-9 items-center justify-center rounded-full text-xs font-semibold text-neutral-900 shadow transition-transform ${
+                  isYearly
+                    ? "translate-x-9 bg-emerald-400 shadow-[0_0_18px_rgba(16,185,129,0.7)]"
+                    : "translate-x-0 bg-white shadow-[0_0_12px_rgba(255,255,255,0.4)]"
                 }`}
               />
             </button>
@@ -109,7 +121,7 @@ export default function PricingContent() {
             </button>
           </div>
           <div className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-300 border border-emerald-500/30">
-            <span>2 meses gratis pagando al año</span>
+            <span>2 meses gratis en el plan Professional pagando al año</span>
           </div>
         </div>
 
@@ -120,15 +132,11 @@ export default function PricingContent() {
             <div className="mb-2 text-sm font-semibold text-neutral-50">Starter</div>
             <div className="mb-1 flex items-baseline gap-1">
               <span className="text-3xl font-semibold text-white">
-                {getPrice(basePrices.starter, billing)}€
+                {getPrice(basePrices.starter, billing, "starter")}€
               </span>
               <span className="text-sm text-neutral-400">{isYearly ? "/año" : "/mes"}</span>
             </div>
-            {isYearly && (
-              <p className="mb-3 text-xs text-emerald-300">
-                Equivale a {basePrices.starter}€/mes (2 meses gratis)
-              </p>
-            )}
+            {/* Sin oferta específica en Starter para anual */}
             <p className="mb-6 text-sm text-neutral-400">
               Ideal si trabajas solo o con 1 persona más y quieres dejar atrás la libreta.
             </p>
@@ -164,7 +172,7 @@ export default function PricingContent() {
             <div className="mb-2 text-sm font-semibold text-neutral-50">Professional</div>
             <div className="mb-1 flex items-baseline gap-1">
               <span className="text-3xl font-semibold text-white">
-                {getPrice(basePrices.professional, billing)}€
+                {getPrice(basePrices.professional, billing, "professional")}€
               </span>
               <span className="text-sm text-neutral-400">{isYearly ? "/año" : "/mes"}</span>
             </div>

@@ -1,33 +1,13 @@
 import type { Metadata } from 'next';
-import localFont from 'next/font/local';
+import { Inter } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SpotlightBackground from '@/components/ui/SpotlightBackground';
 
-const inter = localFont({
-  src: [
-    {
-      path: '../node_modules/@fontsource/inter/files/inter-latin-400-normal.woff2',
-      weight: '400',
-      style: 'normal',
-    },
-    {
-      path: '../node_modules/@fontsource/inter/files/inter-latin-500-normal.woff2',
-      weight: '500',
-      style: 'normal',
-    },
-    {
-      path: '../node_modules/@fontsource/inter/files/inter-latin-600-normal.woff2',
-      weight: '600',
-      style: 'normal',
-    },
-    {
-      path: '../node_modules/@fontsource/inter/files/inter-latin-700-normal.woff2',
-      weight: '700',
-      style: 'normal',
-    },
-  ],
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
   variable: '--font-inter',
   display: 'swap',
 });

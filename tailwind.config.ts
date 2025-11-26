@@ -91,6 +91,12 @@ const config: Config = {
         'fade-in': 'fadeIn 0.5s ease-in-out',
         'slide-up': 'slideUp 0.5s ease-out',
         'slide-down': 'slideDown 0.5s ease-out',
+        'border-beam': 'border-beam calc(var(--duration)*1s) infinite linear',
+        liquid: 'liquid 10s infinite cubic-bezier(0.4, 0, 0.6, 1)',
+        'liquid-glass': 'liquid-glass 8s ease-in-out infinite',
+        shimmer: 'shimmer 2s linear infinite',
+        'liquid-deploy': 'liquid-deploy 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        'shimmer-glass': 'shimmer-glass 3s linear infinite',
       },
       keyframes: {
         fadeIn: {
@@ -104,6 +110,59 @@ const config: Config = {
         slideDown: {
           '0%': { transform: 'translateY(-20px)', opacity: '0' },
           '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+        'border-beam': {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+        },
+        liquid: {
+          '0%, 100%': {
+            transform: 'translate(0px, 0px) scale(1)',
+          },
+          '33%': {
+            transform: 'translate(30px, -50px) scale(1.1)',
+          },
+          '66%': {
+            transform: 'translate(-20px, 20px) scale(0.9)',
+          },
+        },
+        'liquid-glass': {
+          '0%, 100%': {
+            backgroundPosition: '0% 50%',
+          },
+          '50%': {
+            backgroundPosition: '100% 50%',
+          },
+        },
+        shimmer: {
+          from: {
+            backgroundPosition: '0 0',
+          },
+          to: {
+            backgroundPosition: '-200% 0',
+          },
+        },
+        'liquid-deploy': {
+          '0%': {
+            width: '50px',
+            opacity: '0',
+            transform: 'translateY(10px)',
+          },
+          '40%': {
+            width: '60px',
+            opacity: '1',
+            transform: 'translateY(0)',
+          },
+          '100%': {
+            width: '100%',
+            maxWidth: '56rem',
+            opacity: '1',
+            transform: 'translateY(0)',
+          },
+        },
+        'shimmer-glass': {
+          '0%': { backgroundPosition: '200% 0' },
+          '100%': { backgroundPosition: '-200% 0' },
         },
       },
     },

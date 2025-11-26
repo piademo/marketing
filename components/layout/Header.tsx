@@ -1,180 +1,277 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import Link from 'next/link';
-import { Menu, X, ChevronDown } from 'lucide-react';
-import Button from '@/components/ui/Button';
-import Container from '@/components/ui/Container';
+import React, { useState, useEffect, useRef } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
+import Button from "@/components/ui/Button";
+import { Scissors, UserCheck, ChevronDown } from "lucide-react";
 
-const navigation = [
+const navItems = [
+  { name: "Producto", href: "/funcionalidades" },
   {
-    name: 'Producto',
-    items: [
-      { name: 'Funcionalidades', href: '/funcionalidades' },
-      { name: 'Cómo funciona', href: '/como-funciona' },
-      { name: 'Integraciones', href: '/integraciones' },
-      { name: 'Precios', href: '/precios' },
+    name: "Sectores",
+    href: "/sectores",
+    children: [
+      {
+        name: "Barberías",
+        href: "/sectores/barberias",
+        description: "Gestión rápida para cortes y walk-ins.",
+        icon: Scissors,
+      },
+      {
+        name: "Peluquerías",
+        href: "/sectores/peluquerias",
+        description: "Control de tintes y tratamientos largos.",
+        icon: UserCheck,
+      },
     ],
   },
-  {
-    name: 'Soluciones',
-    items: [
-      { name: 'Peluquerías', href: '/sectores/peluquerias' },
-      { name: 'Barberías', href: '/sectores/barberias' },
-    ],
-  },
-  { name: 'Recursos', href: '/recursos' },
-  { name: 'Blog', href: '/blog' },
-  { name: 'Sobre nosotros', href: '/sobre-nosotros' },
+  { name: "Precios", href: "/precios" },
+  { name: "Blog", href: "/blog" },
 ];
 
 export default function Header() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const pathname = usePathname();
+  const navRef = useRef<HTMLDivElement>(null);
+
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [hoveredRect, setHoveredRect] = useState<{
+    left: number;
+    width: number;
+    opacity: number;
+  }>({ left: 0, width: 0, opacity: 0 });
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoaded(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleMouseEnterLink = (
+    e: React.MouseEvent<HTMLElement>,
+    itemName: string,
+  ) => {
+    if (navRef.current) {
+      const navRect = navRef.current.getBoundingClientRect();
+      const linkRect = e.currentTarget.getBoundingClientRect();
+      setHoveredRect({
+        left: linkRect.left - navRect.left,
+        width: linkRect.width,
+        opacity: 1,
+      });
+    }
+    if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
+
+    const item = navItems.find((navItem) => navItem.name === itemName);
+    if (item && item.children && item.children.length > 0) {
+      setActiveDropdown(itemName);
+    } else {
+      setActiveDropdown(null);
+    }
+  };
+
+  const handleMouseLeaveNav = () => {
+    setHoveredRect((prev) => ({ ...prev, opacity: 0 }));
+    dropdownTimeoutRef.current = setTimeout(() => {
+      setActiveDropdown(null);
+    }, 200);
+  };
+
+  const handleMouseEnterDropdown = () => {
+    if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
+  };
+
+  const handleMouseLeaveDropdown = () => {
+    dropdownTimeoutRef.current = setTimeout(() => {
+      setActiveDropdown(null);
+    }, 200);
+  };
+
+  const glassStyle = cn(
+    "bg-[#050505]/30 backdrop-blur-2xl",
+    "border border-white/20",
+    "shadow-[0_20px_40px_-10px_rgba(0,0,0,0.8)]",
+    "shadow-[inset_0_1px_0_0_rgba(255,255,255,0.15)]",
+  );
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 w-full bg-transparent pt-3 sm:pt-4 lg:pt-5">
-      <Container>
-        <nav className="flex items-center justify-between rounded-full border border-white/10 bg-neutral-900/70 px-4 py-2.5 shadow-[0_8px_32px_rgba(0,0,0,0.4)] backdrop-blur-xl sm:px-5 sm:py-3 lg:px-6">
-          {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary-500 to-primary-700 text-white font-bold text-lg">
-              B
-            </div>
-            <span className="text-xl font-bold text-white">BookFast</span>
+    <>
+      <header className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
+        <div
+          className={cn(
+            "pointer-events-auto relative h-[60px] flex items-center rounded-full overflow-hidden transition-all duration-[1200ms] ease-[cubic-bezier(0.25,1,0.5,1)]",
+            isLoaded
+              ? "w-full max-w-5xl opacity-100 translate-y-0"
+              : "w-[100px] opacity-0 translate-y-4",
+            glassStyle,
+          )}
+        >
+          {/* FONDO LÍQUIDO ANIMADO */}
+          <div className="absolute inset-0 z-0 opacity-30 pointer-events-none overflow-hidden rounded-full">
+            <div
+              className="absolute -inset-[100%] animate-liquid-glass blur-3xl opacity-60"
+              style={{
+                background:
+                  "radial-gradient(circle at 50% 50%, rgba(14, 165, 233, 0.3), transparent 50%)," +
+                  "radial-gradient(circle at 100% 0%, rgba(168, 85, 247, 0.3), transparent 50%)," +
+                  "conic-gradient(from 0deg at 50% 50%, rgba(14,165,233,0), rgba(168,85,247,0.2), rgba(14,165,233,0))",
+                backgroundSize: "200% 200%",
+              }}
+            />
+            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.05] mix-blend-overlay" />
+          </div>
+
+          {/* SHIMMER SUPERFICIAL */}
+          <div
+            className="absolute inset-0 z-0 opacity-10 pointer-events-none mix-blend-overlay rounded-full"
+            style={{
+              background:
+                "linear-gradient(110deg, transparent 30%, rgba(255,255,255,0.6) 45%, rgba(255,255,255,0.6) 50%, transparent 70%)",
+              backgroundSize: "200% 100%",
+              animation: "shimmer 6s infinite linear",
+            }}
+          />
+
+          <div
+            className={cn(
+              "relative z-10 w-full h-full flex items-center justify-between px-2 md:px-6 transition-opacity duration-700 delay-300",
+              isLoaded ? "opacity-100" : "opacity-0",
+            )}
+          >
+          <Link
+            href="/"
+            className="ml-2 md:ml-0 text-lg font-bold tracking-tight text-white hover:text-white/80 transition-colors shrink-0 drop-shadow-md"
+          >
+            BookFast
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex lg:items-center lg:gap-8">
-            {navigation.map((item) => (
-              <div key={item.name} className="relative">
-                {item.items ? (
-                  <div
-                    className="group relative"
-                    onMouseEnter={() => setOpenDropdown(item.name)}
-                    onMouseLeave={() => setOpenDropdown(null)}
-                  >
-                    <button className="flex items-center gap-1 text-sm font-medium text-neutral-300 hover:text-white transition-colors py-2">
-                      {item.name}
-                      <ChevronDown className="h-4 w-4" />
-                    </button>
-                    {openDropdown === item.name && (
-                      <div className="absolute left-0 top-full pt-2">
-                        <div className="w-56 rounded-xl border border-neutral-800 bg-neutral-900 p-2 shadow-strong">
-                          {item.items.map((subItem) => (
-                            <Link
-                              key={subItem.name}
-                              href={subItem.href}
-                              className="block rounded-lg px-4 py-2.5 text-sm text-neutral-200 hover:bg-neutral-800 hover:text-white transition-colors"
-                            >
-                              {subItem.name}
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                ) : (
+            <nav
+              ref={navRef}
+              className="relative hidden md:flex items-center h-full"
+              onMouseLeave={handleMouseLeaveNav}
+            >
+            <div
+              className="absolute top-1/2 -translate-y-1/2 h-9 rounded-full transition-all duration-300 ease-[cubic-bezier(0.2,0.8,0.2,1)] pointer-events-none"
+              style={{
+                left: hoveredRect.left,
+                width: hoveredRect.width,
+                opacity: hoveredRect.opacity,
+                background: "rgba(255, 255, 255, 0.08)",
+                border: "1px solid rgba(255, 255, 255, 0.15)",
+              }}
+            />
+
+            {navItems.map((item) => {
+              const isActive = pathname.startsWith(item.href);
+              const hasChildren = item.children && item.children.length > 0;
+              const isDropdownOpen = activeDropdown === item.name;
+
+              return (
+                <div key={item.name} className="relative h-full flex items-center">
                   <Link
-                    href={item.href!}
-                    className="text-sm font-medium text-neutral-300 hover:text-white transition-colors"
+                    href={item.href}
+                    onMouseEnter={(e) => handleMouseEnterLink(e, item.name)}
+                    className={cn(
+                      "relative z-10 px-5 py-2 text-sm font-medium transition-all duration-300 rounded-full flex items-center gap-1",
+                      isActive
+                        ? "text-white bg-white/10 shadow-[0_0_12px_rgba(255,255,255,0.25)]"
+                        : "text-neutral-300 hover:text-white",
+                    )}
                   >
                     {item.name}
+                    {hasChildren && (
+                      <ChevronDown
+                        className={cn(
+                          "w-3 h-3 transition-transform duration-300 opacity-70",
+                          (isActive || isDropdownOpen) ? "rotate-180" : "rotate-0",
+                        )}
+                      />
+                    )}
                   </Link>
-                )}
-              </div>
-            ))}
-          </div>
 
-          {/* CTA Buttons */}
-          <div className="hidden lg:flex lg:items-center lg:gap-3">
-            <Button
-              as="link"
-              href="https://pro.bookfast.es"
-              external
-              variant="ghost"
-              size="sm"
-            >
-              Iniciar sesión
-            </Button>
-            <Button as="link" href="/contacto" size="sm">
-              Empezar gratis
-            </Button>
-          </div>
-
-          {/* Mobile menu button */}
-          <button
-            type="button"
-            className="lg:hidden inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-neutral-900/70 text-neutral-200 shadow-sm hover:bg-neutral-800/80 transition-colors"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
-        </nav>
-
-        {/* Mobile Navigation */}
-        {mobileMenuOpen && (
-          <div className="lg:hidden mb-4 mt-1 rounded-2xl border border-white/10 bg-neutral-900/90 px-3 py-4 shadow-[0_18px_45px_rgba(0,0,0,0.55)] backdrop-blur-xl">
-            <div className="space-y-1">
-              {navigation.map((item) => (
-                <div key={item.name}>
-                  {item.items ? (
-                    <div>
-                      <button
-                        onClick={() =>
-                          setOpenDropdown(openDropdown === item.name ? null : item.name)
-                        }
-                        className="flex w-full items-center justify-between rounded-lg px-4 py-2.5 text-sm font-medium text-neutral-200 hover:bg-neutral-800"
-                      >
-                        {item.name}
-                        <ChevronDown
-                          className={`h-4 w-4 transition-transform ${openDropdown === item.name ? 'rotate-180' : ''}`}
-                        />
-                      </button>
-                      {openDropdown === item.name && (
-                        <div className="ml-4 mt-1 space-y-1">
-                          {item.items.map((subItem) => (
-                            <Link
-                              key={subItem.name}
-                              href={subItem.href}
-                              className="block rounded-lg px-4 py-2 text-sm text-neutral-400 hover:bg-neutral-800 hover:text-white"
-                              onClick={() => setMobileMenuOpen(false)}
-                            >
-                              {subItem.name}
-                            </Link>
-                          ))}
-                        </div>
+                  {hasChildren && (
+                    <div
+                      onMouseEnter={handleMouseEnterDropdown}
+                      onMouseLeave={handleMouseLeaveDropdown}
+                      className={cn(
+                        "absolute top-[calc(100%+12px)] left-1/2 -translate-x-1/2 w-[320px] p-2 rounded-2xl transition-all duration-300 origin-top",
+                        glassStyle,
+                        isDropdownOpen
+                          ? "opacity-100 scale-100 translate-y-0 pointer-events-auto"
+                          : "opacity-0 scale-95 -translate-y-2 pointer-events-none",
                       )}
-                    </div>
-                  ) : (
-                    <Link
-                      href={item.href!}
-                      className="block rounded-lg px-4 py-2.5 text-sm font-medium text-neutral-200 hover:bg-neutral-800"
-                      onClick={() => setMobileMenuOpen(false)}
                     >
-                      {item.name}
-                    </Link>
+                      <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 rotate-45 border-t border-l border-white/20 bg-[#050505]/40 backdrop-blur-2xl" />
+
+                      <div className="relative z-10 flex flex-col gap-1">
+                        {item.children?.map((subItem) => (
+                          <Link
+                            key={subItem.href}
+                            href={subItem.href}
+                            className="group flex items-start gap-3 p-3 rounded-xl hover:bg-white/10 transition-colors"
+                          >
+                            <div className="mt-0.5 p-2 rounded-lg bg-white/5 border border-white/10 group-hover:border-white/30 group-hover:bg-white/10 transition-all text-neutral-300 group-hover:text-white">
+                              <subItem.icon className="w-4 h-4" />
+                            </div>
+                            <div>
+                              <div className="text-sm font-medium text-white group-hover:text-white/90">
+                                {subItem.name}
+                              </div>
+                              <div className="text-xs text-neutral-400 group-hover:text-neutral-300">
+                                {subItem.description}
+                              </div>
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
                   )}
                 </div>
-              ))}
-            </div>
-            <div className="mt-4 space-y-2 border-t border-neutral-800 pt-4">
-              <Button
-                as="link"
-                href="https://pro.bookfast.es"
-                external
-                variant="outline"
-                fullWidth
-              >
-                Iniciar sesión
-              </Button>
-              <Button as="link" href="/contacto" fullWidth>
-                Empezar gratis
-              </Button>
-            </div>
+              );
+            })}
+          </nav>
+
+          <div className="flex items-center gap-2 md:gap-4 shrink-0 mr-1 md:mr-0">
+            <Link
+              href="/login"
+              className="hidden md:block text-sm font-medium text-neutral-300 hover:text-white transition-colors px-2"
+            >
+              Entrar
+            </Link>
+            <Button
+              as="link"
+              href="/contacto"
+              size="sm"
+              className={cn(
+                "rounded-full px-6 h-10 text-xs font-bold tracking-wide transition-all",
+                "bg-white text-black hover:bg-white/90",
+                "shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(255,255,255,0.4)] hover:scale-105",
+                "border border-white/50",
+              )}
+            >
+              Empezar
+            </Button>
+
+            <button className="md:hidden p-2 text-neutral-300 hover:text-white">
+              <div className="space-y-1.5">
+                <span className="block w-5 h-0.5 bg-white/80 rounded-full" />
+                <span className="block w-5 h-0.5 bg-white/80 rounded-full" />
+              </div>
+            </button>
           </div>
+        </div>
+      </div>
+      </header>
+
+      {/* Spacer animado para empujar el contenido cuando hay dropdown */}
+      <div
+        className={cn(
+          "hidden md:block w-full transition-[height] duration-300 ease-out",
+          activeDropdown ? "h-56" : "h-0",
         )}
-      </Container>
-    </header>
+      />
+    </>
   );
 }

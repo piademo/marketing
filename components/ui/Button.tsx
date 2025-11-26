@@ -53,7 +53,7 @@ export default function Button({
   fullWidth = false,
   ...props
 }: ButtonProps) {
-  const baseClasses = `btn ${variantClasses[variant]} ${sizeClasses[size]} ${fullWidth ? 'w-full' : ''} ${className}`;
+  const baseClasses = `btn ${variantClasses[variant]} ${sizeClasses[size]} ${fullWidth ? 'w-full' : ''} rounded-full ${className}`;
 
   const content = (
     <>

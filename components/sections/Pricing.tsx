@@ -7,6 +7,7 @@ import Container from '@/components/ui/Container';
 import Button from '@/components/ui/Button';
 import GlassCard from '@/components/ui/GlassCard';
 import { cn } from '@/lib/utils';
+import BorderBeam from '@/components/ui/BorderBeam';
 
 const soloFeatures = [
   '1 profesional incluido',
@@ -108,11 +109,13 @@ export default function Pricing() {
           </motion.div>
 
           {/* Plan Professional (destacado) */}
-          <motion.div variants={itemVariants}>
+          <motion.div variants={itemVariants} className="relative rounded-3xl sm:rounded-[1.7rem]">
+            {/* BorderBeam recorre el borde EXTERIOR del wrapper con movimiento fluido */}
+            <BorderBeam size={280} duration={18} delay={0} radius={24} />
             <GlassCard
               gradient="subtle"
               className={cn(
-                'relative flex flex-col h-full border-primary-500/40 bg-neutral-900/80 p-4 sm:p-5 lg:p-6 shadow-xl shadow-primary-500/30 sm:scale-105',
+                'relative flex flex-col h-full border-primary-500/40 bg-neutral-900/80 p-4 sm:p-5 lg:p-6 shadow-xl shadow-primary-500/30 sm:scale-105 rounded-3xl sm:rounded-[1.7rem]',
                 'before:pointer-events-none before:absolute before:inset-0 before:rounded-[1.4rem] sm:before:rounded-[1.7rem] before:border before:border-transparent before:bg-[linear-gradient(135deg,rgba(59,130,246,0.6),rgba(236,72,153,0.6))] before:opacity-60 before:[mask:linear-gradient(#000,#000)_content-box,linear-gradient(#000,#000)] before:[mask-composite:exclude] before:p-px',
               )}
             >
