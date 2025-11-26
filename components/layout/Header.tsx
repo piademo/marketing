@@ -101,7 +101,7 @@ export default function Header() {
       <header className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
         <div
           className={cn(
-            "pointer-events-auto relative h-[60px] flex items-center rounded-full overflow-hidden transition-all duration-[1200ms] ease-[cubic-bezier(0.25,1,0.5,1)]",
+            "pointer-events-auto relative h-[60px] flex items-center rounded-full transition-all duration-[1200ms] ease-[cubic-bezier(0.25,1,0.5,1)]",
             isLoaded
               ? "w-full max-w-5xl opacity-100 translate-y-0"
               : "w-[100px] opacity-0 translate-y-4",
@@ -203,8 +203,6 @@ export default function Header() {
                           : "opacity-0 scale-95 -translate-y-2 pointer-events-none",
                       )}
                     >
-                      <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 rotate-45 border-t border-l border-white/20 bg-[#050505]/40 backdrop-blur-2xl" />
-
                       <div className="relative z-10 flex flex-col gap-1">
                         {item.children?.map((subItem) => (
                           <Link
