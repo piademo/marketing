@@ -43,6 +43,8 @@ export default function Header() {
   }>({ left: 0, width: 0, opacity: 0 });
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [ctaOpen, setCtaOpen] = useState(false);
+  const ctaTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoaded(true), 100);
@@ -86,6 +88,17 @@ export default function Header() {
   const handleMouseLeaveDropdown = () => {
     dropdownTimeoutRef.current = setTimeout(() => {
       setActiveDropdown(null);
+    }, 200);
+  };
+
+  const handleCtaEnter = () => {
+    if (ctaTimeoutRef.current) clearTimeout(ctaTimeoutRef.current);
+    setCtaOpen(true);
+  };
+
+  const handleCtaLeave = () => {
+    ctaTimeoutRef.current = setTimeout(() => {
+      setCtaOpen(false);
     }, 200);
   };
 
@@ -136,7 +149,7 @@ export default function Header() {
 
           <div
             className={cn(
-              "relative z-10 w-full h-full flex items-center justify-between px-2 md:px-6 transition-opacity duration-700 delay-300",
+              "relative z-10 w-full h-full flex items-center justify-between pl-2 pr-1 md:pl-6 md:pr-3 transition-opacity duration-700 delay-300",
               isLoaded ? "opacity-100" : "opacity-0",
             )}
           >
@@ -231,23 +244,61 @@ export default function Header() {
             })}
           </nav>
 
-          <div className="flex items-center gap-2 md:gap-4 shrink-0 mr-1 md:mr-0">
-            <Link
-              href="/login"
-              className="hidden md:block text-sm font-medium text-neutral-300 hover:text-white transition-colors px-2"
+          <div className="flex items-center gap-2 md:gap-4 shrink-0">
+            {/* CTA desplegable (solo desktop) */}
+            <div
+              className="hidden md:block relative"
+              onMouseEnter={handleCtaEnter}
+              onMouseLeave={handleCtaLeave}
             >
-              Entrar
-            </Link>
+              <Button
+                as="link"
+                href="/contacto"
+                size="md"
+                className={cn(
+                  "text-xs font-bold tracking-wide transition-all",
+                  "bg-white text-black hover:bg-white/90",
+                  "shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(255,255,255,0.4)] hover:scale-105",
+                  "border border-white/50",
+                )}
+              >
+                Empezar
+              </Button>
+
+              {ctaOpen && (
+                <div
+                  className={cn(
+                    "absolute right-0 top-[calc(100%+20px)] w-44 rounded-xl p-1.5 transition-all duration-300 origin-top",
+                    glassStyle,
+                    "opacity-100 scale-100 translate-y-0 pointer-events-auto",
+                  )}
+                  onMouseEnter={handleCtaEnter}
+                  onMouseLeave={handleCtaLeave}
+                >
+                  <div className="relative z-10 flex flex-col gap-1 text-sm">
+                    <Link
+                      href="/contacto"
+                      className="group flex w-full items-center justify-end rounded-xl px-3 py-2 text-neutral-200 hover:bg-white/10 hover:text-white transition-colors"
+                    >
+                      <span className="text-right">Empezar ahora</span>
+                    </Link>
+                    <Link
+                      href="https://pro.bookfast.es"
+                      className="group flex w-full items-center justify-end rounded-xl px-3 py-2 text-neutral-200 hover:bg-white/10 hover:text-white transition-colors"
+                    >
+                      <span className="text-right">Iniciar sesión</span>
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* CTA móvil simple */}
             <Button
               as="link"
               href="/contacto"
               size="sm"
-              className={cn(
-                "rounded-full px-6 h-10 text-xs font-bold tracking-wide transition-all",
-                "bg-white text-black hover:bg-white/90",
-                "shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(255,255,255,0.4)] hover:scale-105",
-                "border border-white/50",
-              )}
+              className="md:hidden text-xs font-bold tracking-wide"
             >
               Empezar
             </Button>
@@ -267,7 +318,7 @@ export default function Header() {
       <div
         className={cn(
           "hidden md:block w-full transition-[height] duration-300 ease-out",
-          activeDropdown ? "h-56" : "h-0",
+          activeDropdown || ctaOpen ? "h-56" : "h-0",
         )}
       />
     </>
