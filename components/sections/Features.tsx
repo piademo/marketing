@@ -44,12 +44,9 @@ const Features = () => {
           transition={{ duration: 0.6 }}
           className="mb-10 sm:mb-12 lg:mb-14 text-center max-w-3xl mx-auto"
         >
-          <h2 className="text-2xl sm:text-display-sm lg:text-display-md mb-3 sm:mb-4 font-bold tracking-tight text-foreground">
+          <h2 className="text-3xl sm:text-display-sm lg:text-display-md mb-3 sm:mb-4 font-bold tracking-tight text-foreground">
             Todo tu negocio,{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
-              sincronizado al segundo
-            </span>
-            .
+            <span className="gradient-text">sincronizado al segundo</span>.
           </h2>
           <p className="text-sm sm:text-base lg:text-lg text-neutral-700 dark:text-neutral-300 text-balance px-2">
             Deja de usar papel y WhatsApps sueltos. BookFast centraliza cada aspecto de tu salón en un sistema operativo diseñado

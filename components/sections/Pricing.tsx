@@ -8,6 +8,7 @@ import Button from '@/components/ui/Button';
 import GlassCard from '@/components/ui/GlassCard';
 import { cn } from '@/lib/utils';
 import BorderBeam from '@/components/ui/BorderBeam';
+import PricingMobileCarousel from '@/components/sections/PricingMobileCarousel';
 
 const soloFeatures = [
   '1 profesional incluido',
@@ -74,26 +75,27 @@ export default function Pricing() {
           className="mx-auto mb-10 sm:mb-12 lg:mb-14 max-w-3xl text-center"
         >
           <h2 className="text-3xl sm:text-display-sm lg:text-display-md font-semibold tracking-tight text-foreground text-balance">
-            Una inversión que recuperas salvando UNA sola cita al mes.
+            Una inversión que recuperas salvando {" "}
+            <span className="gradient-text">UNA sola cita</span> al mes.
           </h2>
-          <p className="mt-2 sm:mt-3 text-sm sm:text-base lg:text-base text-neutral-700 dark:text-neutral-300 px-2">
+          <p className="mt-2 sm:mt-3 text-base sm:text-base lg:text-base text-neutral-700 dark:text-neutral-300 px-2">
             El coste de un &quot;no-show&quot; suele ser mayor que tu suscripción mensual.
           </p>
         </motion.div>
 
-        {/* Slider horizontal manual con scroll-snap: siempre hay una card centrada y se puede mover con el dedo */}
-        <div className="relative">
+        {/* Versión escritorio / desktop: grid estática de 3 columnas */}
+        <div className="relative hidden lg:block">
           <motion.div
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-50px' }}
-            className="flex gap-4 sm:gap-5 lg:gap-6 overflow-x-auto pb-2 snap-x snap-mandatory justify-center -mx-4 px-4 lg:mx-0 lg:px-0"
+            className="grid gap-5 lg:gap-6 grid-cols-3 items-stretch"
           >
             {/* Plan Starter */}
             <motion.div
               variants={itemVariants}
-              className="relative flex flex-col rounded-2xl sm:rounded-3xl border border-border bg-card p-4 sm:p-5 lg:p-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)] dark:border-neutral-800 dark:bg-neutral-900/70 dark:shadow-sm text-center shrink-0 snap-center min-w-[80%] sm:min-w-[320px] lg:min-w-[340px] max-w-md"
+              className="relative flex flex-col rounded-2xl sm:rounded-3xl border border-border bg-card p-4 sm:p-5 lg:p-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)] dark:border-neutral-800 dark:bg-neutral-900/70 dark:shadow-sm text-center"
             >
               <div className="mb-1 sm:mb-2 text-sm sm:text-sm font-semibold text-foreground">Starter</div>
               <div className="mb-2 sm:mb-3 flex items-baseline justify-center gap-1">
@@ -118,7 +120,7 @@ export default function Pricing() {
             {/* Plan Professional (destacado) */}
             <motion.div
               variants={itemVariants}
-              className="relative rounded-3xl sm:rounded-[1.7rem] shrink-0 snap-center min-w-[80%] sm:min-w-[320px] lg:min-w-[360px] max-w-md"
+              className="relative rounded-3xl sm:rounded-[1.7rem]"
             >
               {/* BorderBeam recorre el borde EXTERIOR del wrapper con movimiento fluido */}
               <BorderBeam size={280} duration={18} delay={0} radius={24} />
@@ -169,7 +171,7 @@ export default function Pricing() {
             {/* Plan Enterprise */}
             <motion.div
               variants={itemVariants}
-              className="relative flex flex-col rounded-2xl sm:rounded-3xl border border-border bg-card p-4 sm:p-5 lg:p-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)] dark:border-neutral-800 dark:bg-neutral-900/70 dark:shadow-sm text-center shrink-0 snap-center min-w-[80%] sm:min-w-[320px] lg:min-w-[340px] max-w-md"
+              className="relative flex flex-col rounded-2xl sm:rounded-3xl border border-border bg-card p-4 sm:p-5 lg:p-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)] dark:border-neutral-800 dark:bg-neutral-900/70 dark:shadow-sm text-center"
             >
               <div className="mb-1 sm:mb-2 text-sm sm:text-sm font-semibold text-foreground">Enterprise</div>
               <div className="mb-2 sm:mb-3 flex items-baseline justify-center gap-1">
@@ -188,6 +190,11 @@ export default function Pricing() {
               </div>
             </motion.div>
           </motion.div>
+        </div>
+
+        {/* Versión móvil / tablet: carrusel 3D tipo Cover Flow */}
+        <div className="block lg:hidden mt-4">
+          <PricingMobileCarousel />
         </div>
       </Container>
     </section>

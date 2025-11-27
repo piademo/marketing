@@ -60,11 +60,11 @@ export default function HowItWorks() {
             transition={{ duration: 0.6 }}
             className="space-y-5 sm:space-y-6 lg:space-y-8"
           >
-            <div className="space-y-2 sm:space-y-3">
-              <h2 className="text-xl sm:text-display-sm lg:text-display-md font-semibold tracking-tight text-foreground">
-                Tus clientes reservan en segundos, no en minutos.
+            <div className="space-y-2 sm:space-y-3 text-center mb-4 sm:mb-5">
+              <h2 className="text-3xl sm:text-display-sm lg:text-display-md font-semibold tracking-tight text-foreground">
+                Tus clientes reservan en <span className="gradient-text">segundos</span>, no en minutos.
               </h2>
-              <p className="text-xs sm:text-sm lg:text-base text-neutral-700 dark:text-neutral-300 max-w-xl">
+              <p className="text-base sm:text-base lg:text-base text-neutral-700 dark:text-neutral-300 max-w-xl">
                 Enséñales un enlace y deja que el sistema se encargue. Sin llamadas, sin notas en papel.
               </p>
             </div>
@@ -74,7 +74,7 @@ export default function HowItWorks() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: '-50px' }}
-              className="space-y-3 sm:space-y-4"
+              className="space-y-3 sm:space-y-4 mt-6 sm:mt-8 lg:mt-10 mb-8 sm:mb-10 lg:mb-12"
             >
               {steps.map((step) => (
                 <motion.div key={step.title} variants={itemVariants} className="flex items-start gap-3 sm:gap-4">
@@ -99,7 +99,7 @@ export default function HowItWorks() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="relative flex justify-center lg:justify-end"
+            className="relative flex justify-center lg:justify-end mt-8 sm:mt-10 lg:mt-12"
           >
             <div
               className={cn(
