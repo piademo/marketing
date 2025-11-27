@@ -151,21 +151,23 @@ export default function PricingMobileCarousel() {
             <motion.div
               key={plan.name}
               className={cn(
-                "absolute top-0 h-full flex items-center justify-center p-2 origin-center w-[320px]",
+                "absolute top-0 h-full flex items-center justify-center p-2 origin-center",
+                "w-full max-w-[360px] min-w-[320px] sm:max-w-[400px] md:max-w-[420px]", // ancho fijo consistente
                 isActive ? "cursor-grab active:cursor-grabbing" : "pointer-events-none",
               )}
               animate={getVariants(slot)}
               transition={SPRING_OPTIONS}
               drag={isActive ? "x" : false}
-              dragConstraints={{ left: 0, right: 0 }}
-              dragElastic={0.1}
+              dragConstraints={{ left: -140, right: 140 }}
+              dragElastic={0.18}
+              dragMomentum={false}
               onDragEnd={handleDragEnd}
               style={{ transformStyle: "preserve-3d" }}
             >
               {/* Tarjeta estilo glassmorphism inspirada en GlassCard */}
               <div
                 className={cn(
-                  "relative h-full flex flex-col rounded-3xl overflow-hidden border backdrop-blur-2xl transition-all duration-300",
+                  "relative h-full w-full flex flex-col rounded-3xl overflow-hidden border backdrop-blur-2xl transition-all duration-300",
                   "bg-gradient-to-br from-primary/15 via-secondary/10 to-neutral-50/5 dark:from-primary/15 dark:via-secondary/10 dark:to-neutral-900/80",
                   isActive
                     ? cn(
