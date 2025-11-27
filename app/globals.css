@@ -5,10 +5,58 @@
 @layer base {
   :root {
     --font-inter: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+    /* --- LIGHT MODE: SUNSET THEME --- */
+    /* Fondo: Blanco cálido "Papel" */
+    --background: 0 0% 99%;
+    /* Texto: Gris Pizarra Oscuro (Nunca negro puro #000) */
+    --foreground: 222 47% 11%;
+
+    /* Primary: Naranja Vibrante */
+    --primary: 24 95% 53%;
+    --primary-foreground: 0 0% 98%;
+
+    /* Secondary: Rosa Fucsia */
+    --secondary: 330 81% 60%;
+    --secondary-foreground: 0 0% 98%;
+
+    /* Card & Glass (Física de Cristal Claro) */
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --card-border: 240 5.9% 90%; /* Gris suave */
+
+    /* Inputs & Borders */
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+
+    /* Sombras Específicas Light (Volumen) */
+    --glass-bg: 0 0% 100% / 0.7;
+    --glass-border: 240 5.9% 85%; /* Borde gris visible */
+    --glass-shadow: 0 10px 30px -10px rgba(249, 115, 22, 0.15); /* Sombra anaranjada sutil */
+  }
+
+  .dark {
+    /* --- DARK MODE: CYBER THEME (Intacto) --- */
+    --background: 0 0% 3.9%; /* neutral-950 */
+    --foreground: 0 0% 98%;
+
+    --primary: 199 89% 48%; /* Sky Blue */
+    --secondary: 270 50% 40%; /* Purple */
+
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --card-border: 0 0% 100% / 0.1;
+
+    --border: 0 0% 100% / 0.1;
+    --input: 0 0% 100% / 0.1;
+
+    --glass-bg: 0 0% 100% / 0.02;
+    --glass-border: 0 0% 100% / 0.1;
+    --glass-shadow: 0 0 0 0 transparent;
   }
 
   * {
-    @apply border-neutral-800; /* Borde base oscuro */
+    @apply border-neutral-800; /* Borde base oscuro (lo afinaremos para light más adelante) */
   }
 
   html {
@@ -16,11 +64,11 @@
   }
 
   body {
-    @apply bg-neutral-950 text-neutral-50 antialiased; /* Fondo oscuro, texto claro */
+    @apply bg-background text-foreground antialiased border border-border;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-semibold tracking-tight text-white;
+    @apply font-semibold tracking-tight text-foreground;
   }
 }
 
@@ -57,7 +105,8 @@
   }
 
   .btn-primary {
-    @apply btn bg-[#050505]/60 text-white border border-white/20 shadow-[0_14px_32px_rgba(0,0,0,0.75)];
+    /* LIGHT por defecto: botón Sunset sólido */
+    @apply btn bg-primary text-primary-foreground hover:bg-primary/90 focus:ring-primary border border-transparent shadow-md shadow-[0_10px_30px_rgba(0,0,0,0.15)];
   }
 
   .btn-primary::before {
@@ -67,12 +116,25 @@
     border-radius: 9999px;
     opacity: 0.7;
     pointer-events: none;
+    /* LIGHT: halo Sunset (orange/pink) sobre botón naranja */
+    background:
+      radial-gradient(circle at 50% 50%, rgba(249, 115, 22, 0.35), transparent 55%),
+      radial-gradient(circle at 100% 0%, rgba(236, 72, 153, 0.35), transparent 55%),
+      conic-gradient(from 0deg at 50% 50%, rgba(249,115,22,0), rgba(236,72,153,0.35), rgba(249,115,22,0));
+    background-size: 200% 200%;
+    animation: liquid-glass 8s ease-in-out infinite;
+  }
+
+  /* Overrides específicos para DARK: restaurar cápsula oscura con gradiente cyan/purple en movimiento */
+  .dark .btn-primary {
+    @apply bg-[#050505]/60 text-white border border-white/20 shadow-[0_14px_32px_rgba(0,0,0,0.75)];
+  }
+
+  .dark .btn-primary::before {
     background:
       radial-gradient(circle at 50% 50%, rgba(14, 165, 233, 0.35), transparent 50%),
       radial-gradient(circle at 100% 0%, rgba(168, 85, 247, 0.35), transparent 50%),
       conic-gradient(from 0deg at 50% 50%, rgba(14,165,233,0), rgba(168,85,247,0.25), rgba(14,165,233,0));
-    background-size: 200% 200%;
-    animation: liquid-glass 8s ease-in-out infinite;
   }
 
   .btn-secondary {
@@ -80,11 +142,11 @@
   }
 
   .btn-outline {
-    @apply btn border border-neutral-700 bg-transparent text-neutral-300 hover:bg-neutral-800 hover:text-white focus:ring-neutral-500;
+    @apply btn border border-neutral-300 bg-transparent text-neutral-800 hover:bg-neutral-50 hover:text-neutral-950 focus:ring-neutral-400 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:hover:text-white dark:focus:ring-neutral-500;
   }
 
   .btn-ghost {
-    @apply btn bg-transparent text-neutral-400 hover:bg-neutral-800 hover:text-white focus:ring-neutral-500;
+    @apply btn bg-transparent text-neutral-800 hover:bg-neutral-50 hover:text-neutral-950 focus:ring-neutral-300 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white dark:focus:ring-neutral-500;
   }
 
   .btn-lg {
@@ -95,13 +157,13 @@
     @apply px-3 sm:px-4 py-1 sm:py-1.5 text-xs;
   }
 
-  /* Cards (Adaptadas a Dark Mode) */
+  /* Cards (adaptadas a Light/Dark) */
   .card {
-    @apply rounded-xl sm:rounded-2xl border border-neutral-800 bg-neutral-900/20 p-4 sm:p-6 shadow-none transition-all duration-200;
+    @apply rounded-xl sm:rounded-2xl border border-neutral-300 bg-card p-4 sm:p-6 dark:border-neutral-800 dark:bg-neutral-900/20 transition-all duration-200;
   }
 
   .card-hover {
-    @apply card hover:border-neutral-700 hover:bg-neutral-900/40 hover:-translate-y-1;
+    @apply card hover:-translate-y-1 hover:border-neutral-400 dark:hover:border-primary/40 dark:hover:bg-neutral-900/40;
   }
 
   /* Inputs (Adaptados a Dark Mode) */
@@ -123,6 +185,10 @@
   }
 
   .badge-primary {
+    @apply badge bg-[#f97316]/10 text-neutral-900 border border-[#f97316]/30;
+  }
+
+  .dark .badge-primary {
     @apply badge bg-primary-900/30 text-primary-300 border border-primary-500/20;
   }
 
@@ -149,7 +215,7 @@
   }
 
   .gradient-text {
-    @apply bg-gradient-to-r from-primary-400 to-secondary-400 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
   }
 }
 

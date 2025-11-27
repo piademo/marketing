@@ -17,22 +17,22 @@ export default function GlassCard({
   return (
     <div 
       className={cn(
-        // BASE:
-        'relative overflow-hidden rounded-3xl border transition-all duration-300',
-        
-        // EFECTO CRISTAL (Ajustado):
-        // 1. backdrop-blur-xl: Mucho más desenfoque (efecto esmerilado)
-        // 2. bg-neutral-900/30: Fondo oscuro muy transparente (deja ver el spotlight)
-        // 3. border-white/10: Borde sutil para delimitar
-        'bg-neutral-900/10 backdrop-blur-2xl border-white/10 shadow-lg',
+        // BASE: tarjeta de cristal adaptable a light/dark
+        'relative overflow-hidden rounded-3xl border transition-all duration-300 backdrop-blur-2xl',
+        // Light: hielo esmerilado
+        'bg-white/60 text-card-foreground border-neutral-200 shadow-[0_18px_45px_rgba(15,23,42,0.10)]',
+        // Dark: seguimos usando los tokens para mantener el look actual
+        'dark:bg-card dark:text-card-foreground dark:border-card-border dark:shadow-none',
 
-        // ESTADOS HOVER (Más brillo al pasar el ratón):
-        hoverEffect && 'hover:border-white/20 hover:bg-neutral-900/20 hover:shadow-primary-500/10 hover:-translate-y-1',
+        // ESTADOS HOVER (más brillo al pasar el ratón):
+        hoverEffect && 'hover:-translate-y-1 hover:shadow-[0_30px_70px_rgba(249,115,22,0.18)] dark:hover:bg-card/40 dark:hover:border-card-border',
 
-        // VARIANTES DE GRADIENTE (Ajustadas para ser sutiles):
-        gradient === 'subtle' && 'bg-gradient-to-br from-white/5 to-transparent',
-        gradient === 'strong' && 'bg-gradient-to-br from-primary-500/10 to-secondary-500/10 border-primary-500/20',
-        
+        // VARIANTES DE GRADIENTE
+        // subtle: halo muy suave basado en la paleta semántica (Sunset/Cyber)
+        gradient === 'subtle' && 'bg-gradient-to-br from-primary/10 via-secondary/5 to-transparent dark:from-primary/15 dark:via-secondary/10',
+        // strong: acento más marcado en el fondo, borde se mantiene como el base
+        gradient === 'strong' && 'bg-gradient-to-br from-primary/18 to-secondary/18',
+
         className,
       )}
     >

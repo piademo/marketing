@@ -1,6 +1,7 @@
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
+  darkMode: ['class'],
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -9,8 +10,22 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Semantic theme tokens (light/dark via CSS variables)
+        border: 'hsl(var(--border))',
+        input: 'hsl(var(--input))',
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
+        card: 'hsl(var(--card))',
+        'card-foreground': 'hsl(var(--card-foreground))',
+        glass: {
+          DEFAULT: 'hsl(var(--glass-bg))',
+          border: 'hsl(var(--glass-border))',
+        },
+        'primary-glow': 'hsl(var(--primary-glow))',
         // Sistema de colores BookFast
         primary: {
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))',
           50: '#f0f9ff',
           100: '#e0f2fe',
           200: '#bae6fd',
@@ -24,6 +39,8 @@ const config: Config = {
           950: '#082f49',
         },
         secondary: {
+          DEFAULT: 'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))',
           50: '#faf5ff',
           100: '#f3e8ff',
           200: '#e9d5ff',

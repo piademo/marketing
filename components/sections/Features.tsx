@@ -35,7 +35,7 @@ const itemVariants = {
 
 const Features = () => {
   return (
-    <section className="relative py-16 sm:py-20 lg:py-24 text-white overflow-hidden">
+    <section className="relative py-16 sm:py-20 lg:py-24 overflow-hidden">
       <Container>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -44,14 +44,14 @@ const Features = () => {
           transition={{ duration: 0.6 }}
           className="mb-10 sm:mb-12 lg:mb-14 text-center max-w-3xl mx-auto"
         >
-          <h2 className="text-2xl sm:text-display-sm lg:text-display-md mb-3 sm:mb-4 font-bold tracking-tight">
+          <h2 className="text-2xl sm:text-display-sm lg:text-display-md mb-3 sm:mb-4 font-bold tracking-tight text-foreground">
             Todo tu negocio,{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-secondary-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
               sincronizado al segundo
             </span>
             .
           </h2>
-          <p className="text-sm sm:text-base lg:text-lg text-neutral-400 text-balance px-2">
+          <p className="text-sm sm:text-base lg:text-lg text-neutral-700 dark:text-neutral-300 text-balance px-2">
             Deja de usar papel y WhatsApps sueltos. BookFast centraliza cada aspecto de tu salón en un sistema operativo diseñado
             para la velocidad.
           </p>
@@ -124,12 +124,14 @@ const Features = () => {
           {/* FEATURE 5: Preview - Chat simulation */}
           <motion.div variants={itemVariants} className="col-span-2">
             <GlassCard className="h-full p-4 sm:p-5 group" gradient="subtle">
-              <p className="text-xs text-neutral-500 mb-2 uppercase tracking-wide">Vista previa</p>
+              <p className="text-xs text-neutral-500 dark:text-neutral-400 mb-2 uppercase tracking-wide">Vista previa</p>
               <div className="flex flex-col gap-2 text-xs">
-                <div className="bg-green-600/20 text-green-200 p-2 rounded-lg rounded-tr-none ml-auto max-w-[85%]">
+                {/* Mensaje de BookFast */}
+                <div className="p-2 rounded-lg rounded-tr-none ml-auto max-w-[85%] bg-green-100 text-green-900 dark:bg-green-600/20 dark:text-green-200">
                   Hola Juan, recordatorio de tu cita mañana a las 17:00 ✂️
                 </div>
-                <div className="bg-neutral-800 text-neutral-300 p-2 rounded-lg rounded-tl-none max-w-[75%]">
+                {/* Respuesta del cliente */}
+                <div className="p-2 rounded-lg rounded-tl-none max-w-[75%] bg-neutral-100 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-300">
                   ¡Allí estaré! Gracias 👍
                 </div>
               </div>

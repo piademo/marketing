@@ -19,8 +19,8 @@ export default function BlogPage() {
       <section className="section-lg">
         <Container>
           <div className="mx-auto max-w-3xl text-center mb-16">
-            <h1 className="text-display-md sm:text-display-lg mb-4">Blog de BookFast</h1>
-            <p className="text-lg text-neutral-300 sm:text-xl">
+            <h1 className="text-display-md sm:text-display-lg mb-4 text-foreground dark:text-white">Blog de BookFast</h1>
+            <p className="text-lg text-neutral-700 dark:text-neutral-300 sm:text-xl">
               Consejos, guías y estrategias para hacer crecer tu negocio de belleza.
             </p>
           </div>
@@ -30,11 +30,11 @@ export default function BlogPage() {
               <Link
                 key={post.slug}
                 href={`/blog/${post.slug}`}
-                className="group rounded-2xl border border-neutral-800 bg-neutral-900/30 p-6 transition-all duration-200 hover:border-primary-500/40 hover:bg-neutral-900/60 hover:-translate-y-1"
+                className="group rounded-2xl border border-border bg-card p-6 transition-all duration-200 hover:border-primary/30 hover:bg-white/70 hover:-translate-y-1 dark:border-neutral-800 dark:bg-neutral-900/30 dark:hover:border-primary-500/40 dark:hover:bg-neutral-900/60"
               >
                 <div className="mb-4">
-                  <div className="aspect-video rounded-xl border border-neutral-800 bg-gradient-to-br from-neutral-900/40 via-neutral-950/60 to-neutral-900/20 flex items-center justify-center text-4xl">
-                    <span className="text-neutral-500">{post.category.slice(0, 2).toUpperCase()}</span>
+                  <div className="aspect-video rounded-xl border border-border bg-gradient-to-br from-primary/10 via-secondary/10 to-card flex items-center justify-center text-4xl dark:border-neutral-800 dark:from-neutral-900/40 dark:via-neutral-950/60 dark:to-neutral-900/20">
+                    <span className="text-neutral-600 dark:text-neutral-500">{post.category.slice(0, 2).toUpperCase()}</span>
                   </div>
                 </div>
 
@@ -42,13 +42,13 @@ export default function BlogPage() {
                   <Badge variant="primary">{post.category}</Badge>
                 </div>
 
-                <h2 className="text-xl font-semibold text-white mb-2 group-hover:text-primary-300 transition-colors">
+                <h2 className="text-xl font-semibold text-foreground dark:text-white mb-2 group-hover:text-[#f97316] dark:group-hover:text-primary-300 transition-colors">
                   {post.title}
                 </h2>
 
-                <p className="text-sm text-neutral-400 mb-4">{post.excerpt}</p>
+                <p className="text-sm text-neutral-700 dark:text-neutral-400 mb-4">{post.excerpt}</p>
 
-                <div className="flex items-center gap-4 text-xs text-neutral-500">
+                <div className="flex items-center gap-4 text-xs text-neutral-500 dark:text-neutral-500">
                   <div className="flex items-center gap-1">
                     <Calendar className="h-4 w-4" />
                     <span>{post.date}</span>
@@ -59,7 +59,7 @@ export default function BlogPage() {
                   </div>
                 </div>
 
-                <div className="mt-4 flex items-center gap-2 text-sm font-medium text-primary-400 group-hover:gap-3 transition-all">
+                <div className="mt-4 flex items-center gap-2 text-sm font-medium text-primary group-hover:gap-3 transition-all">
                   Leer más
                   <ArrowRight className="h-4 w-4" />
                 </div>

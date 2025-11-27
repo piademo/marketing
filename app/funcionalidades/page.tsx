@@ -140,7 +140,7 @@ export default function FuncionalidadesPage() {
             <h1 className="text-display-md sm:text-display-lg mb-4">
               Todo lo que necesitas en un solo lugar
             </h1>
-            <p className="text-lg text-neutral-300 sm:text-xl">
+            <p className="text-lg text-neutral-700 dark:text-neutral-300 sm:text-xl">
               Funcionalidades profesionales diseñadas para hacer crecer tu negocio de belleza.
             </p>
           </div>
@@ -149,10 +149,10 @@ export default function FuncionalidadesPage() {
             {featureCategories.map((category, index) => (
               <div key={category.title} className={index % 2 === 1 ? 'md:flex md:flex-row-reverse md:items-center md:gap-12' : 'md:flex md:items-center md:gap-12'}>
                 <div className="mb-10 md:mb-0 md:w-1/3 text-center md:text-left">
-                  <h2 className="text-3xl font-semibold text-white mb-2">
+                  <h2 className="text-3xl font-semibold text-foreground dark:text-white mb-2">
                     {category.title}
                   </h2>
-                  <p className="text-neutral-400">{category.description}</p>
+                  <p className="text-neutral-700 dark:text-neutral-400">{category.description}</p>
                 </div>
 
                 <div
@@ -165,7 +165,7 @@ export default function FuncionalidadesPage() {
                   {category.features.map((feature) => (
                     <Card key={feature.title} hover>
                       <CardHeader>
-                        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-neutral-800 text-primary-300 shadow-[0_0_25px_rgba(14,165,233,0.35)]">
+                        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl border border-primary/20 bg-primary/10 text-primary dark:bg-neutral-800 dark:text-primary-300">
                           <feature.icon className="h-6 w-6" />
                         </div>
                         <CardTitle>{feature.title}</CardTitle>

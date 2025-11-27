@@ -30,7 +30,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         <Container size="narrow">
           <Link
             href="/blog"
-            className="inline-flex items-center gap-2 text-sm text-neutral-400 hover:text-neutral-200 mb-8 transition-colors"
+            className="inline-flex items-center gap-2 text-sm text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-200 mb-8 transition-colors"
           >
             <ArrowLeft className="h-4 w-4" />
             Volver al blog
@@ -40,7 +40,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             <Badge variant="primary">{post.category}</Badge>
           </div>
 
-          <h1 className="text-display-sm sm:text-display-md mb-4 text-white">{post.title}</h1>
+          <h1 className="text-display-sm sm:text-display-md mb-4 text-foreground dark:text-white">{post.title}</h1>
 
           <div className="flex items-center gap-4 text-sm text-neutral-500 mb-8">
             <div className="flex items-center gap-2">
@@ -53,12 +53,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             </div>
           </div>
 
-          <div className="aspect-video rounded-2xl border border-neutral-800 bg-gradient-to-br from-neutral-900 via-neutral-950 to-neutral-900 mb-12 flex items-center justify-center text-5xl text-neutral-600">
+          <div className="aspect-video rounded-2xl border border-border bg-card shadow-[0_18px_45px_rgba(15,23,42,0.08)] dark:border-neutral-800 dark:bg-gradient-to-br dark:from-neutral-900 dark:via-neutral-950 dark:to-neutral-900 mb-12 flex items-center justify-center text-5xl text-neutral-800 dark:text-neutral-500">
             📝
           </div>
 
           <div
-            className="prose prose-invert prose-lg max-w-none prose-headings:text-white prose-p:text-neutral-300 prose-li:text-neutral-300 prose-strong:text-white"
+            className="prose prose-lg max-w-none prose-headings:text-foreground prose-p:text-neutral-700 prose-li:text-neutral-700 prose-strong:text-foreground dark:prose-invert dark:prose-headings:text-white dark:prose-p:text-neutral-300 dark:prose-li:text-neutral-300 dark:prose-strong:text-white"
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
         </Container>

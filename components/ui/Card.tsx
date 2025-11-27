@@ -26,7 +26,7 @@ interface CardTitleProps {
 }
 
 export function CardTitle({ children, className = '' }: CardTitleProps) {
-  return <h3 className={`text-xl font-semibold text-white ${className}`}>{children}</h3>;
+  return <h3 className={`text-xl font-semibold text-foreground dark:text-white ${className}`}>{children}</h3>;
 }
 
 interface CardDescriptionProps {

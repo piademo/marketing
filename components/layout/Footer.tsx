@@ -50,7 +50,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-neutral-800 bg-neutral-950/80">
+    <footer className="border-t border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-950/80">
       <Container>
         {/* Main Footer */}
         <div className="py-12 lg:py-16">
@@ -58,12 +58,12 @@ export default function Footer() {
             {/* Brand */}
             <div className="col-span-2">
               <Link href="/" className="flex items-center space-x-2">
-                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary-500 to-primary-700 text-white font-bold text-lg">
+                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-secondary text-white font-bold text-lg">
                   B
                 </div>
-                <span className="text-xl font-bold text-white">BookFast</span>
+                <span className="text-xl font-bold text-foreground">BookFast</span>
               </Link>
-              <p className="mt-4 text-sm text-neutral-400 max-w-xs">
+              <p className="mt-4 text-sm text-neutral-600 dark:text-neutral-400 max-w-xs">
                 Software profesional de gestión de citas para peluquerías, barberías y centros de
                 estética.
               </p>
@@ -74,7 +74,7 @@ export default function Footer() {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex h-9 w-9 items-center justify-center rounded-lg bg-neutral-900 text-neutral-400 hover:text-primary-400 transition-colors shadow-soft hover:shadow-medium"
+                    className="flex h-9 w-9 items-center justify-center rounded-lg bg-neutral-100 text-neutral-600 hover:text-primary transition-colors dark:bg-neutral-900 dark:text-neutral-400 dark:hover:text-primary-400"
                     aria-label={social.name}
                   >
                     <social.icon className="h-4 w-4" />
@@ -86,13 +86,13 @@ export default function Footer() {
             {/* Links */}
             {Object.values(footerLinks).map((section) => (
               <div key={section.title}>
-                <h3 className="text-sm font-semibold text-neutral-50">{section.title}</h3>
+                <h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-50">{section.title}</h3>
                 <ul className="mt-4 space-y-3">
                   {section.links.map((link) => (
                     <li key={link.name}>
                       <Link
                         href={link.href}
-                        className="text-sm text-neutral-400 hover:text-neutral-50 transition-colors"
+                        className="text-sm text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-50 transition-colors"
                       >
                         {link.name}
                       </Link>
@@ -105,9 +105,9 @@ export default function Footer() {
         </div>
 
         {/* Bottom Footer */}
-        <div className="border-t border-neutral-800 py-6">
+        <div className="border-t border-neutral-200 dark:border-neutral-800 py-6">
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-            <p className="text-sm text-neutral-500">
+            <p className="text-sm text-neutral-600 dark:text-neutral-500">
               © {currentYear} BookFast. Todos los derechos reservados.
             </p>
             <div className="flex gap-6">

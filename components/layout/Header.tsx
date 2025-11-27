@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import Button from "@/components/ui/Button";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 import { Scissors, UserCheck, ChevronDown } from "lucide-react";
 
 const navItems = [
@@ -103,10 +104,12 @@ export default function Header() {
   };
 
   const glassStyle = cn(
-    "bg-[#050505]/30 backdrop-blur-2xl",
-    "border border-white/20",
-    "shadow-[0_20px_40px_-10px_rgba(0,0,0,0.8)]",
-    "shadow-[inset_0_1px_0_0_rgba(255,255,255,0.15)]",
+    // Light: cristal blanco visible con borde y sombra física
+    "backdrop-blur-2xl",
+    "bg-white/70 dark:bg-[#050505]/30",
+    "border border-black/5 dark:border-white/20",
+    "shadow-xl shadow-black/5 dark:shadow-none",
+    "shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)]",
   );
 
   return (
@@ -126,12 +129,15 @@ export default function Header() {
             <div
               className="absolute -inset-[100%] animate-liquid-glass blur-3xl opacity-60"
               style={{
+                // Usamos las vars semánticas primary/secondary para que en Light sea Sunset (naranja/rosa)
+                // y en Dark sea Cyber (cyan/morado), manteniendo la misma animación.
                 background:
-                  "radial-gradient(circle at 50% 50%, rgba(14, 165, 233, 0.3), transparent 50%)," +
-                  "radial-gradient(circle at 100% 0%, rgba(168, 85, 247, 0.3), transparent 50%)," +
-                  "conic-gradient(from 0deg at 50% 50%, rgba(14,165,233,0), rgba(168,85,247,0.2), rgba(14,165,233,0))",
+                  "radial-gradient(circle at 50% 50%, hsla(var(--primary) / 0.35), transparent 55%)," +
+                  "radial-gradient(circle at 100% 0%, hsla(var(--secondary) / 0.35), transparent 55%)," +
+                  "conic-gradient(from 0deg at 50% 50%, hsla(var(--primary) / 0), hsla(var(--secondary) / 0.30), hsla(var(--primary) / 0))",
                 backgroundSize: "200% 200%",
-              }}
+              } as React.CSSProperties
+              }
             />
             <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.05] mix-blend-overlay" />
           </div>
@@ -155,7 +161,7 @@ export default function Header() {
           >
           <Link
             href="/"
-            className="ml-2 md:ml-0 text-lg font-bold tracking-tight text-white hover:text-white/80 transition-colors shrink-0 drop-shadow-md"
+            className="ml-2 md:ml-0 text-lg font-bold tracking-tight text-foreground hover:text-foreground/80 transition-colors shrink-0 drop-shadow-md"
           >
             BookFast
           </Link>
@@ -189,8 +195,8 @@ export default function Header() {
                     className={cn(
                       "relative z-10 px-5 py-2 text-sm font-medium transition-all duration-300 rounded-full flex items-center gap-1",
                       isActive
-                        ? "text-white bg-white/10 shadow-[0_0_12px_rgba(255,255,255,0.25)]"
-                        : "text-neutral-300 hover:text-white",
+                        ? "text-foreground bg-white/10 shadow-[0_0_12px_rgba(255,255,255,0.25)]"
+                        : "text-neutral-600 dark:text-neutral-300 hover:text-foreground",
                     )}
                   >
                     {item.name}
@@ -210,7 +216,8 @@ export default function Header() {
                       onMouseLeave={handleMouseLeaveDropdown}
                       className={cn(
                         "absolute top-[calc(100%+12px)] left-1/2 -translate-x-1/2 w-[320px] p-2 rounded-2xl transition-all duration-300 origin-top",
-                        glassStyle,
+                        // Más contraste en light: fondo más opaco y borde algo más marcado
+                        "backdrop-blur-2xl bg-white/95 border border-black/10 shadow-[0_22px_55px_rgba(15,23,42,0.18)] dark:bg-[#050505]/30 dark:border-white/20 dark:shadow-none shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)]",
                         isDropdownOpen
                           ? "opacity-100 scale-100 translate-y-0 pointer-events-auto"
                           : "opacity-0 scale-95 -translate-y-2 pointer-events-none",
@@ -227,10 +234,10 @@ export default function Header() {
                               <subItem.icon className="w-4 h-4" />
                             </div>
                             <div>
-                              <div className="text-sm font-medium text-white group-hover:text-white/90">
+                              <span className="hidden md:block text-sm font-medium text-neutral-600 dark:text-neutral-300 group-hover:text-foreground transition-colors px-2">
                                 {subItem.name}
-                              </div>
-                              <div className="text-xs text-neutral-400 group-hover:text-neutral-300">
+                              </span>
+                              <div className="text-xs text-neutral-600 dark:text-neutral-400 group-hover:text-neutral-800 dark:group-hover:text-neutral-200">
                                 {subItem.description}
                               </div>
                             </div>
@@ -245,6 +252,9 @@ export default function Header() {
           </nav>
 
           <div className="flex items-center gap-2 md:gap-4 shrink-0">
+            <div className="hidden md:block mr-1">
+              <ThemeToggle />
+            </div>
             {/* CTA desplegable (solo desktop) */}
             <div
               className="hidden md:block relative"
@@ -269,7 +279,8 @@ export default function Header() {
                 <div
                   className={cn(
                     "absolute right-0 top-[calc(100%+20px)] w-44 rounded-xl p-1.5 transition-all duration-300 origin-top",
-                    glassStyle,
+                    // Más contraste en light: fondo casi opaco y borde/sombra más marcados
+                    "backdrop-blur-2xl bg-white/95 border border-black/10 shadow-[0_22px_55px_rgba(15,23,42,0.18)] dark:bg-[#050505]/30 dark:border-white/20 dark:shadow-none shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)]",
                     "opacity-100 scale-100 translate-y-0 pointer-events-auto",
                   )}
                   onMouseEnter={handleCtaEnter}
@@ -278,13 +289,13 @@ export default function Header() {
                   <div className="relative z-10 flex flex-col gap-1 text-sm">
                     <Link
                       href="/contacto"
-                      className="group flex w-full items-center justify-end rounded-xl px-3 py-2 text-neutral-200 hover:bg-white/10 hover:text-white transition-colors"
+                      className="group flex w-full items-center justify-end rounded-xl px-3 py-2 text-neutral-800 dark:text-neutral-200 hover:bg-white/10 hover:text-neutral-950 dark:hover:text-white transition-colors"
                     >
                       <span className="text-right">Empezar ahora</span>
                     </Link>
                     <Link
                       href="https://pro.bookfast.es"
-                      className="group flex w-full items-center justify-end rounded-xl px-3 py-2 text-neutral-200 hover:bg-white/10 hover:text-white transition-colors"
+                      className="group flex w-full items-center justify-end rounded-xl px-3 py-2 text-neutral-800 dark:text-neutral-200 hover:bg-white/10 hover:text-neutral-950 dark:hover:text-white transition-colors"
                     >
                       <span className="text-right">Iniciar sesión</span>
                     </Link>

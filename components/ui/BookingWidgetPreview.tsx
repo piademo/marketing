@@ -10,7 +10,7 @@ const BookingWidgetPreview: React.FC<BookingWidgetPreviewProps> = ({ className }
   return (
     <div
       className={cn(
-        'relative mx-auto w-full max-w-[240px] sm:max-w-xs rounded-2xl sm:rounded-3xl border border-neutral-200 bg-white shadow-xl shadow-black/5',
+        'relative mx-auto w-full max-w-[240px] sm:max-w-xs rounded-2xl sm:rounded-3xl border border-neutral-200 bg-white',
         'overflow-hidden',
         className,
       )}
@@ -27,13 +27,16 @@ const BookingWidgetPreview: React.FC<BookingWidgetPreviewProps> = ({ className }
           <p className="text-[10px] sm:text-xs font-medium uppercase tracking-[0.15em] sm:tracking-[0.18em] text-neutral-500">1. Servicio</p>
           <button
             type="button"
-            className="flex w-full items-center justify-between rounded-xl sm:rounded-2xl border border-primary-100 bg-primary-50 px-3 sm:px-4 py-2 sm:py-3 text-left"
+            className="flex w-full items-center justify-between rounded-xl sm:rounded-2xl border border-primary/20 bg-primary/10 px-3 sm:px-4 py-2 sm:py-3 text-left"
           >
             <div>
               <div className="text-xs sm:text-sm font-semibold text-neutral-900">Corte Degradado</div>
               <div className="text-[10px] sm:text-xs text-neutral-500">45 min · 18€</div>
             </div>
-            <CheckCircle2 className="h-4 w-4 sm:h-5 sm:w-5 text-primary-600 shrink-0" />
+            <CheckCircle2
+              className="h-4 w-4 sm:h-5 sm:w-5 shrink-0"
+              style={{ color: 'hsl(var(--primary))' }}
+            />
           </button>
         </div>
 
@@ -49,7 +52,7 @@ const BookingWidgetPreview: React.FC<BookingWidgetPreviewProps> = ({ className }
             </button>
             <button
               type="button"
-              className="rounded-full border border-primary-600 bg-primary-600 px-2 sm:px-3 py-1.5 sm:py-2 font-semibold text-white shadow-sm"
+              className="rounded-full border border-primary bg-primary px-2 sm:px-3 py-1.5 sm:py-2 font-semibold text-primary-foreground"
             >
               17:00
             </button>
@@ -65,7 +68,7 @@ const BookingWidgetPreview: React.FC<BookingWidgetPreviewProps> = ({ className }
         {/* CTA */}
         <button
           type="button"
-          className="mt-1 sm:mt-2 inline-flex w-full items-center justify-center rounded-xl sm:rounded-2xl bg-primary-600 px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm font-semibold text-white shadow-sm shadow-primary-500/30"
+          className="mt-1 sm:mt-2 inline-flex w-full items-center justify-center rounded-xl sm:rounded-2xl bg-primary px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm font-semibold text-primary-foreground"
         >
           Confirmar Reserva
         </button>

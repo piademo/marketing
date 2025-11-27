@@ -41,7 +41,17 @@ export default function SectoresPage() {
   return (
     <div className="relative min-h-screen pt-32 pb-20 overflow-hidden">
       {/* Background Glows específicos de esta página */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-primary-900/20 rounded-full blur-[120px] pointer-events-none -z-10" />
+      {/* Light: Glow Sunset */}
+      <div
+        className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full blur-[120px] pointer-events-none -z-10 dark:hidden"
+        style={{
+          backgroundImage:
+            'radial-gradient(circle at 50% 0%, rgba(249,115,22,0.32), transparent 60%), radial-gradient(circle at 50% 100%, rgba(236,72,153,0.24), transparent 60%)',
+          mixBlendMode: 'normal',
+        }}
+      />
+      {/* Dark: Blob original Cyber */}
+      <div className="hidden dark:block absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-primary-900/20 rounded-full blur-[120px] pointer-events-none -z-10" />
 
       <Container>
         {/* Header de Sección */}
@@ -49,20 +59,20 @@ export default function SectoresPage() {
           <div className="flex justify-center mb-6">
             <Badge
               variant="neutral"
-              className="bg-white/5 border-white/10 text-neutral-300 backdrop-blur-md"
+              className="bg-[#f97316]/10 text-neutral-900 border-[#f97316]/30 dark:bg-white/5 dark:border-white/10 dark:text-neutral-300 backdrop-blur-md"
             >
-              <Sparkles className="w-3 h-3 mr-2 text-primary-400" />
+              <Sparkles className="w-3 h-3 mr-2 text-[#f97316] dark:text-primary-300" />
               Especialización
             </Badge>
           </div>
 
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-6 text-balance">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground dark:text-white mb-6 text-balance">
             Software que habla <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-secondary-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
               el idioma de tu negocio
             </span>
           </h1>
-          <p className="text-lg text-neutral-400 text-balance max-w-2xl mx-auto">
+          <p className="text-lg text-neutral-700 dark:text-neutral-400 text-balance max-w-2xl mx-auto">
             No es lo mismo cortar pelo que hacer un tratamiento facial. Hemos diseñado BookFast adaptándonos a las
             necesidades reales de cada nicho.
           </p>
@@ -73,27 +83,27 @@ export default function SectoresPage() {
           {sectores.map((sector) => (
             <Link key={sector.title} href={sector.href} className="group block h-full">
               <GlassCard
-                className="h-full flex flex-col p-8 transition-all duration-300 group-hover:border-white/20 group-hover:bg-white/5 group-hover:-translate-y-1"
+                className="h-full flex flex-col p-8 transition-all duration-300 group-hover:border-primary/30 group-hover:bg-white/60 dark:group-hover:border-white/20 dark:group-hover:bg-white/5 group-hover:-translate-y-1"
                 gradient="subtle"
               >
                 <div className="flex items-start justify-between mb-8">
                   <div className={`p-4 rounded-2xl ${sector.bg} ${sector.border} border shadow-inner`}>
                     <sector.icon className={`w-8 h-8 ${sector.color}`} />
                   </div>
-                  <div className="p-2 rounded-full bg-white/5 border border-white/5 group-hover:bg-white/10 transition-colors">
-                    <ArrowRight className="w-5 h-5 text-neutral-400 group-hover:text-white" />
+                  <div className="p-2 rounded-full bg-primary/10 text-primary border border-primary/20 dark:bg-white/5 dark:border-white/5 group-hover:bg-primary/20 dark:group-hover:bg-white/10 transition-colors">
+                    <ArrowRight className="w-5 h-5 text-primary group-hover:text-primary-700 dark:text-neutral-400 dark:group-hover:text-white" />
                   </div>
                 </div>
 
-                <h2 className="text-2xl font-bold text-white mb-4 group-hover:text-primary-300 transition-colors">
+                <h2 className="text-2xl font-bold text-foreground dark:text-white mb-4 group-hover:text-primary-700 dark:group-hover:text-primary-300 transition-colors">
                   {sector.title}
                 </h2>
-                <p className="text-neutral-400 leading-relaxed mb-8 flex-grow">{sector.description}</p>
+                <p className="text-neutral-700 dark:text-neutral-400 leading-relaxed mb-8 flex-grow">{sector.description}</p>
 
-                <div className="space-y-3 border-t border-white/5 pt-6 mt-auto">
+                <div className="space-y-3 border-t border-border dark:border-white/5 pt-6 mt-auto">
                   {sector.features.map((feature) => (
-                    <div key={feature} className="flex items-center text-sm text-neutral-300">
-                      <div className="w-1.5 h-1.5 rounded-full bg-primary-500 mr-3 shadow-[0_0_8px_rgba(14,165,233,0.5)]" />
+                    <div key={feature} className="flex items-center text-sm text-neutral-700 dark:text-neutral-300">
+                      <div className="w-1.5 h-1.5 rounded-full bg-primary-500 mr-3 shadow-[0_0_8px_rgba(249,115,22,0.5)]" />
                       {feature}
                     </div>
                   ))}
@@ -105,12 +115,12 @@ export default function SectoresPage() {
 
         {/* CTA Final */}
         <div className="mt-24 text-center">
-          <h3 className="text-xl text-white font-medium mb-6">¿Tu negocio es diferente?</h3>
+          <h3 className="text-xl text-foreground dark:text-white font-medium mb-6">¿Tu negocio es diferente?</h3>
           <Button
             as="link"
             href="/contacto"
             variant="outline"
-            className="border-white/10 hover:bg-white/5 text-neutral-300 hover:text-white"
+            className="text-neutral-800 hover:text-neutral-950 dark:text-neutral-300 dark:hover:text-white"
           >
             Habla con un experto
           </Button>

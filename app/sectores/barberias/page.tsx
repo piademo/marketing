@@ -71,7 +71,7 @@ export default function BarberiasPage() {
               <h1 className="text-display-md sm:text-display-lg mb-6">
                 El copiloto digital que tu <span className="gradient-text">Barbería</span> necesita.
               </h1>
-              <p className="text-lg text-neutral-300 mb-8">
+              <p className="text-lg text-neutral-700 dark:text-neutral-300 mb-8">
                 Programa para barberías pensado para el ritmo real de tu Barber Shop: walk-ins, Corte y Barba, clientes fieles y días
                 de locura. Deja que BookFast se encargue de las citas mientras tú marcas estilo en el sillón.
               </p>
@@ -85,8 +85,8 @@ export default function BarberiasPage() {
               </div>
             </div>
 
-            <div className="aspect-square rounded-2xl border border-neutral-800 bg-gradient-to-br from-neutral-900/30 via-neutral-950/40 to-neutral-900/10 shadow-strong overflow-hidden flex items-center justify-center">
-              <div className="text-center text-neutral-300">
+            <div className="aspect-square rounded-2xl border border-border bg-card shadow-[0_18px_45px_rgba(15,23,42,0.10)] dark:border-neutral-800 dark:bg-gradient-to-br dark:from-neutral-900/30 dark:via-neutral-950/40 dark:to-neutral-900/10 dark:shadow-strong overflow-hidden flex items-center justify-center">
+              <div className="text-center text-neutral-800 dark:text-neutral-300">
                 <div className="text-8xl mb-4">✂️</div>
                 <p className="text-sm">Gestión para barberías</p>
               </div>
@@ -101,7 +101,7 @@ export default function BarberiasPage() {
             <h2 className="text-display-sm sm:text-display-md mb-4">
               Resolvemos los desafíos de tu barbería
             </h2>
-            <p className="text-lg text-neutral-300">
+            <p className="text-lg text-neutral-700 dark:text-neutral-300">
               Entendemos cómo funciona una barbería. BookFast está pensado para tu negocio.
             </p>
           </div>
@@ -110,12 +110,12 @@ export default function BarberiasPage() {
             {problems.map((problem) => (
               <div
                 key={problem.title}
-                className="rounded-2xl border border-neutral-800 bg-neutral-900/60 p-6"
+                className="rounded-2xl border border-border bg-card p-6 dark:border-neutral-800 dark:bg-neutral-900/60"
               >
-                <h3 className="text-lg font-semibold text-white mb-2">
+                <h3 className="text-lg font-semibold text-foreground dark:text-white mb-2">
                   ❌ {problem.title}
                 </h3>
-                <p className="text-neutral-300 flex items-start gap-2">
+                <p className="text-neutral-700 dark:text-neutral-300 flex items-start gap-2">
                   <CheckCircle2 className="h-5 w-5 flex-shrink-0 text-green-500 mt-0.5" />
                   <span>{problem.solution}</span>
                 </p>
@@ -131,7 +131,7 @@ export default function BarberiasPage() {
             <h2 className="text-display-sm sm:text-display-md mb-4">
               Funcionalidades para barberías
             </h2>
-            <p className="text-lg text-neutral-300">
+            <p className="text-lg text-neutral-700 dark:text-neutral-300">
               Herramientas profesionales adaptadas a tu forma de trabajar.
             </p>
           </div>
@@ -140,7 +140,7 @@ export default function BarberiasPage() {
             {features.map((feature) => (
               <Card key={feature.title} hover>
                 <CardHeader>
-                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-500/15 text-primary-300">
+                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl border border-primary/20 bg-primary/10 text-primary dark:bg-neutral-800 dark:text-primary-300">
                     <feature.icon className="h-6 w-6" />
                   </div>
                   <CardTitle>{feature.title}</CardTitle>

@@ -61,10 +61,10 @@ export default function HowItWorks() {
             className="space-y-5 sm:space-y-6 lg:space-y-8"
           >
             <div className="space-y-2 sm:space-y-3">
-              <h2 className="text-xl sm:text-display-sm lg:text-display-md font-semibold tracking-tight text-white">
+              <h2 className="text-xl sm:text-display-sm lg:text-display-md font-semibold tracking-tight text-foreground">
                 Tus clientes reservan en segundos, no en minutos.
               </h2>
-              <p className="text-xs sm:text-sm lg:text-base text-neutral-300 max-w-xl">
+              <p className="text-xs sm:text-sm lg:text-base text-neutral-700 dark:text-neutral-300 max-w-xl">
                 Enséñales un enlace y deja que el sistema se encargue. Sin llamadas, sin notas en papel.
               </p>
             </div>
@@ -78,12 +78,15 @@ export default function HowItWorks() {
             >
               {steps.map((step) => (
                 <motion.div key={step.title} variants={itemVariants} className="flex items-start gap-3 sm:gap-4">
-                  <div className="flex h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-lg sm:rounded-xl border border-neutral-700 bg-neutral-900 text-primary-400 shadow-sm shrink-0">
-                    <step.icon className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <div className="flex h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-lg sm:rounded-xl border border-primary/20 bg-primary/10 dark:border-neutral-700 dark:bg-neutral-900 shrink-0">
+                    <step.icon
+                      className="h-4 w-4 sm:h-5 sm:w-5"
+                      style={{ color: 'hsl(var(--primary))' }}
+                    />
                   </div>
                   <div>
-                    <h3 className="text-sm sm:text-base font-semibold text-neutral-50">{step.title}</h3>
-                    <p className="text-[11px] sm:text-xs lg:text-sm text-neutral-400">{step.description}</p>
+                    <h3 className="text-sm sm:text-base font-semibold text-foreground dark:text-neutral-50">{step.title}</h3>
+                    <p className="text-[11px] sm:text-xs lg:text-sm text-neutral-700 dark:text-neutral-400">{step.description}</p>
                   </div>
                 </motion.div>
               ))}

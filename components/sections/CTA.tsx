@@ -31,7 +31,7 @@ export default function CTA({
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] }}
-          className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-primary-600/35 via-primary-700/35 to-secondary-700/35 px-6 py-12 sm:px-12 sm:py-16 lg:px-24 lg:py-20"
+          className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-primary to-secondary dark:from-primary-600/35 dark:via-primary-700/35 dark:to-secondary-700/35 px-6 py-12 sm:px-12 sm:py-16 lg:px-24 lg:py-20"
         >
           {/* Decorative elements */}
           <div className="pointer-events-none absolute -right-16 sm:-right-24 -top-16 sm:-top-24 h-48 sm:h-72 w-48 sm:w-72 rounded-full bg-white/15 blur-3xl" />
@@ -54,7 +54,7 @@ export default function CTA({
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="mb-6 sm:mb-8 text-sm sm:text-lg lg:text-xl text-primary-50 text-balance px-2"
+              className="mb-6 sm:mb-8 text-sm sm:text-lg lg:text-xl text-white/90 text-balance px-2"
             >
               {description}
             </motion.p>
@@ -73,7 +73,7 @@ export default function CTA({
                 size="lg"
                 icon={ArrowRight}
                 iconPosition="right"
-                className="bg-white text-primary-700 hover:bg-neutral-50 text-sm sm:text-base"
+                className="bg-white text-primary hover:bg-neutral-50 text-sm sm:text-base"
               >
                 {primaryButtonText}
               </Button>
@@ -82,7 +82,7 @@ export default function CTA({
                 href={secondaryButtonHref}
                 variant="outline"
                 size="lg"
-                className="border-white text-white hover:bg-white/10 text-sm sm:text-base"
+                className="border border-neutral-300 text-white hover:bg-white/10 dark:border-white dark:text-white dark:hover:bg-white/10 text-sm sm:text-base"
               >
                 {secondaryButtonText}
               </Button>

@@ -31,8 +31,8 @@ const enterpriseFeatures = [
 
 function FeatureItem({ label }: { label: string }) {
   return (
-    <li className="flex items-start gap-1.5 sm:gap-2 text-xs sm:text-sm text-neutral-200">
-      <span className="mt-0.5 inline-flex h-4 w-4 sm:h-5 sm:w-5 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-400 shrink-0">
+    <li className="flex items-start gap-1.5 sm:gap-2 text-xs sm:text-sm">
+      <span className="mt-0.5 inline-flex h-4 w-4 sm:h-5 sm:w-5 items-center justify-center rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400 shrink-0">
         <Check className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
       </span>
       <span>{label}</span>
@@ -73,10 +73,10 @@ export default function Pricing() {
           transition={{ duration: 0.6 }}
           className="mx-auto mb-10 sm:mb-12 lg:mb-14 max-w-3xl text-center"
         >
-          <h2 className="text-xl sm:text-display-sm lg:text-display-md font-semibold tracking-tight text-white text-balance">
+          <h2 className="text-xl sm:text-display-sm lg:text-display-md font-semibold tracking-tight text-foreground text-balance">
             Una inversión que recuperas salvando UNA sola cita al mes.
           </h2>
-          <p className="mt-2 sm:mt-3 text-xs sm:text-sm lg:text-base text-neutral-300 px-2">
+          <p className="mt-2 sm:mt-3 text-xs sm:text-sm lg:text-base text-neutral-700 dark:text-neutral-300 px-2">
             El coste de un &quot;no-show&quot; suele ser mayor que tu suscripción mensual.
           </p>
         </motion.div>
@@ -89,14 +89,14 @@ export default function Pricing() {
           className="grid gap-4 sm:gap-5 lg:gap-6 grid-cols-1 sm:grid-cols-3 md:items-stretch"
         >
           {/* Plan Starter */}
-          <motion.div variants={itemVariants} className="relative flex flex-col rounded-2xl sm:rounded-3xl border border-neutral-800 bg-neutral-900/70 p-4 sm:p-5 lg:p-6 shadow-sm">
-            <div className="mb-1 sm:mb-2 text-xs sm:text-sm font-semibold text-neutral-50">Starter</div>
+          <motion.div variants={itemVariants} className="relative flex flex-col rounded-2xl sm:rounded-3xl border border-border bg-card p-4 sm:p-5 lg:p-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)] dark:border-neutral-800 dark:bg-neutral-900/70 dark:shadow-sm">
+            <div className="mb-1 sm:mb-2 text-xs sm:text-sm font-semibold text-foreground">Starter</div>
             <div className="mb-2 sm:mb-3 flex items-baseline gap-1">
-              <span className="text-2xl sm:text-3xl font-semibold text-white">29€</span>
-              <span className="text-xs sm:text-sm text-neutral-400">/mes</span>
+              <span className="text-2xl sm:text-3xl font-semibold text-foreground">29€</span>
+              <span className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400">/mes</span>
             </div>
-            <p className="mb-3 sm:mb-4 text-[11px] sm:text-xs text-neutral-400">Ideal para 1-2 profesionales.</p>
-            <ul className="mb-3 sm:mb-4 space-y-1.5 sm:space-y-2">
+            <p className="mb-3 sm:mb-4 text-[11px] sm:text-xs text-neutral-700 dark:text-neutral-400">Ideal para 1-2 profesionales.</p>
+            <ul className="mb-3 sm:mb-4 space-y-1.5 sm:space-y-2 text-neutral-800 dark:text-neutral-200">
               {soloFeatures.map((item) => (
                 <FeatureItem key={item} label={item} />
               ))}
@@ -115,29 +115,39 @@ export default function Pricing() {
             <GlassCard
               gradient="subtle"
               className={cn(
-                'relative flex flex-col h-full border-primary-500/40 bg-neutral-900/80 p-4 sm:p-5 lg:p-6 shadow-xl shadow-primary-500/30 sm:scale-105 rounded-3xl sm:rounded-[1.7rem]',
-                'before:pointer-events-none before:absolute before:inset-0 before:rounded-[1.4rem] sm:before:rounded-[1.7rem] before:border before:border-transparent before:bg-[linear-gradient(135deg,rgba(59,130,246,0.6),rgba(236,72,153,0.6))] before:opacity-60 before:[mask:linear-gradient(#000,#000)_content-box,linear-gradient(#000,#000)] before:[mask-composite:exclude] before:p-px',
+                'relative flex flex-col h-full sm:scale-105 rounded-3xl sm:rounded-[1.7rem] border-primary-500/40 dark:bg-neutral-900/80 shadow-[0_20px_55px_rgba(249,115,22,0.18)] dark:shadow-primary-500/30 text-white',
+                'before:pointer-events-none before:absolute before:inset-0 before:rounded-[1.4rem] sm:before:rounded-[1.7rem] before:border before:border-transparent before:bg-[linear-gradient(135deg,hsl(var(--primary)),hsl(var(--secondary)))] before:opacity-60 before:[mask:linear-gradient(#000,#000)_content-box,linear-gradient(#000,#000)] before:[mask-composite:exclude] before:p-px',
+                'p-4 sm:p-5 lg:p-6',
               )}
             >
-              <div className="mb-2 inline-flex items-center gap-1.5 sm:gap-2 rounded-full bg-primary-500/10 px-2 sm:px-3 py-0.5 sm:py-1 text-[10px] sm:text-xs font-semibold text-primary-200 w-fit">
-                <span className="h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-primary-400" />
+              <div
+                className="mb-2 inline-flex items-center gap-1.5 sm:gap-2 rounded-full px-2 sm:px-3 py-0.5 sm:py-1 text-[10px] sm:text-xs font-semibold w-fit bg-primary text-primary-foreground"
+              >
+                <span className="h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-white/80" />
                 Más Popular
               </div>
-              <div className="mb-1 sm:mb-2 text-xs sm:text-sm font-semibold text-neutral-50">Professional</div>
+              <div className="mb-1 sm:mb-2 text-xs sm:text-sm font-semibold text-white">Professional</div>
               <div className="mb-2 sm:mb-3 flex items-baseline gap-1">
-                <span className="text-2xl sm:text-3xl font-semibold text-white">79€</span>
-                <span className="text-xs sm:text-sm text-neutral-400">/mes</span>
+                <span className="text-2xl sm:text-3xl font-semibold text-white">
+                  79€
+                </span>
+                <span className="text-xs sm:text-sm text-neutral-200 dark:text-neutral-400">/mes</span>
               </div>
-              <p className="mb-3 sm:mb-4 text-[11px] sm:text-xs text-neutral-200">
+              <p className="mb-3 sm:mb-4 text-[11px] sm:text-xs text-neutral-100 dark:text-neutral-200">
                 Para negocios en crecimiento.
               </p>
-              <ul className="mb-3 sm:mb-4 space-y-1.5 sm:space-y-2">
+              <ul className="mb-3 sm:mb-4 space-y-1.5 sm:space-y-2 text-neutral-100 dark:text-neutral-200">
                 {proFeatures.map((item) => (
                   <FeatureItem key={item} label={item} />
                 ))}
               </ul>
               <div className="mt-auto">
-                <Button as="link" href="/contacto" variant="primary" className="w-full text-xs sm:text-sm">
+                <Button
+                  as="link"
+                  href="/contacto"
+                  variant="primary"
+                  className="w-full text-xs sm:text-sm bg-white text-primary hover:bg-neutral-50 dark:bg-primary dark:text-primary-foreground"
+                >
                   Elegir Professional
                 </Button>
               </div>
@@ -145,13 +155,13 @@ export default function Pricing() {
           </motion.div>
 
           {/* Plan Enterprise */}
-          <motion.div variants={itemVariants} className="relative flex flex-col rounded-2xl sm:rounded-3xl border border-neutral-800 bg-neutral-900/70 p-4 sm:p-5 lg:p-6 shadow-sm">
-            <div className="mb-1 sm:mb-2 text-xs sm:text-sm font-semibold text-neutral-50">Enterprise</div>
+          <motion.div variants={itemVariants} className="relative flex flex-col rounded-2xl sm:rounded-3xl border border-border bg-card p-4 sm:p-5 lg:p-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)] dark:border-neutral-800 dark:bg-neutral-900/70 dark:shadow-sm">
+            <div className="mb-1 sm:mb-2 text-xs sm:text-sm font-semibold text-foreground">Enterprise</div>
             <div className="mb-2 sm:mb-3 flex items-baseline gap-1">
-              <span className="text-lg sm:text-2xl font-semibold text-white">Personalizado</span>
+              <span className="text-lg sm:text-2xl font-semibold text-foreground">Personalizado</span>
             </div>
-            <p className="mb-3 sm:mb-4 text-[11px] sm:text-xs text-neutral-400">Cadenas y grupos.</p>
-            <ul className="mb-3 sm:mb-4 space-y-1.5 sm:space-y-2">
+            <p className="mb-3 sm:mb-4 text-[11px] sm:text-xs text-neutral-700 dark:text-neutral-400">Cadenas y grupos.</p>
+            <ul className="mb-3 sm:mb-4 space-y-1.5 sm:space-y-2 text-neutral-800 dark:text-neutral-200">
               {enterpriseFeatures.map((item) => (
                 <FeatureItem key={item} label={item} />
               ))}

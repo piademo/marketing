@@ -61,10 +61,10 @@ export default function ForWho() {
           transition={{ duration: 0.6 }}
           className="mx-auto max-w-3xl text-center mb-10 sm:mb-12 lg:mb-14"
         >
-          <h2 className="text-2xl sm:text-display-sm lg:text-display-md mb-3 sm:mb-4 text-white text-balance">
+          <h2 className="text-2xl sm:text-display-sm lg:text-display-md mb-3 sm:mb-4 text-foreground text-balance">
             ¿Para quién es <span className="gradient-text">BookFast</span>?
           </h2>
-          <p className="text-sm sm:text-base lg:text-lg text-neutral-300 px-2">
+          <p className="text-sm sm:text-base lg:text-lg text-neutral-700 dark:text-neutral-300 px-2">
             Pensado para negocios de belleza que viven de la agenda: barberías, peluquerías y centros de estética.
           </p>
         </motion.div>
@@ -80,7 +80,7 @@ export default function ForWho() {
             <motion.div key={sector.href} variants={itemVariants}>
               <Card hover className="h-full p-4 sm:p-6">
                 <CardHeader className="p-0 mb-4">
-                  <div className="mb-3 sm:mb-4 inline-flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl sm:rounded-2xl bg-neutral-800 text-primary-300 shadow-[0_0_20px_rgba(14,165,233,0.4)]">
+                  <div className="mb-3 sm:mb-4 inline-flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl sm:rounded-2xl border border-primary/20 bg-primary/10 text-primary dark:bg-neutral-800 dark:text-primary-300">
                     <sector.icon className="h-5 w-5 sm:h-6 sm:w-6" />
                   </div>
                   <CardTitle className="text-base sm:text-lg">{sector.label}</CardTitle>

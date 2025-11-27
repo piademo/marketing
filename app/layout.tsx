@@ -4,6 +4,7 @@ import './globals.css';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SpotlightBackground from '@/components/ui/SpotlightBackground';
+import { AppThemeProvider } from '@/components/layout/ThemeProvider';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -80,10 +81,12 @@ export default function RootLayout({
   return (
     <html lang="es" className={inter.variable}>
       <body className="flex min-h-screen flex-col">
-        <SpotlightBackground />
-        <Header />
-        <main className="flex-1 relative z-10 pt-20 sm:pt-24 lg:pt-28">{children}</main>
-        <Footer />
+        <AppThemeProvider>
+          <SpotlightBackground />
+          <Header />
+          <main className="flex-1 relative z-10 pt-20 sm:pt-24 lg:pt-28">{children}</main>
+          <Footer />
+        </AppThemeProvider>
       </body>
     </html>
   );

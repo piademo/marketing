@@ -67,10 +67,10 @@ export default function PricingContent() {
     <section className="section-lg">
       <Container>
         <div className="mx-auto mb-10 max-w-3xl text-center">
-          <h1 className="text-display-sm sm:text-display-md mb-4 text-white text-balance">
+          <h1 className="text-display-sm sm:text-display-md mb-4 text-foreground dark:text-white text-balance">
             Precios pensados para recuperarse con una sola cita salvada.
           </h1>
-          <p className="text-lg text-neutral-300 text-balance">
+          <p className="text-lg text-neutral-700 dark:text-neutral-300 text-balance">
             Elige el plan que mejor encaje con tu equipo. Sin permanencia, sin sorpresas y con todo el
             soporte que necesitas para poner tu agenda en piloto automático.
           </p>
@@ -84,8 +84,8 @@ export default function PricingContent() {
               onClick={() => setBilling("monthly")}
               className={
                 billing === "monthly"
-                  ? "text-white font-semibold"
-                  : "text-neutral-400 hover:text-neutral-200"
+                  ? "text-foreground font-semibold"
+                  : "text-neutral-500 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-200"
               }
             >
               Mensual
@@ -113,14 +113,14 @@ export default function PricingContent() {
               onClick={() => setBilling("yearly")}
               className={
                 billing === "yearly"
-                  ? "text-white font-semibold"
-                  : "text-neutral-400 hover:text-neutral-200"
+                  ? "text-foreground font-semibold"
+                  : "text-neutral-500 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-200"
               }
             >
               Anual
             </button>
           </div>
-          <div className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-300 border border-emerald-500/30">
+          <div className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-700 border border-emerald-500/30 dark:text-emerald-300">
             <span>2 meses gratis en el plan Professional pagando al año</span>
           </div>
         </div>
@@ -128,19 +128,19 @@ export default function PricingContent() {
         {/* Cards de planes */}
         <div className="grid gap-6 md:grid-cols-3 md:items-stretch mb-16">
           {/* Starter */}
-          <div className="relative flex flex-col rounded-3xl border border-neutral-800 bg-neutral-900/70 p-6 shadow-sm">
-            <div className="mb-2 text-sm font-semibold text-neutral-50">Starter</div>
+          <div className="relative flex flex-col rounded-3xl border border-border bg-card p-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)] dark:border-neutral-800 dark:bg-neutral-900/70 dark:shadow-sm">
+            <div className="mb-2 text-sm font-semibold text-foreground dark:text-neutral-50">Starter</div>
             <div className="mb-1 flex items-baseline gap-1">
-              <span className="text-3xl font-semibold text-white">
+              <span className="text-3xl font-semibold text-foreground dark:text-white">
                 {getPrice(basePrices.starter, billing, "starter")}€
               </span>
-              <span className="text-sm text-neutral-400">{isYearly ? "/año" : "/mes"}</span>
+              <span className="text-sm text-neutral-600 dark:text-neutral-400">{isYearly ? "/año" : "/mes"}</span>
             </div>
             {/* Sin oferta específica en Starter para anual */}
-            <p className="mb-6 text-sm text-neutral-400">
+            <p className="mb-6 text-sm text-neutral-700 dark:text-neutral-400">
               Ideal si trabajas solo o con 1 persona más y quieres dejar atrás la libreta.
             </p>
-            <ul className="mb-6 space-y-2 text-sm text-neutral-200">
+            <ul className="mb-6 space-y-2 text-sm text-neutral-800 dark:text-neutral-200">
               <li className="flex items-start gap-2">
                 <Check className="mt-0.5 h-4 w-4 text-emerald-400" />
                 <span>1 profesional incluido</span>
@@ -162,30 +162,31 @@ export default function PricingContent() {
           </div>
 
           {/* Professional (destacado) */}
-          <div className="relative flex flex-col rounded-3xl border border-primary-500/40 bg-neutral-900/80 p-6 shadow-xl shadow-primary-500/30 md:scale-105">
-            <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-primary-500/10 px-3 py-1 text-xs font-semibold text-primary-200">
-              <span className="h-2 w-2 rounded-full bg-primary-400" />
-              <Badge variant="primary" className="border-0 bg-transparent px-0 py-0 text-xs">
-                Más popular
-              </Badge>
+          <div className="relative flex flex-col rounded-3xl border border-primary-500/40 bg-gradient-to-br from-primary/20 via-secondary/15 to-card p-6 shadow-[0_20px_55px_rgba(249,115,22,0.18)] dark:bg-neutral-900/80 dark:shadow-primary-500/30 md:scale-105">
+            <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-[#f97316]/10 px-3 py-1 text-xs font-semibold text-[#f97316] border border-[#f97316]/40 dark:bg-primary-500/10 dark:border-primary-500/40 dark:text-primary-200">
+              <span className="h-2 w-2 rounded-full bg-[#f97316] dark:bg-primary-400" />
+              <span>Más popular</span>
             </div>
-            <div className="mb-2 text-sm font-semibold text-neutral-50">Professional</div>
+            <div className="mb-2 text-sm font-semibold text-white">Professional</div>
             <div className="mb-1 flex items-baseline gap-1">
-              <span className="text-3xl font-semibold text-white">
+              <span className="text-3xl font-semibold text-foreground dark:text-white">
                 {getPrice(basePrices.professional, billing, "professional")}€
               </span>
-              <span className="text-sm text-neutral-400">{isYearly ? "/año" : "/mes"}</span>
+              <span className="text-sm text-neutral-200 dark:text-neutral-400">{isYearly ? "/año" : "/mes"}</span>
             </div>
             {isYearly && (
-              <p className="mb-3 text-xs text-emerald-300">
-                Equivale a {basePrices.professional}€/mes (2 meses gratis)
+              <p className="mb-3 inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-2.5 py-1 text-[11px] font-medium text-emerald-700 border border-emerald-500/30 dark:text-emerald-200">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                <span>
+                  Equivale a {basePrices.professional}€/mes (2 meses gratis)
+                </span>
               </p>
             )}
-            <p className="mb-6 text-sm text-neutral-200">
+            <p className="mb-6 text-sm text-neutral-800 dark:text-neutral-200">
               Para equipos que ya están llenos y quieren profesionalizar reservas, reducir ausencias y
               tener un control real de métricas.
             </p>
-            <ul className="mb-6 space-y-2 text-sm text-neutral-200">
+            <ul className="mb-6 space-y-2 text-sm text-neutral-800 dark:text-neutral-200">
               <li className="flex items-start gap-2">
                 <Check className="mt-0.5 h-4 w-4 text-emerald-400" />
                 <span>Hasta 5 profesionales</span>
@@ -208,23 +209,28 @@ export default function PricingContent() {
               </li>
             </ul>
             <div className="mt-auto">
-              <Button as="link" href="/contacto" variant="primary" className="w-full">
+              <Button
+                as="link"
+                href="/contacto"
+                variant="primary"
+                className="w-full bg-white text-primary hover:bg-neutral-50 dark:bg-primary dark:text-primary-foreground"
+              >
                 Elegir plan Professional
               </Button>
             </div>
           </div>
 
           {/* Enterprise */}
-          <div className="relative flex flex-col rounded-3xl border border-neutral-800 bg-neutral-900/70 p-6 shadow-sm">
-            <div className="mb-2 text-sm font-semibold text-neutral-50">Enterprise</div>
+          <div className="relative flex flex-col rounded-3xl border border-border bg-card p-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)] dark:border-neutral-800 dark:bg-neutral-900/70 dark:shadow-sm">
+            <div className="mb-2 text-sm font-semibold text-foreground dark:text-neutral-50">Enterprise</div>
             <div className="mb-4 flex items-baseline gap-1">
-              <span className="text-3xl font-semibold text-white">Personalizado</span>
+              <span className="text-3xl font-semibold text-foreground dark:text-white">Personalizado</span>
             </div>
-            <p className="mb-6 text-sm text-neutral-400">
+            <p className="mb-6 text-sm text-neutral-700 dark:text-neutral-400">
               Para cadenas o grupos con varios locales y necesidades avanzadas de informes e
               integraciones.
             </p>
-            <ul className="mb-6 space-y-2 text-sm text-neutral-200">
+            <ul className="mb-6 space-y-2 text-sm text-neutral-800 dark:text-neutral-200">
               <li className="flex items-start gap-2">
                 <Check className="mt-0.5 h-4 w-4 text-emerald-400" />
                 <span>Más de 5 locales o equipos</span>
@@ -251,21 +257,21 @@ export default function PricingContent() {
           {featureRows.map((row) => (
             <div
               key={row.label}
-              className="rounded-2xl border border-neutral-800 bg-neutral-900/70 p-4 text-sm space-y-3"
+              className="rounded-2xl border border-border bg-card p-4 text-sm space-y-3 dark:border-neutral-800 dark:bg-neutral-900/70"
             >
-              <p className="text-neutral-200 font-medium">{row.label}</p>
+              <p className="text-neutral-800 dark:text-neutral-200 font-medium">{row.label}</p>
               <div className="grid grid-cols-1 gap-2">
                 <div className="flex items-baseline justify-between gap-3">
                   <span className="text-xs uppercase tracking-wide text-neutral-500">Starter</span>
-                  <span className="text-neutral-200 text-right">{row.starter}</span>
+                  <span className="text-neutral-800 dark:text-neutral-200 text-right">{row.starter}</span>
                 </div>
                 <div className="flex items-baseline justify-between gap-3">
                   <span className="text-xs uppercase tracking-wide text-neutral-500">Professional</span>
-                  <span className="text-neutral-200 text-right">{row.professional}</span>
+                  <span className="text-neutral-800 dark:text-neutral-200 text-right">{row.professional}</span>
                 </div>
                 <div className="flex items-baseline justify-between gap-3">
                   <span className="text-xs uppercase tracking-wide text-neutral-500">Enterprise</span>
-                  <span className="text-neutral-200 text-right">{row.enterprise}</span>
+                  <span className="text-neutral-800 dark:text-neutral-200 text-right">{row.enterprise}</span>
                 </div>
               </div>
             </div>
@@ -273,23 +279,23 @@ export default function PricingContent() {
         </div>
 
         {/* Tabla comparativa (solo visible en md+ para vista horizontal completa) */}
-        <div className="hidden md:block rounded-3xl border border-neutral-800 bg-neutral-900/60 p-6 shadow-sm overflow-x-auto">
-          <table className="min-w-full text-sm text-left text-neutral-200">
+        <div className="hidden md:block rounded-3xl border border-border bg-card p-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)] dark:border-neutral-800 dark:bg-neutral-900/60 dark:shadow-sm overflow-x-auto">
+          <table className="min-w-full text-sm text-left text-neutral-800 dark:text-neutral-200">
             <thead>
               <tr className="border-b border-neutral-800">
-                <th className="py-3 px-4 text-neutral-400 font-medium">Características</th>
-                <th className="py-3 px-4 text-center font-medium text-white">Starter</th>
-                <th className="py-3 px-4 text-center font-medium text-white">Professional</th>
-                <th className="py-3 px-4 text-center font-medium text-white">Enterprise</th>
+                <th className="py-3 px-4 text-neutral-600 dark:text-neutral-400 font-medium">Características</th>
+                <th className="py-3 px-4 text-center font-medium text-foreground dark:text-white">Starter</th>
+                <th className="py-3 px-4 text-center font-medium text-foreground dark:text-white">Professional</th>
+                <th className="py-3 px-4 text-center font-medium text-foreground dark:text-white">Enterprise</th>
               </tr>
             </thead>
             <tbody>
               {featureRows.map((row) => (
                 <tr key={row.label} className="border-b border-neutral-900/60 last:border-0">
-                  <td className="py-3 px-4 text-neutral-300">{row.label}</td>
-                  <td className="py-3 px-4 text-center text-neutral-200">{row.starter}</td>
-                  <td className="py-3 px-4 text-center text-neutral-200">{row.professional}</td>
-                  <td className="py-3 px-4 text-center text-neutral-200">{row.enterprise}</td>
+                  <td className="py-3 px-4 text-neutral-700 dark:text-neutral-300">{row.label}</td>
+                  <td className="py-3 px-4 text-center text-neutral-800 dark:text-neutral-200">{row.starter}</td>
+                  <td className="py-3 px-4 text-center text-neutral-800 dark:text-neutral-200">{row.professional}</td>
+                  <td className="py-3 px-4 text-center text-neutral-800 dark:text-neutral-200">{row.enterprise}</td>
                 </tr>
               ))}
             </tbody>
