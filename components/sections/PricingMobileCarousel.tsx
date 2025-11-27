@@ -39,6 +39,14 @@ const plans = [
   },
 ];
 
+// Física de muelle para un movimiento fluido y con "peso"
+const SPRING_OPTIONS = {
+  type: "spring" as const,
+  stiffness: 300,
+  damping: 28,
+  mass: 1.1,
+};
+
 export default function PricingMobileCarousel() {
   const { resolvedTheme } = useTheme();
   const isDark = resolvedTheme === "dark";
@@ -61,9 +69,10 @@ export default function PricingMobileCarousel() {
     event: MouseEvent | TouchEvent | PointerEvent,
     info: PanInfo,
   ) => {
-    if (info.offset.x < -50) {
+    const threshold = 25; // menos distancia para que cambie, se siente más reactivo
+    if (info.offset.x < -threshold) {
       setActiveIndex((prev) => prev + 1);
-    } else if (info.offset.x > 50) {
+    } else if (info.offset.x > threshold) {
       setActiveIndex((prev) => prev - 1);
     }
   };
@@ -71,7 +80,7 @@ export default function PricingMobileCarousel() {
   return (
     <div className="relative w-full h-[460px] flex items-center justify-center overflow-hidden py-6">
       {/* Contenedor de Perspectiva 3D, solo se usará en móvil/tablet */}
-      <div className="relative w-full max-w-[320px] h-full flex items-center justify-center perspective-[1000px]">
+      <div className="relative w-full max-w-[320px] h-full flex items-center justify-center perspective-[1200px]">
         {[-1, 0, 1].map((offset) => {
           const index = getIndex(activeIndex + offset);
           const plan = plans[index];
@@ -81,8 +90,8 @@ export default function PricingMobileCarousel() {
             <motion.div
               key={`${index}-${activeIndex}`}
               className={cn(
-                "absolute top-0 w-full",
-                isActive ? "z-20" : "z-10",
+                "absolute top-0 w-full cursor-grab active:cursor-grabbing",
+                isActive ? "z-30" : "z-10",
               )}
               initial={{
                 scale: 0.8,
@@ -92,19 +101,24 @@ export default function PricingMobileCarousel() {
               }}
               animate={{
                 scale: isActive ? 1 : 0.85,
-                x: `${offset * 60}%`,
-                rotateY: offset * -25,
-                opacity: isActive ? 1 : 0.4,
-                zIndex: isActive ? 20 : 10,
+                x: isActive ? "0%" : `${offset * 75}%`, // más cerca del centro para mayor overlap
+                rotateY: isActive ? 0 : offset * -25,
+                opacity: isActive ? 1 : 0.45,
+                zIndex: isActive ? 30 : 10,
               }}
-              transition={{
-                type: "spring",
-                stiffness: 220,
-                damping: 22,
-              }}
-              drag={isActive ? "x" : false}
+              transition={SPRING_OPTIONS}
+              drag="x"
               dragConstraints={{ left: 0, right: 0 }}
-              onDragEnd={handleDragEnd}
+              dragElastic={0.15}
+              onDragEnd={(e, info) => {
+                // la central manda, pero permitimos que las laterales empujen si las arrastras hacia el centro
+                if (isActive) {
+                  handleDragEnd(e, info);
+                } else {
+                  if (offset === 1 && info.offset.x < -20) setActiveIndex((prev) => prev + 1);
+                  if (offset === -1 && info.offset.x > 20) setActiveIndex((prev) => prev - 1);
+                }
+              }}
               style={{ transformStyle: "preserve-3d" }}
             >
               {/* Tarjeta estilo glassmorphism inspirada en GlassCard */}
@@ -134,7 +148,12 @@ export default function PricingMobileCarousel() {
                 <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.08] mix-blend-overlay pointer-events-none" />
                 <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-70" />
 
-                <div className="relative z-10 flex h-full flex-col p-5">
+                <div
+                  className={cn(
+                    "relative z-10 flex h-full flex-col p-5",
+                    !isActive && "pointer-events-none",
+                  )}
+                >
                   {/* Header */}
                   <div className="mb-4">
                     <h3

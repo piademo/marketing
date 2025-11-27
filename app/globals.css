@@ -201,9 +201,10 @@
     @apply card hover:-translate-y-1 hover:border-neutral-400 dark:hover:border-primary/40 dark:hover:bg-neutral-900/40;
   }
 
-  /* Inputs (Adaptados a Dark Mode) */
+  /* Inputs (Light/Dark) */
   .input {
-    @apply w-full rounded-lg sm:rounded-xl border border-neutral-800 bg-neutral-900 px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-white placeholder:text-neutral-500 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 transition-colors;
+    /* LIGHT: campo claro, borde suave, texto oscuro */
+    @apply w-full rounded-lg sm:rounded-xl border border-neutral-300 bg-white px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-neutral-900 placeholder:text-neutral-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 transition-colors;
   }
 
   .textarea {
@@ -211,7 +212,16 @@
   }
 
   .label {
-    @apply mb-1.5 sm:mb-2 block text-xs sm:text-sm font-medium text-neutral-300;
+    @apply mb-1.5 sm:mb-2 block text-xs sm:text-sm font-medium text-neutral-700;
+  }
+
+  /* Overrides Dark Mode para inputs */
+  .dark .input {
+    @apply border-neutral-800 bg-neutral-900 text-white placeholder:text-neutral-500;
+  }
+
+  .dark .label {
+    @apply text-neutral-300;
   }
 
   /* Badges */

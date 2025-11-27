@@ -90,12 +90,12 @@ export default function SectoresPage() {
                   <div className={`p-4 rounded-2xl ${sector.bg} ${sector.border} border shadow-inner`}>
                     <sector.icon className={`w-8 h-8 ${sector.color}`} />
                   </div>
-                  <div className="p-2 rounded-full bg-primary/10 text-primary border border-primary/20 dark:bg-white/5 dark:border-white/5 group-hover:bg-primary/20 dark:group-hover:bg-white/10 transition-colors">
-                    <ArrowRight className="w-5 h-5 text-primary group-hover:text-primary-700 dark:text-neutral-400 dark:group-hover:text-white" />
+                  <div className="p-2 rounded-full bg-[#f97316]/10 text-[#ea580c] border border-[#f97316]/30 dark:bg-primary/10 dark:text-primary dark:border-primary/20 dark:group-hover:bg-primary/20 dark:group-hover:text-primary-300 transition-colors">
+                    <ArrowRight className="w-5 h-5 text-[#ea580c] group-hover:text-[#c05621] dark:text-primary dark:group-hover:text-primary-300" />
                   </div>
                 </div>
 
-                <h2 className="text-2xl font-bold text-foreground dark:text-white mb-4 group-hover:text-primary-700 dark:group-hover:text-primary-300 transition-colors">
+                <h2 className="text-2xl font-bold text-foreground dark:text-white mb-4 group-hover:text-[#ea580c] dark:group-hover:text-primary-300 transition-colors">
                   {sector.title}
                 </h2>
                 <p className="text-neutral-700 dark:text-neutral-400 leading-relaxed mb-8 flex-grow">{sector.description}</p>
@@ -103,7 +103,7 @@ export default function SectoresPage() {
                 <div className="space-y-3 border-t border-border dark:border-white/5 pt-6 mt-auto">
                   {sector.features.map((feature) => (
                     <div key={feature} className="flex items-center text-sm text-neutral-700 dark:text-neutral-300">
-                      <div className="w-1.5 h-1.5 rounded-full bg-primary-500 mr-3 shadow-[0_0_8px_rgba(249,115,22,0.5)]" />
+                      <div className="w-1.5 h-1.5 rounded-full mr-3 bg-[#f97316] shadow-[0_0_8px_rgba(249,115,22,0.5)] dark:bg-primary-500" />
                       {feature}
                     </div>
                   ))}

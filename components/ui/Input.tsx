@@ -14,7 +14,7 @@ export default function Input({
   className = '',
   ...props
 }: InputProps) {
-  const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`;
+  const inputId = id;
 
   return (
     <div className="w-full">
