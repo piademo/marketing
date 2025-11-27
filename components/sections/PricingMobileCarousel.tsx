@@ -152,14 +152,14 @@ export default function PricingMobileCarousel() {
               key={plan.name}
               className={cn(
                 "absolute top-0 h-full flex items-center justify-center p-2 origin-center",
-                "w-[88vw] max-w-[380px] min-w-[320px] sm:max-w-[400px] md:max-w-[420px]", // ancho fijo consistente pero deja respirar laterales
+                "w-[90vw] max-w-[380px] min-w-[320px] sm:max-w-[400px] md:max-w-[420px]", // ancho fijo consistente pero deja respirar laterales
                 isActive ? "cursor-grab active:cursor-grabbing" : "pointer-events-none",
               )}
               animate={getVariants(slot)}
               transition={SPRING_OPTIONS}
               drag={isActive ? "x" : false}
-              dragConstraints={{ left: -260, right: 260 }}
-              dragElastic={0.34}
+              dragConstraints={{ left: -200, right: 200 }}
+              dragElastic={0.26}
               dragMomentum={false}
               onDragEnd={handleDragEnd}
               style={{ transformStyle: "preserve-3d" }}
