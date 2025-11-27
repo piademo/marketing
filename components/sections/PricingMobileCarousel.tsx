@@ -39,18 +39,21 @@ const plans = [
   },
 ];
 
-// Física de muelle para un movimiento fluido y con "peso" tipo Cover Flow
+// Física de muelle "snappy": rápida y precisa para evitar solapamientos visibles
 const SPRING_OPTIONS = {
   type: "spring" as const,
-  stiffness: 180,
-  damping: 25,
-  mass: 1.2,
+  stiffness: 300,
+  damping: 30,
+  mass: 0.8,
 };
 
 export default function PricingMobileCarousel() {
   const { resolvedTheme } = useTheme();
   const isDark = resolvedTheme === "dark";
-  const [activeIndex, setActiveIndex] = useState(1); // Empezar en el del medio (Professional)
+
+  // Índice infinito: puede crecer/ decrecer sin hacer reset a 0..N
+  // Empezamos en 1 para que el plan central sea Professional
+  const [index, setIndex] = useState(1);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -59,77 +62,110 @@ export default function PricingMobileCarousel() {
 
   if (!mounted) return null;
 
-  // Índice circular para loop infinito
-  const getIndex = (index: number) => {
+  // Normaliza un índice infinito al rango 0..len-1
+  const getWrappedIndex = (i: number) => {
     const len = plans.length;
-    return ((index % len) + len) % len;
+    return ((i % len) + len) % len;
+  };
+
+  // Lógica de slots virtuales: -1 (izquierda), 0 (centro), 1 (derecha)
+  const getSlot = (cardIndex: number, activeIndex: number) => {
+    const total = plans.length;
+    let diff = (cardIndex - getWrappedIndex(activeIndex)) % total;
+    if (diff > 1) diff -= total;
+    if (diff < -1) diff += total;
+    return diff;
+  };
+
+  // Variantes de animación según el slot (0 centro, 1 derecha, -1 izquierda, resto = backstage)
+  const getVariants = (slot: number) => {
+    if (slot === 0) {
+      // Centro (activa)
+      return {
+        x: "0%",
+        scale: 1,
+        zIndex: 50,
+        opacity: 1,
+        rotateY: 0,
+        z: 0,
+        filter: "blur(0px) brightness(1)",
+      };
+    }
+    if (slot === 1) {
+      // Derecha (lateral)
+      return {
+        x: "65%", // más separación para evitar choque visual
+        scale: 0.85,
+        zIndex: 10,
+        opacity: 0.5,
+        rotateY: -15,
+        z: -100,
+        filter: "blur(2px) brightness(0.6)",
+      };
+    }
+    if (slot === -1) {
+      // Izquierda (lateral)
+      return {
+        x: "-65%",
+        scale: 0.85,
+        zIndex: 10,
+        opacity: 0.5,
+        rotateY: 15,
+        z: -100,
+        filter: "blur(2px) brightness(0.6)",
+      };
+    }
+    // Backstage: cruce invisible por detrás
+    return {
+      x: "0%",
+      scale: 0.5,
+      zIndex: 0,
+      opacity: 0,
+      rotateY: 0,
+      z: -200,
+      filter: "blur(10px)",
+    };
   };
 
   const handleDragEnd = (
     event: MouseEvent | TouchEvent | PointerEvent,
     info: PanInfo,
   ) => {
-    const threshold = 50; // distancia mínima algo mayor para un snap más pesado
-    if (info.offset.x < -threshold) {
-      setActiveIndex((prev) => prev + 1);
-    } else if (info.offset.x > threshold) {
-      setActiveIndex((prev) => prev - 1);
+    const { offset, velocity } = info;
+    const swipe = Math.abs(offset.x) * velocity.x;
+    if (swipe < -200 || offset.x < -80) {
+      setIndex((prev) => prev + 1);
+    } else if (swipe > 200 || offset.x > 80) {
+      setIndex((prev) => prev - 1);
     }
   };
 
   return (
-    <div className="relative w-full h-[480px] flex items-center justify-center overflow-hidden py-8">
-      {/* Contenedor de Perspectiva 3D, clave para la profundidad */}
-      <div className="relative w-full max-w-[320px] h-full flex items-center justify-center perspective-[1200px]">
-        {[-1, 0, 1].map((offset) => {
-          const index = getIndex(activeIndex + offset);
-          const plan = plans[index];
-          const isActive = offset === 0;
-
+    <div className="relative w-full h-[520px] flex items-center justify-center overflow-hidden py-4">
+      {/* Escenario 3D compacto con tarjetas anchas */}
+      <div className="relative w-full h-[420px] flex items-center justify-center perspective-[1200px] px-4">
+        {plans.map((plan, i) => {
+          const slot = getSlot(i, index);
+          const isActive = slot === 0;
           return (
             <motion.div
-              key={`${index}-${activeIndex}`}
+              key={plan.name}
               className={cn(
-                "absolute top-0 w-full cursor-grab active:cursor-grabbing origin-center",
-                isActive ? "z-30" : "z-10",
+                "absolute top-0 h-full flex items-center justify-center p-2 origin-center w-[90%] max-w-[400px]",
+                isActive ? "cursor-grab active:cursor-grabbing" : "pointer-events-none",
               )}
-              initial={{
-                scale: 0.8,
-                x: `${offset * 100}%`,
-                rotateY: offset === -1 ? 45 : offset === 1 ? -45 : 0,
-                opacity: 0,
-                filter: "blur(2px)",
-              }}
-              animate={{
-                // Centro
-                scale: isActive ? 1 : 0.85,
-                x: isActive ? "0%" : `${offset * 65}%`, // overlap agresivo (~35-40% solapado)
-                // Concavidad: las laterales miran hacia el centro
-                rotateY: isActive ? 0 : offset === -1 ? 35 : -35,
-                opacity: isActive ? 1 : 0.6,
-                zIndex: isActive ? 30 : 5,
-                // Profundidad de campo: blur ligero en las laterales
-                filter: isActive ? "blur(0px)" : "blur(2px)",
-              }}
+              animate={getVariants(slot)}
               transition={SPRING_OPTIONS}
-              drag="x"
+              drag={isActive ? "x" : false}
               dragConstraints={{ left: 0, right: 0 }}
-              dragElastic={0.15}
-              onDragEnd={(e, info) => {
-                // la central manda, pero permitimos que las laterales empujen si las arrastras hacia el centro
-                if (isActive) {
-                  handleDragEnd(e, info);
-                } else {
-                  if (offset === 1 && info.offset.x < -20) setActiveIndex((prev) => prev + 1);
-                  if (offset === -1 && info.offset.x > 20) setActiveIndex((prev) => prev - 1);
-                }
-              }}
+              dragElastic={0.1}
+              onDragEnd={handleDragEnd}
               style={{ transformStyle: "preserve-3d" }}
             >
               {/* Tarjeta estilo glassmorphism inspirada en GlassCard */}
               <div
                 className={cn(
-                  "relative h-[380px] flex flex-col rounded-3xl overflow-hidden border backdrop-blur-2xl transition-all duration-300",
+                  "relative h-full flex flex-col rounded-3xl overflow-hidden border backdrop-blur-2xl transition-all duration-300",
                   "bg-gradient-to-br from-primary/15 via-secondary/10 to-neutral-50/5 dark:from-primary/15 dark:via-secondary/10 dark:to-neutral-900/80",
                   isActive
                     ? cn(
@@ -234,7 +270,6 @@ export default function PricingMobileCarousel() {
           );
         })}
       </div>
-
     </div>
   );
 }
