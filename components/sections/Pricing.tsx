@@ -123,7 +123,14 @@ export default function Pricing() {
               className="relative rounded-3xl sm:rounded-[1.7rem]"
             >
               {/* BorderBeam recorre el borde EXTERIOR del wrapper con movimiento fluido */}
-              <BorderBeam size={280} duration={18} delay={0} radius={24} />
+              <BorderBeam
+                size={280}
+                duration={18}
+                delay={0}
+                radius={24}
+                colorFrom="#f97316"  /* Sunset naranja */
+                colorTo="#fb7185"    /* Sunset rosa */
+              />
               <GlassCard
                 gradient="subtle"
                 className={cn(
@@ -146,20 +153,20 @@ export default function Pricing() {
                     </span>
                     <span className="text-xs sm:text-sm text-neutral-200 dark:text-neutral-400">/mes</span>
                   </div>
-                  <p className="mb-3 sm:mb-4 text-sm sm:text-xs text-neutral-100 dark:text-neutral-200">
+                  <p className="mb-2 sm:mb-3 text-sm sm:text-xs text-neutral-100 dark:text-neutral-200">
                     Para negocios en crecimiento.
                   </p>
-                  <ul className="mb-3 sm:mb-4 space-y-1.5 sm:space-y-2 text-neutral-100 dark:text-neutral-200 text-left mx-auto max-w-xs">
+                  <ul className="mb-6 sm:mb-7 lg:mb-8 space-y-1.5 sm:space-y-2 text-neutral-100 dark:text-neutral-200 text-left mx-auto max-w-xs">
                     {proFeatures.map((item) => (
                       <FeatureItem key={item} label={item} />
                     ))}
                   </ul>
-                  <div className="mt-auto w-full">
+                  <div className="w-full">
                     <Button
                       as="link"
                       href="/contacto"
                       variant="primary"
-                      className="w-full text-sm sm:text-sm bg-white text-primary hover:bg-neutral-50 dark:bg-primary dark:text-primary-foreground"
+                      className="w-full text-sm sm:text-sm bg-white !text-black hover:bg-white btn-cyber-animated"
                     >
                       Elegir Professional
                     </Button>
@@ -184,7 +191,12 @@ export default function Pricing() {
                 ))}
               </ul>
               <div className="mt-auto">
-                <Button as="link" href="/contacto" variant="ghost" className="w-full text-sm sm:text-sm">
+                <Button
+                  as="link"
+                  href="/contacto"
+                  variant="ghost"
+                  className="w-full text-sm sm:text-sm border border-border dark:border-neutral-700"
+                >
                   Hablar con ventas
                 </Button>
               </div>

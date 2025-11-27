@@ -189,12 +189,13 @@ export default function PricingMobileCarousel() {
                     variant={isActive && plan.highlight ? "primary" : "outline"}
                     className={cn(
                       "w-full text-sm",
-                      isActive && plan.highlight
-                        ? "bg-white text-primary hover:bg-neutral-50 dark:bg-primary dark:text-primary-foreground"
-                        : "",
+                      isActive && plan.highlight ? "bg-white !text-black hover:bg-white btn-cyber-animated" : "",
+                      !isDark && plan.name === 'Professional' && "!text-black",
                     )}
                   >
-                    Empezar
+                    {plan.name === 'Starter' && 'Empezar con Starter'}
+                    {plan.name === 'Professional' && 'Elegir Professional'}
+                    {plan.name === 'Enterprise' && 'Hablar con ventas'}
                   </Button>
                 </div>
               </div>
