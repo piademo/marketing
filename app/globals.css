@@ -74,7 +74,7 @@
   /* Ajuste tipográfico en móviles: textos un poco más grandes para que la home no se vea comprimida */
   @media (max-width: 640px) {
     body {
-      font-size: 1.05rem; /* ~16px -> ~16.8px */
+      font-size: 1.12rem; /* ~16px -> ~18px aprox */
     }
 
     h1 {
