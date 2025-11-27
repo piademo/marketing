@@ -92,10 +92,10 @@ export default function PricingMobileCarousel() {
       };
     }
     if (slot === 1) {
-      // Derecha (lateral)
+      // Derecha (lateral) – mismo tamaño que la central, solo cambia posición/profundidad
       return {
-        x: "65%", // más separación para evitar choque visual
-        scale: 0.85,
+        x: "75%", // un poco más alejada para compensar el scale 1
+        scale: 1,
         zIndex: 10,
         opacity: 0.5,
         rotateY: -15,
@@ -104,10 +104,10 @@ export default function PricingMobileCarousel() {
       };
     }
     if (slot === -1) {
-      // Izquierda (lateral)
+      // Izquierda (lateral) – mismo tamaño que la central
       return {
-        x: "-65%",
-        scale: 0.85,
+        x: "-75%",
+        scale: 1,
         zIndex: 10,
         opacity: 0.5,
         rotateY: 15,
@@ -151,7 +151,7 @@ export default function PricingMobileCarousel() {
             <motion.div
               key={plan.name}
               className={cn(
-                "absolute top-0 h-full flex items-center justify-center p-2 origin-center w-[90%] max-w-[400px]",
+                "absolute top-0 h-full flex items-center justify-center p-2 origin-center w-[320px]",
                 isActive ? "cursor-grab active:cursor-grabbing" : "pointer-events-none",
               )}
               animate={getVariants(slot)}
