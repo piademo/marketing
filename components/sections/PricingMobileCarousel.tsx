@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion, PanInfo } from "framer-motion";
 import { useTheme } from "next-themes";
 import { Check } from "lucide-react";
@@ -43,6 +43,13 @@ export default function PricingMobileCarousel() {
   const { resolvedTheme } = useTheme();
   const isDark = resolvedTheme === "dark";
   const [activeIndex, setActiveIndex] = useState(1); // Empezar en el del medio (Professional)
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
 
   // Índice circular para loop infinito
   const getIndex = (index: number) => {
