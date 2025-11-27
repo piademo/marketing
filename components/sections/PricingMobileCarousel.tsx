@@ -39,12 +39,12 @@ const plans = [
   },
 ];
 
-// Física de muelle para un movimiento fluido y con "peso"
+// Física de muelle para un movimiento fluido y con "peso" tipo Cover Flow
 const SPRING_OPTIONS = {
   type: "spring" as const,
-  stiffness: 300,
-  damping: 28,
-  mass: 1.1,
+  stiffness: 180,
+  damping: 25,
+  mass: 1.2,
 };
 
 export default function PricingMobileCarousel() {
@@ -69,7 +69,7 @@ export default function PricingMobileCarousel() {
     event: MouseEvent | TouchEvent | PointerEvent,
     info: PanInfo,
   ) => {
-    const threshold = 25; // menos distancia para que cambie, se siente más reactivo
+    const threshold = 50; // distancia mínima algo mayor para un snap más pesado
     if (info.offset.x < -threshold) {
       setActiveIndex((prev) => prev + 1);
     } else if (info.offset.x > threshold) {
@@ -78,8 +78,8 @@ export default function PricingMobileCarousel() {
   };
 
   return (
-    <div className="relative w-full h-[460px] flex items-center justify-center overflow-hidden py-6">
-      {/* Contenedor de Perspectiva 3D, solo se usará en móvil/tablet */}
+    <div className="relative w-full h-[480px] flex items-center justify-center overflow-hidden py-8">
+      {/* Contenedor de Perspectiva 3D, clave para la profundidad */}
       <div className="relative w-full max-w-[320px] h-full flex items-center justify-center perspective-[1200px]">
         {[-1, 0, 1].map((offset) => {
           const index = getIndex(activeIndex + offset);
@@ -90,21 +90,26 @@ export default function PricingMobileCarousel() {
             <motion.div
               key={`${index}-${activeIndex}`}
               className={cn(
-                "absolute top-0 w-full cursor-grab active:cursor-grabbing",
+                "absolute top-0 w-full cursor-grab active:cursor-grabbing origin-center",
                 isActive ? "z-30" : "z-10",
               )}
               initial={{
                 scale: 0.8,
                 x: `${offset * 100}%`,
-                rotateY: offset * -45,
+                rotateY: offset === -1 ? 45 : offset === 1 ? -45 : 0,
                 opacity: 0,
+                filter: "blur(2px)",
               }}
               animate={{
+                // Centro
                 scale: isActive ? 1 : 0.85,
-                x: isActive ? "0%" : `${offset * 75}%`, // más cerca del centro para mayor overlap
-                rotateY: isActive ? 0 : offset * -25,
-                opacity: isActive ? 1 : 0.45,
-                zIndex: isActive ? 30 : 10,
+                x: isActive ? "0%" : `${offset * 65}%`, // overlap agresivo (~35-40% solapado)
+                // Concavidad: las laterales miran hacia el centro
+                rotateY: isActive ? 0 : offset === -1 ? 35 : -35,
+                opacity: isActive ? 1 : 0.6,
+                zIndex: isActive ? 30 : 5,
+                // Profundidad de campo: blur ligero en las laterales
+                filter: isActive ? "blur(0px)" : "blur(2px)",
               }}
               transition={SPRING_OPTIONS}
               drag="x"
