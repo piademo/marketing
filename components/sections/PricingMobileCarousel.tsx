@@ -94,25 +94,25 @@ export default function PricingMobileCarousel() {
     if (slot === 1) {
       // Derecha (lateral) – mismo tamaño que la central, solo cambia posición/profundidad
       return {
-        x: "60%", // más cerca para que se vea la pieza trasera derecha
-        scale: 1,
+        x: "65%", // deja ver la trasera sin tapar la izquierda
+        scale: 0.98,
         zIndex: 10,
-        opacity: 0.5,
-        rotateY: -15,
-        z: -100,
-        filter: "blur(2px) brightness(0.6)",
+        opacity: 0.55,
+        rotateY: -18,
+        z: -110,
+        filter: "blur(2px) brightness(0.62)",
       };
     }
     if (slot === -1) {
       // Izquierda (lateral) – mismo tamaño que la central
       return {
-        x: "-60%", // visible asomada a la izquierda
-        scale: 1,
+        x: "-65%", // visible asomada a la izquierda
+        scale: 0.98,
         zIndex: 10,
-        opacity: 0.5,
-        rotateY: 15,
-        z: -100,
-        filter: "blur(2px) brightness(0.6)",
+        opacity: 0.55,
+        rotateY: 18,
+        z: -110,
+        filter: "blur(2px) brightness(0.62)",
       };
     }
     // Backstage: cruce invisible por detrás
@@ -143,7 +143,7 @@ export default function PricingMobileCarousel() {
   return (
     <div className="relative w-full h-[520px] flex items-center justify-center overflow-hidden py-4">
       {/* Escenario 3D compacto con tarjetas anchas */}
-      <div className="relative w-full h-[420px] flex items-center justify-center perspective-[1200px] px-4">
+      <div className="relative w-full max-w-[520px] h-[420px] flex items-center justify-center perspective-[1200px] px-2">
         {plans.map((plan, i) => {
           const slot = getSlot(i, index);
           const isActive = slot === 0;
@@ -152,14 +152,14 @@ export default function PricingMobileCarousel() {
               key={plan.name}
               className={cn(
                 "absolute top-0 h-full flex items-center justify-center p-2 origin-center",
-                "w-full max-w-[360px] min-w-[320px] sm:max-w-[400px] md:max-w-[420px]", // ancho fijo consistente
+                "w-[88vw] max-w-[380px] min-w-[320px] sm:max-w-[400px] md:max-w-[420px]", // ancho fijo consistente pero deja respirar laterales
                 isActive ? "cursor-grab active:cursor-grabbing" : "pointer-events-none",
               )}
               animate={getVariants(slot)}
               transition={SPRING_OPTIONS}
               drag={isActive ? "x" : false}
-              dragConstraints={{ left: -220, right: 220 }}
-              dragElastic={0.28}
+              dragConstraints={{ left: -260, right: 260 }}
+              dragElastic={0.34}
               dragMomentum={false}
               onDragEnd={handleDragEnd}
               style={{ transformStyle: "preserve-3d" }}
