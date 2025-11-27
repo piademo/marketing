@@ -10,7 +10,7 @@ import TiltCard from '@/components/ui/TiltCard';
 export default function Hero() {
   return (
     // Mantenemos la estructura pero sin los divs de fondo "extra"
-    <section className="relative -mt-16 overflow-hidden pt-20 pb-24 lg:-mt-20 lg:pt-24 lg:pb-32">
+    <section className="relative -mt-16 overflow-hidden pt-24 pb-24 lg:-mt-20 lg:pt-28 lg:pb-32">
       {/* ELIMINADO: Las capas de ruido y color locales que causaban el corte.
          Ahora el Hero es totalmente transparente y mostrará el mismo SpotlightBackground que Features.
       */}

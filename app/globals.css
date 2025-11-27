@@ -111,7 +111,7 @@
   }
 
   .section-lg {
-    @apply py-20 sm:py-24 lg:py-32;
+    @apply pt-16 pb-20 sm:pt-20 sm:pb-24 lg:pt-20 lg:pb-28;
   }
 
   /* Botones base */

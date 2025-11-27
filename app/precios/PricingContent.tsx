@@ -64,7 +64,7 @@ export default function PricingContent() {
   const isYearly = billing === "yearly";
 
   return (
-    <section className="section-lg">
+    <section className="pt-8 sm:pt-12 lg:pt-10 pb-16 sm:pb-20 lg:pb-24">
       <Container>
         <div className="mx-auto mb-10 max-w-3xl text-center">
           <h1 className="text-display-sm sm:text-display-md mb-4 text-foreground dark:text-white text-balance">

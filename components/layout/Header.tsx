@@ -350,7 +350,15 @@ export default function Header() {
       <div
         className={cn(
           "hidden md:block w-full transition-[height] duration-300 ease-out",
-          activeDropdown || ctaOpen ? "h-56" : "h-0",
+          activeDropdown || ctaOpen ? "h-40" : "h-0",
+        )}
+      />
+
+      {/* Spacer para móvil cuando el menú está abierto */}
+      <div
+        className={cn(
+          "block md:hidden w-full transition-[height] duration-300 ease-out",
+          mobileOpen ? "h-72" : "h-0",
         )}
       />
 
