@@ -31,7 +31,7 @@ const enterpriseFeatures = [
 
 function FeatureItem({ label }: { label: string }) {
   return (
-    <li className="flex items-start gap-1.5 sm:gap-2 text-xs sm:text-sm">
+    <li className="flex items-start gap-1.5 sm:gap-2 text-sm sm:text-sm">
       <span className="mt-0.5 inline-flex h-4 w-4 sm:h-5 sm:w-5 items-center justify-center rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400 shrink-0">
         <Check className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
       </span>
@@ -73,7 +73,7 @@ export default function Pricing() {
           transition={{ duration: 0.6 }}
           className="mx-auto mb-10 sm:mb-12 lg:mb-14 max-w-3xl text-center"
         >
-          <h2 className="text-xl sm:text-display-sm lg:text-display-md font-semibold tracking-tight text-foreground text-balance">
+          <h2 className="text-3xl sm:text-display-sm lg:text-display-md font-semibold tracking-tight text-foreground text-balance">
             Una inversión que recuperas salvando UNA sola cita al mes.
           </h2>
           <p className="mt-2 sm:mt-3 text-xs sm:text-sm lg:text-base text-neutral-700 dark:text-neutral-300 px-2">
@@ -90,19 +90,19 @@ export default function Pricing() {
         >
           {/* Plan Starter */}
           <motion.div variants={itemVariants} className="relative flex flex-col rounded-2xl sm:rounded-3xl border border-border bg-card p-4 sm:p-5 lg:p-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)] dark:border-neutral-800 dark:bg-neutral-900/70 dark:shadow-sm">
-            <div className="mb-1 sm:mb-2 text-xs sm:text-sm font-semibold text-foreground">Starter</div>
+            <div className="mb-1 sm:mb-2 text-sm sm:text-sm font-semibold text-foreground">Starter</div>
             <div className="mb-2 sm:mb-3 flex items-baseline gap-1">
               <span className="text-2xl sm:text-3xl font-semibold text-foreground">29€</span>
               <span className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400">/mes</span>
             </div>
-            <p className="mb-3 sm:mb-4 text-[11px] sm:text-xs text-neutral-700 dark:text-neutral-400">Ideal para 1-2 profesionales.</p>
+            <p className="mb-3 sm:mb-4 text-sm sm:text-xs text-neutral-700 dark:text-neutral-400">Ideal para 1-2 profesionales.</p>
             <ul className="mb-3 sm:mb-4 space-y-1.5 sm:space-y-2 text-neutral-800 dark:text-neutral-200">
               {soloFeatures.map((item) => (
                 <FeatureItem key={item} label={item} />
               ))}
             </ul>
             <div className="mt-auto">
-              <Button as="link" href="/contacto" variant="outline" className="w-full text-xs sm:text-sm">
+              <Button as="link" href="/contacto" variant="outline" className="w-full text-sm sm:text-sm">
                 Empezar con Starter
               </Button>
             </div>
@@ -126,14 +126,14 @@ export default function Pricing() {
                 <span className="h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-white/80" />
                 Más Popular
               </div>
-              <div className="mb-1 sm:mb-2 text-xs sm:text-sm font-semibold text-white">Professional</div>
+              <div className="mb-1 sm:mb-2 text-sm sm:text-sm font-semibold text-white">Professional</div>
               <div className="mb-2 sm:mb-3 flex items-baseline gap-1">
                 <span className="text-2xl sm:text-3xl font-semibold text-white">
                   79€
                 </span>
                 <span className="text-xs sm:text-sm text-neutral-200 dark:text-neutral-400">/mes</span>
               </div>
-              <p className="mb-3 sm:mb-4 text-[11px] sm:text-xs text-neutral-100 dark:text-neutral-200">
+              <p className="mb-3 sm:mb-4 text-sm sm:text-xs text-neutral-100 dark:text-neutral-200">
                 Para negocios en crecimiento.
               </p>
               <ul className="mb-3 sm:mb-4 space-y-1.5 sm:space-y-2 text-neutral-100 dark:text-neutral-200">
@@ -146,7 +146,7 @@ export default function Pricing() {
                   as="link"
                   href="/contacto"
                   variant="primary"
-                  className="w-full text-xs sm:text-sm bg-white text-primary hover:bg-neutral-50 dark:bg-primary dark:text-primary-foreground"
+                  className="w-full text-sm sm:text-sm bg-white text-primary hover:bg-neutral-50 dark:bg-primary dark:text-primary-foreground"
                 >
                   Elegir Professional
                 </Button>
@@ -156,18 +156,18 @@ export default function Pricing() {
 
           {/* Plan Enterprise */}
           <motion.div variants={itemVariants} className="relative flex flex-col rounded-2xl sm:rounded-3xl border border-border bg-card p-4 sm:p-5 lg:p-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)] dark:border-neutral-800 dark:bg-neutral-900/70 dark:shadow-sm">
-            <div className="mb-1 sm:mb-2 text-xs sm:text-sm font-semibold text-foreground">Enterprise</div>
+            <div className="mb-1 sm:mb-2 text-sm sm:text-sm font-semibold text-foreground">Enterprise</div>
             <div className="mb-2 sm:mb-3 flex items-baseline gap-1">
               <span className="text-lg sm:text-2xl font-semibold text-foreground">Personalizado</span>
             </div>
-            <p className="mb-3 sm:mb-4 text-[11px] sm:text-xs text-neutral-700 dark:text-neutral-400">Cadenas y grupos.</p>
+            <p className="mb-3 sm:mb-4 text-sm sm:text-xs text-neutral-700 dark:text-neutral-400">Cadenas y grupos.</p>
             <ul className="mb-3 sm:mb-4 space-y-1.5 sm:space-y-2 text-neutral-800 dark:text-neutral-200">
               {enterpriseFeatures.map((item) => (
                 <FeatureItem key={item} label={item} />
               ))}
             </ul>
             <div className="mt-auto">
-              <Button as="link" href="/contacto" variant="ghost" className="w-full text-xs sm:text-sm">
+              <Button as="link" href="/contacto" variant="ghost" className="w-full text-sm sm:text-sm">
                 Hablar con ventas
               </Button>
             </div>

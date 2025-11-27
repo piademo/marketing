@@ -93,8 +93,6 @@ export default function Hero() {
                   </div>
                 </div>
               </div>
-              <div className="absolute -left-4 top-1/4 h-72 w-72 rounded-full bg-primary-500/20 opacity-30 blur-3xl pointer-events-none" />
-              <div className="absolute -right-4 bottom-1/4 h-72 w-72 rounded-full bg-secondary-500/20 opacity-30 blur-3xl pointer-events-none" />
             </div>
           </TiltCard>
         </div>

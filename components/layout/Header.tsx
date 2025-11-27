@@ -112,8 +112,8 @@ export default function Header() {
   const glassStyle = cn(
     // Light: cristal blanco visible con borde y sombra física
     "backdrop-blur-2xl",
-    "bg-white/70 dark:bg-[#050505]/30",
-    "border border-black/5 dark:border-white/20",
+    "bg-white/90 dark:bg-[#050505]/30",
+    "border border-black/10 dark:border-white/20",
     "shadow-xl shadow-black/5 dark:shadow-none",
     "shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)]",
   );
