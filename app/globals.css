@@ -70,6 +70,21 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-semibold tracking-tight text-foreground;
   }
+
+  /* Ajuste tipográfico en móviles: textos un poco más grandes para que la home no se vea comprimida */
+  @media (max-width: 640px) {
+    body {
+      font-size: 1.05rem; /* ~16px -> ~16.8px */
+    }
+
+    h1 {
+      @apply text-3xl;
+    }
+
+    h2 {
+      @apply text-2xl;
+    }
+  }
 }
 
 @layer components {

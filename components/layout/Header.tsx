@@ -46,11 +46,17 @@ export default function Header() {
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [ctaOpen, setCtaOpen] = useState(false);
   const ctaTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoaded(true), 100);
     return () => clearTimeout(timer);
   }, []);
+
+  // Cerrar menú móvil al cambiar de ruta
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
 
   const handleMouseEnterLink = (
     e: React.MouseEvent<HTMLElement>,
@@ -314,10 +320,25 @@ export default function Header() {
               Empezar
             </Button>
 
-            <button className="md:hidden p-2 text-neutral-300 hover:text-white">
+            <button
+              type="button"
+              aria-label="Abrir menú"
+              onClick={() => setMobileOpen((open) => !open)}
+              className="md:hidden p-2 text-neutral-800 hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-white"
+            >
               <div className="space-y-1.5">
-                <span className="block w-5 h-0.5 bg-white/80 rounded-full" />
-                <span className="block w-5 h-0.5 bg-white/80 rounded-full" />
+                <span
+                  className={cn(
+                    "block w-5 h-0.5 rounded-full bg-current transition-transform",
+                    mobileOpen ? "translate-y-[5px] rotate-45" : "",
+                  )}
+                />
+                <span
+                  className={cn(
+                    "block w-5 h-0.5 rounded-full bg-current transition-transform",
+                    mobileOpen ? "-translate-y-[5px] -rotate-45" : "",
+                  )}
+                />
               </div>
             </button>
           </div>
@@ -332,6 +353,61 @@ export default function Header() {
           activeDropdown || ctaOpen ? "h-56" : "h-0",
         )}
       />
+
+      {/* Menú móvil desplegable */}
+      {mobileOpen && (
+        <div className="md:hidden fixed inset-x-0 top-24 z-40 px-4">
+          <div
+            className={cn(
+              "rounded-2xl p-4 space-y-3 backdrop-blur-2xl border shadow-xl shadow-black/5",
+              "bg-white/95 border-black/10 dark:bg-[#050505]/90 dark:border-white/10",
+            )}
+          >
+            {navItems.map((item) => (
+              <div key={item.name} className="flex flex-col gap-1">
+                <Link
+                  href={item.href}
+                  className={cn(
+                    "flex items-center justify-between px-2 py-2 text-sm font-medium rounded-xl",
+                    pathname.startsWith(item.href)
+                      ? "text-foreground bg-black/5 dark:bg-white/10"
+                      : "text-neutral-800 hover:bg-black/5 dark:text-neutral-200 dark:hover:bg-white/10",
+                  )}
+                >
+                  <span>{item.name}</span>
+                  {item.children && item.children.length > 0 && (
+                    <span className="text-[10px] uppercase tracking-wide text-neutral-500 dark:text-neutral-400">
+                      Sectores
+                    </span>
+                  )}
+                </Link>
+
+                {item.children && item.children.length > 0 && (
+                  <div className="pl-4 space-y-1">
+                    {item.children.map((child) => (
+                      <Link
+                        key={child.href}
+                        href={child.href}
+                        className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-lg text-neutral-700 hover:bg-black/5 dark:text-neutral-300 dark:hover:bg-white/10"
+                      >
+                        <child.icon className="w-4 h-4" />
+                        <span>{child.name}</span>
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+
+            <div className="pt-3 mt-2 border-t border-neutral-200 dark:border-neutral-800 flex items-center justify-between gap-3">
+              <ThemeToggle />
+              <Button as="link" href="/contacto" size="sm" className="flex-1">
+                Empezar gratis
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

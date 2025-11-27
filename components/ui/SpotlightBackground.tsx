@@ -8,6 +8,7 @@ export default function SpotlightBackground() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { resolvedTheme } = useTheme(); // Usamos resolvedTheme para evitar flasheos
   const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   const state = useRef({
     mouse: { x: 0, y: 0 },
@@ -23,6 +24,25 @@ export default function SpotlightBackground() {
   useEffect(() => {
     if (!mounted) return;
 
+    const checkEnvironment = () => {
+      const isCoarse = window.matchMedia("(pointer: coarse)").matches;
+      const isNarrow = window.matchMedia("(max-width: 768px)").matches;
+      state.current.isTouch = isCoarse;
+      setIsMobile(isCoarse || isNarrow);
+    };
+
+    checkEnvironment();
+    window.addEventListener("resize", checkEnvironment);
+
+    return () => {
+      window.removeEventListener("resize", checkEnvironment);
+    };
+  }, [mounted]);
+
+  // Lógica de canvas / luz solo en desktop
+  useEffect(() => {
+    if (!mounted || isMobile) return;
+
     const canvas = canvasRef.current;
     const container = containerRef.current;
     if (!canvas || !container) return;
@@ -31,12 +51,6 @@ export default function SpotlightBackground() {
     if (!ctx) return;
 
     const isDark = resolvedTheme === "dark";
-    
-    const checkTouch = () => {
-        state.current.isTouch = window.matchMedia("(pointer: coarse)").matches;
-    };
-    checkTouch();
-    window.addEventListener('resize', checkTouch);
 
     const resizeObserver = new ResizeObserver(() => {
       const { width, height } = container.getBoundingClientRect();
@@ -112,11 +126,10 @@ export default function SpotlightBackground() {
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener('resize', checkTouch);
       cancelAnimationFrame(animationFrameId);
       resizeObserver.disconnect();
     };
-  }, [mounted, resolvedTheme]); 
+  }, [mounted, isMobile, resolvedTheme]); 
 
   if (!mounted) return null;
 
@@ -145,11 +158,14 @@ export default function SpotlightBackground() {
         }}
       />
       
-      <canvas 
-        ref={canvasRef}
-        className="absolute inset-0 block w-full h-full"
-        style={{ mixBlendMode: isDark ? "plus-lighter" : "normal" }} 
-      />
+      {/* Luz interactiva solo en desktop; en móvil dejamos solo la malla estática */}
+      {!isMobile && (
+        <canvas 
+          ref={canvasRef}
+          className="absolute inset-0 block w-full h-full"
+          style={{ mixBlendMode: isDark ? "plus-lighter" : "normal" }} 
+        />
+      )}
     </div>
   );
 }
