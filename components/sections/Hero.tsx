@@ -22,8 +22,8 @@ export default function Hero() {
       <Container>
         <motion.div
           variants={prefersReducedMotion ? undefined : staggerContainerHero}
-          initial={prefersReducedMotion ? false : "initial"}
-          animate={prefersReducedMotion ? false : "animate"}
+          initial={prefersReducedMotion ? undefined : "initial"}
+          animate={prefersReducedMotion ? undefined : "animate"}
           className="flex flex-col items-center text-center"
         >
           {/* Badge: Social Proof / FOMO */}
@@ -116,8 +116,8 @@ export default function Hero() {
 
         {/* Hero Image / Mockup con efecto Tilt 3D */}
         <motion.div
-          initial={prefersReducedMotion ? false : { opacity: 0, y: 32 }}
-          animate={prefersReducedMotion ? false : { opacity: 1, y: 0 }}
+          initial={prefersReducedMotion ? undefined : { opacity: 0, y: 32 }}
+          animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
           transition={
             prefersReducedMotion
               ? undefined
