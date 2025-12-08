@@ -15,6 +15,13 @@ export default function TextReveal({ children, className }: TextRevealProps) {
   useEffect(() => {
     if (!ref.current) return;
 
+    // Respetar prefers-reduced-motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      setVisible(true);
+      return;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -39,9 +46,12 @@ export default function TextReveal({ children, className }: TextRevealProps) {
   return (
     <div
       ref={ref}
+      style={{
+        transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1)'
+      }}
       className={cn(
-        "transition-all duration-700 ease-out will-change-transform will-change-opacity",
-        visible ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-4 blur-sm",
+        "will-change-transform",
+        visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6",
         className,
       )}
     >

@@ -30,7 +30,10 @@ export default function BlogPage() {
               <Link
                 key={post.slug}
                 href={`/blog/${post.slug}`}
-                className="group rounded-2xl border border-border bg-card p-6 transition-all duration-200 hover:border-primary/30 hover:bg-white/70 hover:-translate-y-1 dark:border-neutral-800 dark:bg-neutral-900/30 dark:hover:border-primary-500/40 dark:hover:bg-neutral-900/60"
+                style={{
+                  transition: 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
+                }}
+                className="group rounded-2xl border border-border bg-card p-6 hover:border-primary/30 hover:bg-white/70 hover:-translate-y-1 dark:border-neutral-800 dark:bg-neutral-900/30 dark:hover:border-primary-500/40 dark:hover:bg-neutral-900/60 will-change-transform"
               >
                 <div className="mb-4">
                   <div className="aspect-video rounded-xl border border-border bg-gradient-to-br from-primary/10 via-secondary/10 to-card flex items-center justify-center text-4xl dark:border-neutral-800 dark:from-neutral-900/40 dark:via-neutral-950/60 dark:to-neutral-900/20">
@@ -59,7 +62,9 @@ export default function BlogPage() {
                   </div>
                 </div>
 
-                <div className="mt-4 flex items-center gap-2 text-sm font-medium text-primary group-hover:gap-3 transition-all">
+                <div style={{
+                  transition: 'gap 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
+                }} className="mt-4 flex items-center gap-2 text-sm font-medium text-primary group-hover:gap-3">
                   Leer más
                   <ArrowRight className="h-4 w-4" />
                 </div>

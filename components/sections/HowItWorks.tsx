@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import Container from '@/components/ui/Container';
 import BookingWidgetPreview from '@/components/ui/BookingWidgetPreview';
 import { cn } from '@/lib/utils';
+import { fadeInUp, staggerContainer, transition, viewport } from '@/lib/motion';
 
 const steps = [
   {
@@ -25,28 +26,6 @@ const steps = [
   },
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, x: -20 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: {
-      duration: 0.5,
-      ease: [0.21, 0.47, 0.32, 0.98],
-    },
-  },
-};
-
 export default function HowItWorks() {
   return (
     <section className="py-16 sm:py-20 lg:py-24">
@@ -54,10 +33,10 @@ export default function HowItWorks() {
         <div className="grid items-center gap-8 sm:gap-10 lg:gap-14 lg:grid-cols-2">
           {/* Columna izquierda: copy */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: -24 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.6 }}
+            viewport={viewport.default}
+            transition={transition.default}
             className="space-y-5 sm:space-y-6 lg:space-y-8"
           >
             <div className="space-y-2 sm:space-y-3 text-center mb-4 sm:mb-5">
@@ -70,14 +49,14 @@ export default function HowItWorks() {
             </div>
 
             <motion.div
-              variants={containerVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: '-50px' }}
+              variants={staggerContainer}
+              initial="initial"
+              whileInView="animate"
+              viewport={viewport.early}
               className="space-y-3 sm:space-y-4 mt-6 sm:mt-8 lg:mt-10 mb-8 sm:mb-10 lg:mb-12"
             >
               {steps.map((step) => (
-                <motion.div key={step.title} variants={itemVariants} className="flex items-start gap-3 sm:gap-4">
+                <motion.div key={step.title} variants={fadeInUp} className="flex items-start gap-3 sm:gap-4">
                   <div className="flex h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-lg sm:rounded-xl border border-primary/20 bg-primary/10 dark:border-neutral-700 dark:bg-neutral-900 shrink-0">
                     <step.icon
                       className="h-4 w-4 sm:h-5 sm:w-5"
@@ -95,10 +74,10 @@ export default function HowItWorks() {
 
           {/* Columna derecha: widget + badge */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
+            initial={{ opacity: 0, x: 24 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={viewport.default}
+            transition={transition.slow}
             className="relative flex justify-center lg:justify-end mt-8 sm:mt-10 lg:mt-12"
           >
             <div

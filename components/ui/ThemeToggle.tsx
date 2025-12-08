@@ -21,10 +21,16 @@ export default function ThemeToggle() {
       type="button"
       onClick={() => setTheme(isDark ? "light" : "dark")}
       aria-label="Cambiar tema"
-      className="inline-flex items-center justify-between h-8 w-16 rounded-full border border-glass-border bg-glass/80 backdrop-blur-md px-1 text-[11px] font-medium text-foreground shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover:shadow-[0_14px_40px_rgba(0,0,0,0.5)] transition-all"
+      style={{
+        transition: 'box-shadow 0.15s cubic-bezier(0.16, 1, 0.3, 1)'
+      }}
+      className="inline-flex items-center justify-between h-8 w-16 rounded-full border border-glass-border bg-glass/80 backdrop-blur-md px-1 text-[11px] font-medium text-foreground shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover:shadow-[0_14px_40px_rgba(0,0,0,0.5)]"
     >
       <span
-        className={`inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/90 text-neutral-900 shadow-sm transform transition-transform duration-300 ${
+        style={{
+          transition: 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
+        }}
+        className={`inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/90 text-neutral-900 shadow-sm will-change-transform ${
           isDark ? "translate-x-0" : "translate-x-7"
         }`}
       >

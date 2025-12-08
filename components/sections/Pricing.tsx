@@ -9,6 +9,7 @@ import GlassCard from '@/components/ui/GlassCard';
 import { cn } from '@/lib/utils';
 import BorderBeam from '@/components/ui/BorderBeam';
 import PricingMobileCarousel from '@/components/sections/PricingMobileCarousel';
+import { fadeInUp, staggerContainer, transition, viewport } from '@/lib/motion';
 
 const soloFeatures = [
   '1 profesional incluido',
@@ -41,37 +42,15 @@ function FeatureItem({ label }: { label: string }) {
   );
 }
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5,
-      ease: [0.21, 0.47, 0.32, 0.98],
-    },
-  },
-};
-
 export default function Pricing() {
   return (
     <section className="py-16 sm:py-20 lg:py-24">
       <Container>
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.6 }}
+          viewport={viewport.default}
+          transition={transition.default}
           className="mx-auto mb-10 sm:mb-12 lg:mb-14 max-w-3xl text-center"
         >
           <h2 className="text-3xl sm:text-display-sm lg:text-display-md font-semibold tracking-tight text-foreground text-balance">
@@ -86,15 +65,15 @@ export default function Pricing() {
         {/* Versión escritorio / desktop: grid estática de 3 columnas */}
         <div className="relative hidden lg:block">
           <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-50px' }}
+            variants={staggerContainer}
+            initial="initial"
+            whileInView="animate"
+            viewport={viewport.early}
             className="grid gap-5 lg:gap-6 grid-cols-3 items-stretch"
           >
             {/* Plan Starter */}
             <motion.div
-              variants={itemVariants}
+              variants={fadeInUp}
               className="relative flex flex-col rounded-2xl sm:rounded-3xl border border-border bg-card p-4 sm:p-5 lg:p-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)] dark:border-neutral-800 dark:bg-neutral-900/70 dark:shadow-sm text-center"
             >
               <div className="mb-1 sm:mb-2 text-sm sm:text-sm font-semibold text-foreground">Starter</div>
@@ -119,7 +98,7 @@ export default function Pricing() {
 
             {/* Plan Professional (destacado) */}
             <motion.div
-              variants={itemVariants}
+              variants={fadeInUp}
               className="relative rounded-3xl sm:rounded-[1.7rem]"
             >
               {/* BorderBeam recorre el borde EXTERIOR del wrapper con movimiento fluido */}
@@ -177,7 +156,7 @@ export default function Pricing() {
 
             {/* Plan Enterprise */}
             <motion.div
-              variants={itemVariants}
+              variants={fadeInUp}
               className="relative flex flex-col rounded-2xl sm:rounded-3xl border border-border bg-card p-4 sm:p-5 lg:p-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)] dark:border-neutral-800 dark:bg-neutral-900/70 dark:shadow-sm text-center"
             >
               <div className="mb-1 sm:mb-2 text-sm sm:text-sm font-semibold text-foreground">Enterprise</div>

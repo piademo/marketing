@@ -5,6 +5,7 @@ import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Button from '@/components/ui/Button';
 import Container from '@/components/ui/Container';
+import { transition, viewport, usePrefersReducedMotion } from '@/lib/motion';
 
 interface CTAProps {
   title?: string;
@@ -23,14 +24,16 @@ export default function CTA({
   secondaryButtonText = 'Hablar con ventas',
   secondaryButtonHref = '/contacto',
 }: CTAProps) {
+  const prefersReducedMotion = usePrefersReducedMotion();
+
   return (
     <section className="py-16 sm:py-20 lg:py-24">
       <Container>
         <motion.div
-          initial={{ opacity: 0, y: 40, scale: 0.98 }}
-          whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] }}
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
+          whileInView={prefersReducedMotion ? false : { opacity: 1, y: 0 }}
+          viewport={viewport.default}
+          transition={prefersReducedMotion ? undefined : transition.default}
           className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-primary to-secondary dark:from-primary-600/35 dark:via-primary-700/35 dark:to-secondary-700/35 px-6 py-12 sm:px-12 sm:py-16 lg:px-24 lg:py-20"
         >
           {/* Decorative elements */}
@@ -41,29 +44,29 @@ export default function CTA({
 
           <div className="relative mx-auto max-w-3xl text-center">
             <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
+              initial={prefersReducedMotion ? false : { opacity: 0, y: 12 }}
+              whileInView={prefersReducedMotion ? false : { opacity: 1, y: 0 }}
+              viewport={viewport.default}
+              transition={prefersReducedMotion ? undefined : { ...transition.fast, delay: 0.05 }}
               className="text-xl sm:text-display-sm lg:text-display-md mb-3 sm:mb-4 text-white text-balance"
             >
               {title}
             </motion.h2>
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
+              initial={prefersReducedMotion ? false : { opacity: 0, y: 12 }}
+              whileInView={prefersReducedMotion ? false : { opacity: 1, y: 0 }}
+              viewport={viewport.default}
+              transition={prefersReducedMotion ? undefined : { ...transition.fast, delay: 0.1 }}
               className="mb-6 sm:mb-8 text-sm sm:text-lg lg:text-xl text-white/90 text-balance px-2"
             >
               {description}
             </motion.p>
 
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.3 }}
+              initial={prefersReducedMotion ? false : { opacity: 0, y: 12 }}
+              whileInView={prefersReducedMotion ? false : { opacity: 1, y: 0 }}
+              viewport={viewport.default}
+              transition={prefersReducedMotion ? undefined : { ...transition.fast, delay: 0.15 }}
               className="flex flex-col items-center justify-center gap-3 sm:gap-4 sm:flex-row"
             >
               <Button

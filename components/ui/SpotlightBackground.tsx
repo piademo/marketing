@@ -89,7 +89,8 @@ export default function SpotlightBackground() {
         s.pos.x = centerX + Math.cos(s.autoParams.t) * (canvas.width * 0.3);
         s.pos.y = centerY + Math.sin(s.autoParams.t * 1.5) * (canvas.height * 0.2);
       } else {
-        const SPRING = 0.1;
+        // Smoothing más suave (0.08 en vez de 0.1) para movimiento menos agresivo
+        const SPRING = 0.08;
         s.pos.x += (s.mouse.x - s.pos.x) * SPRING;
         s.pos.y += (s.mouse.y - s.pos.y) * SPRING;
       }
@@ -138,11 +139,17 @@ export default function SpotlightBackground() {
   return (
     <div
       ref={containerRef}
-      className="pointer-events-none fixed inset-0 z-[-1] transition-colors duration-500 bg-background"
+      style={{
+        transition: 'background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1)'
+      }}
+      className="pointer-events-none fixed inset-0 z-[-1] bg-background"
     >
       {/* GRID DE PUNTOS MEJORADO */}
       <div 
-        className="absolute inset-0 h-full w-full transition-all duration-500"
+        style={{
+          transition: 'opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1)'
+        }}
+        className="absolute inset-0 h-full w-full"
         style={{
           // AJUSTE DE VISIBILIDAD:
           // - Dark: Opacidad 0.1 (10%) -> Sutil

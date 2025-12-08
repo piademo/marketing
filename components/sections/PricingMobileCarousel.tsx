@@ -7,6 +7,7 @@ import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Button from "@/components/ui/Button";
 import BorderBeam from "@/components/ui/BorderBeam";
+import { spring } from "@/lib/motion";
 
 // Planes sincronizados con la sección de Pricing principal
 const plans = [
@@ -39,13 +40,8 @@ const plans = [
   },
 ];
 
-// Física de muelle "snappy": rápida y precisa para evitar solapamientos visibles
-const SPRING_OPTIONS = {
-  type: "spring" as const,
-  stiffness: 300,
-  damping: 30,
-  mass: 0.8,
-};
+// Física de muelle "snappy": rápida y precisa usando el sistema centralizado
+const SPRING_OPTIONS = spring.snappy;
 
 export default function PricingMobileCarousel() {
   const { resolvedTheme } = useTheme();
@@ -166,8 +162,11 @@ export default function PricingMobileCarousel() {
             >
               {/* Tarjeta estilo glassmorphism inspirada en GlassCard */}
               <div
+                style={{
+                  transition: 'border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
+                }}
                 className={cn(
-                  "relative h-full w-full flex flex-col rounded-3xl overflow-hidden border backdrop-blur-2xl transition-all duration-300",
+                  "relative h-full w-full flex flex-col rounded-3xl overflow-hidden border backdrop-blur-2xl",
                   "bg-gradient-to-br from-primary/15 via-secondary/10 to-neutral-50/5 dark:from-primary/15 dark:via-secondary/10 dark:to-neutral-900/80",
                   isActive
                     ? cn(

@@ -83,7 +83,10 @@ export default function SectoresPage() {
           {sectores.map((sector) => (
             <Link key={sector.title} href={sector.href} className="group block h-full">
               <GlassCard
-                className="h-full flex flex-col p-8 transition-all duration-300 group-hover:border-primary/30 group-hover:bg-white/60 dark:group-hover:border-white/20 dark:group-hover:bg-white/5 group-hover:-translate-y-1"
+                style={{
+                  transition: 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
+                }}
+                className="h-full flex flex-col p-8 group-hover:border-primary/30 group-hover:bg-white/60 dark:group-hover:border-white/20 dark:group-hover:bg-white/5 group-hover:-translate-y-1 will-change-transform"
                 gradient="subtle"
               >
                 <div className="flex items-start justify-between mb-8">

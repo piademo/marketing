@@ -105,9 +105,9 @@ const config: Config = {
         'strong': '0 8px 32px rgba(0, 0, 0, 0.12)',
       },
       animation: {
-        'fade-in': 'fadeIn 0.5s ease-in-out',
-        'slide-up': 'slideUp 0.5s ease-out',
-        'slide-down': 'slideDown 0.5s ease-out',
+        'fade-in': 'fadeIn 0.3s cubic-bezier(0.16,1,0.3,1)',
+        'slide-up': 'slideUp 0.3s cubic-bezier(0.16,1,0.3,1)',
+        'slide-down': 'slideDown 0.3s cubic-bezier(0.16,1,0.3,1)',
         'border-beam': 'border-beam calc(var(--duration)*1s) infinite linear',
         liquid: 'liquid 10s infinite cubic-bezier(0.4, 0, 0.6, 1)',
         'liquid-glass': 'liquid-glass 8s ease-in-out infinite',
@@ -121,11 +121,11 @@ const config: Config = {
           '100%': { opacity: '1' },
         },
         slideUp: {
-          '0%': { transform: 'translateY(20px)', opacity: '0' },
+          '0%': { transform: 'translateY(24px)', opacity: '0' },
           '100%': { transform: 'translateY(0)', opacity: '1' },
         },
         slideDown: {
-          '0%': { transform: 'translateY(-20px)', opacity: '0' },
+          '0%': { transform: 'translateY(-24px)', opacity: '0' },
           '100%': { transform: 'translateY(0)', opacity: '1' },
         },
         'border-beam': {

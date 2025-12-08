@@ -18,23 +18,26 @@ export default function GlassCard({
     <div 
       className={cn(
         // BASE: tarjeta de cristal adaptable a light/dark
-        'relative overflow-hidden rounded-3xl border transition-all duration-300 backdrop-blur-2xl',
+        'relative overflow-hidden rounded-3xl border backdrop-blur-2xl',
+        // Transiciones optimizadas: solo transform, opacity y box-shadow
+        'will-change-transform',
         // Light: hielo esmerilado
         'bg-white/60 text-card-foreground border-neutral-200 shadow-[0_18px_45px_rgba(15,23,42,0.10)]',
-        // Dark: seguimos usando los tokens para mantener el look actual
+        // Dark: usando los tokens semánticos
         'dark:bg-card dark:text-card-foreground dark:border-card-border dark:shadow-none',
 
-        // ESTADOS HOVER (más brillo al pasar el ratón):
-        hoverEffect && 'hover:-translate-y-1 hover:shadow-[0_30px_70px_rgba(249,115,22,0.18)] dark:hover:bg-card/40 dark:hover:border-card-border',
+        // ESTADOS HOVER (solo transform y opacity - GPU accelerated):
+        hoverEffect && 'hover:-translate-y-0.5 hover:shadow-[0_24px_60px_rgba(249,115,22,0.14)] dark:hover:bg-card/40 dark:hover:border-card-border',
 
         // VARIANTES DE GRADIENTE
-        // subtle: halo muy suave basado en la paleta semántica (Sunset/Cyber)
         gradient === 'subtle' && 'bg-gradient-to-br from-primary/10 via-secondary/5 to-transparent dark:from-primary/15 dark:via-secondary/10',
-        // strong: acento más marcado en el fondo, borde se mantiene como el base
         gradient === 'strong' && 'bg-gradient-to-br from-primary/18 to-secondary/18',
 
         className,
       )}
+      style={{
+        transition: 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
+      }}
     >
       {/* Capa de Ruido (Noise) para textura realista */}
       <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-5 mix-blend-overlay pointer-events-none" />

@@ -111,17 +111,19 @@ export default function TiltCard({
         {children}
       </div>
 
+      {/* Glare effect optimizado: solo opacity y transform */}
       <div
         className="absolute inset-0 z-20 overflow-hidden rounded-[inherit] pointer-events-none"
         style={{ transform: "translateZ(1px)" }}
       >
         <div
           ref={glareRef}
-          className="absolute -inset-[100%] opacity-0 transition-opacity duration-300"
+          className="absolute -inset-[100%] opacity-0"
           style={{
             background:
               "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.6) 0%, transparent 60%)",
             mixBlendMode: "overlay",
+            transition: "opacity 0.15s cubic-bezier(0.16, 1, 0.3, 1)",
           }}
         />
       </div>
