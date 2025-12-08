@@ -146,11 +146,9 @@ export default function SpotlightBackground() {
     >
       {/* GRID DE PUNTOS MEJORADO */}
       <div 
-        style={{
-          transition: 'opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1)'
-        }}
         className="absolute inset-0 h-full w-full"
         style={{
+          transition: 'opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
           // AJUSTE DE VISIBILIDAD:
           // - Dark: Opacidad 0.1 (10%) -> Sutil
           // - Light: Opacidad 0.25 (25%) -> Mucho más visible para contrarrestar el blanco

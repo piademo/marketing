@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { Check } from "lucide-react";
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
-import Badge from "@/components/ui/Badge";
 import { cn } from "@/lib/utils";
 
 type BillingPeriod = "monthly" | "yearly";

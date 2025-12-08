@@ -3,7 +3,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { fadeInUp, transition, viewport, usePrefersReducedMotion, getAccessibleTransition } from '@/lib/motion';
+import { transition, viewport, usePrefersReducedMotion } from '@/lib/motion';
 
 interface AnimatedSectionProps {
   children: React.ReactNode;
