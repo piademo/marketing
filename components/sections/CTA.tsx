@@ -34,7 +34,7 @@ export default function CTA({
           whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
           viewport={viewport.default}
           transition={prefersReducedMotion ? undefined : transition.default}
-          className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-primary to-secondary dark:from-primary-600/35 dark:via-primary-700/35 dark:to-secondary-700/35 px-6 py-12 sm:px-12 sm:py-16 lg:px-24 lg:py-20"
+          className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-primary via-primary/80 to-secondary dark:from-primary-600/35 dark:via-primary-700/35 dark:to-secondary-700/35 px-6 py-12 sm:px-12 sm:py-16 lg:px-24 lg:py-20 animated-gradient"
         >
           {/* Decorative elements */}
           <div className="pointer-events-none absolute -right-16 sm:-right-24 -top-16 sm:-top-24 h-48 sm:h-72 w-48 sm:w-72 rounded-full bg-white/15 blur-3xl" />
@@ -76,7 +76,7 @@ export default function CTA({
                 size="lg"
                 icon={ArrowRight}
                 iconPosition="right"
-                className="bg-white text-primary hover:bg-neutral-50 text-sm sm:text-base"
+                className="relative overflow-hidden bg-gradient-to-r from-primary via-primary/80 to-secondary hover:from-primary/60 hover:to-secondary/60 text-white border-0 shadow-lg animated-gradient text-sm sm:text-base"
               >
                 {primaryButtonText}
               </Button>

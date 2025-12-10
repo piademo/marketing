@@ -58,7 +58,7 @@ export default function Footer() {
             {/* Brand */}
             <div className="col-span-2">
               <Link href="/" className="flex items-center space-x-2">
-                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-secondary text-white font-bold text-lg">
+                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary via-primary/80 to-secondary text-white font-bold text-lg animated-gradient">
                   B
                 </div>
                 <span className="text-xl font-bold text-foreground">BookFast</span>

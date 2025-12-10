@@ -50,7 +50,7 @@ export default function Hero() {
             className="mb-6 max-w-4xl text-balance text-display-md font-bold tracking-tight text-foreground sm:text-display-lg"
           >
             Tu agenda llena,{" "}
-            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary/60 to-secondary animated-gradient gradient-text">
               cero llamadas perdidas
             </span>{" "}
             y adiós al papel.
@@ -78,7 +78,7 @@ export default function Hero() {
               size="lg"
               icon={ArrowRight}
               iconPosition="right"
-              className="text-white"
+              className="relative overflow-hidden bg-gradient-to-r from-primary via-primary/80 to-secondary hover:from-primary/60 hover:to-secondary/60 text-white border-0 shadow-lg animated-gradient"
             >
               Empezar gratis
             </Button>

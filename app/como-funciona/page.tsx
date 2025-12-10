@@ -86,7 +86,7 @@ export default function ComoFuncionaPage() {
               >
                 {/* Content */}
                 <div className={index % 2 === 1 ? 'lg:order-2' : ''}>
-                  <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-500 to-primary-700 text-2xl font-bold text-white shadow-medium">
+                  <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary via-primary/80 to-secondary text-2xl font-bold text-white shadow-medium animated-gradient">
                     {step.number}
                   </div>
 

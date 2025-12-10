@@ -167,7 +167,7 @@ export default function PricingMobileCarousel() {
                 }}
                 className={cn(
                   "relative h-full w-full flex flex-col rounded-3xl overflow-hidden border backdrop-blur-2xl",
-                  "bg-gradient-to-br from-primary/15 via-secondary/10 to-neutral-50/5 dark:from-primary/15 dark:via-secondary/10 dark:to-neutral-900/80",
+                  "bg-gradient-to-br from-primary/15 via-primary/80 to-secondary/10 dark:from-primary/15 dark:via-primary/80 dark:to-secondary/10 animated-gradient",
                   isActive
                     ? cn(
                         isDark

@@ -102,7 +102,7 @@ export default function ContactoPage() {
                   fullWidth
                   icon={Send}
                   iconPosition="right"
-                  className="bg-gradient-to-r from-primary/70 to-secondary/70 hover:from-primary/60 hover:to-secondary/60 bg-opacity-70 border border-white/60 shadow-sm backdrop-blur-sm"
+                  className="relative overflow-hidden bg-gradient-to-r from-primary via-primary/80 to-secondary hover:from-primary/60 hover:to-secondary/60 bg-opacity-70 border border-white/60 shadow-sm backdrop-blur-sm animated-gradient"
                 >
                   Enviar mensaje
                 </Button>

@@ -31,7 +31,7 @@ export default function GlassCard({
 
         // VARIANTES DE GRADIENTE
         gradient === 'subtle' && 'bg-gradient-to-br from-primary/10 via-secondary/5 to-transparent dark:from-primary/15 dark:via-secondary/10',
-        gradient === 'strong' && 'bg-gradient-to-br from-primary/18 to-secondary/18',
+        gradient === 'strong' && 'bg-gradient-to-br from-primary/18 via-primary/80 to-secondary/18 animated-gradient',
 
         className,
       )}

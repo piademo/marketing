@@ -68,7 +68,9 @@ export default function SectoresPage() {
 
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground dark:text-white mb-6 text-balance">
             Software que habla <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary/60 to-secondary animated-gradient gradient-text">
+              el idioma de tu negocio
+            </span>
               el idioma de tu negocio
             </span>
           </h1>

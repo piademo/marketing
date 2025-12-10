@@ -67,7 +67,11 @@ export default function PricingContent() {
       <Container>
         <div className="mx-auto mb-10 max-w-3xl text-center">
           <h1 className="text-display-sm sm:text-display-md mb-4 text-foreground dark:text-white text-balance">
-            Precios pensados para recuperarse con una sola cita salvada.
+            Precios pensados para{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary/60 to-secondary animated-gradient gradient-text">
+              recuperarse con una sola cita salvada
+            </span>
+            .
           </h1>
           <p className="text-lg text-neutral-700 dark:text-neutral-300 text-balance">
             Elige el plan que mejor encaje con tu equipo. Sin permanencia, sin sorpresas y con todo el
@@ -161,7 +165,7 @@ export default function PricingContent() {
           </div>
 
           {/* Professional (destacado) */}
-          <div className="relative flex flex-col rounded-3xl border border-primary-500/40 bg-gradient-to-br from-primary/20 via-secondary/15 to-card p-6 shadow-[0_20px_55px_rgba(249,115,22,0.18)] dark:bg-neutral-900/80 dark:shadow-primary-500/30 md:scale-105">
+          <div className="relative flex flex-col rounded-3xl border border-primary-500/40 bg-gradient-to-br from-primary/20 via-primary/80 to-secondary/15 p-6 shadow-[0_20px_55px_rgba(249,115,22,0.18)] dark:bg-neutral-900/80 dark:shadow-primary-500/30 md:scale-105 animated-gradient">
             <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-[#f97316]/10 px-3 py-1 text-xs font-semibold text-[#f97316] border border-[#f97316]/40 dark:bg-primary-500/10 dark:border-primary-500/40 dark:text-primary-200">
               <span className="h-2 w-2 rounded-full bg-[#f97316] dark:bg-primary-400" />
               <span>Más popular</span>
@@ -212,7 +216,7 @@ export default function PricingContent() {
                 as="link"
                 href="/contacto"
                 variant="primary"
-                className="w-full bg-white text-primary hover:bg-neutral-50 dark:bg-primary dark:text-primary-foreground"
+                className="w-full relative overflow-hidden bg-gradient-to-r from-primary via-primary/80 to-secondary hover:from-primary/60 hover:to-secondary/60 text-white border-0 shadow-lg animated-gradient"
               >
                 Elegir plan Professional
               </Button>

@@ -55,6 +55,41 @@
     color: #020617 !important; /* casi negro para buen contraste */
   }
 
+  /* Gradiente animado ultra-suave como Stripe/Linear/Vercel */
+  @keyframes gradient-flow {
+    0% {
+      background-position: 0% 50%;
+    }
+    25% {
+      background-position: 50% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    75% {
+      background-position: 50% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .animated-gradient {
+    background-size: 300% 300%; /* ← MÁS AMPLIO = transiciones más suaves */
+    animation: gradient-flow 12s ease-in-out infinite; /* ← ciclo más largo, movimiento más suave */
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animated-gradient {
+      animation: none;
+    }
+  }
+
+  /* Blur sutil para textos degradados premium */
+  .gradient-text {
+    filter: blur(0.15px); /* SUUUPER sutil pero evita cortes */
+  }
+
   .dark {
     /* --- DARK MODE: CYBER THEME (Intacto) --- */
     --background: 0 0% 3.9%; /* neutral-950 */

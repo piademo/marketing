@@ -339,9 +339,9 @@ export default function Header() {
                   size="md"
                   className={cn(
                     "text-xs font-bold tracking-wide",
-                    "border border-white/50 bg-white text-black hover:bg-white/90",
+                    "relative overflow-hidden bg-gradient-to-r from-primary via-primary/80 to-secondary hover:from-primary/60 hover:to-secondary/60 text-white border-0",
                     "shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.4)]",
-                    "transition-all duration-150",
+                    "transition-all duration-150 animated-gradient",
                   )}
                 >
                   Empezar
@@ -385,13 +385,10 @@ export default function Header() {
                   onClick={() => setCtaOpen((open) => !open)}
                   size="md"
                   className={cn(
-                    // Igual que desktop: padding y altura correctos
-                    "px-5 py-2 h-[40px] rounded-full text-xs font-bold tracking-wide",
-
-                    // Alineación visual y estilo pill premium
-                    "bg-sky-500 text-white hover:bg-sky-400",
-                    "shadow-[0_0_18px_rgba(56,189,248,0.45)] hover:shadow-[0_0_26px_rgba(56,189,248,0.65)]",
-                    "border border-sky-300/60"
+                    "text-xs font-bold tracking-wide",
+                    "relative overflow-hidden bg-gradient-to-r from-primary via-primary/80 to-secondary hover:from-primary/60 hover:to-secondary/60 text-white border-0",
+                    "shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.4)]",
+                    "transition-all duration-150 animated-gradient",
                   )}
                 >
                   Empezar
@@ -530,7 +527,7 @@ export default function Header() {
 
             <div className="mt-2 flex items-center justify-between gap-3 border-t border-neutral-200 pt-3 dark:border-neutral-800">
               <ThemeToggle />
-              <Button as="link" href="/contacto" size="sm" className="flex-1">
+              <Button as="link" href="/contacto" size="sm" className="flex-1 relative overflow-hidden bg-gradient-to-r from-primary via-primary/80 to-secondary hover:from-primary/60 hover:to-secondary/60 text-white border-0 shadow-md animated-gradient">
                 Empezar gratis
               </Button>
             </div>
