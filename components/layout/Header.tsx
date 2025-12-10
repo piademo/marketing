@@ -383,8 +383,8 @@ export default function Header() {
               <div ref={ctaButtonRef} className="relative md:hidden">
                 <Button
                   onClick={() => setCtaOpen((open) => !open)}
-                  size="sm"
-                  className="text-[11px] font-bold tracking-wide px-3 py-1.5"
+                  size="md"
+                  className="text-xs font-bold tracking-wide"
                 >
                   Empezar
                 </Button>
