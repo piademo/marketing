@@ -71,8 +71,6 @@ export default function SectoresPage() {
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary/60 to-secondary animated-gradient gradient-text">
               el idioma de tu negocio
             </span>
-              el idioma de tu negocio
-            </span>
           </h1>
           <p className="text-lg text-neutral-700 dark:text-neutral-400 text-balance max-w-2xl mx-auto">
             No es lo mismo cortar pelo que hacer un tratamiento facial. Hemos diseñado BookFast adaptándonos a las
