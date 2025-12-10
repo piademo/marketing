@@ -388,13 +388,10 @@ export default function Header() {
                     // Igual que desktop: padding y altura correctos
                     "px-5 py-2 h-[40px] rounded-full text-xs font-bold tracking-wide",
 
-                    // Alineación visual como en desktop
+                    // Alineación visual y estilo pill premium
                     "bg-sky-500 text-white hover:bg-sky-400",
                     "shadow-[0_0_18px_rgba(56,189,248,0.45)] hover:shadow-[0_0_26px_rgba(56,189,248,0.65)]",
-                    "border border-sky-300/60",
-
-                    // Ajuste fino para móvil (sin que se vea aplastado)
-                    "md:hidden"
+                    "border border-sky-300/60"
                   )}
                 >
                   Empezar
