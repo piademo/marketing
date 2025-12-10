@@ -120,16 +120,13 @@ export const fadeIn: Variants = {
  */
 export const fadeInUp: Variants = {
   initial: { 
-    opacity: 0, 
-    y: 24,
+    opacity: 0,
   },
   animate: { 
-    opacity: 1, 
-    y: 0,
+    opacity: 1,
   },
   exit: { 
-    opacity: 0, 
-    y: -12,
+    opacity: 0,
   },
 };
 
@@ -139,16 +136,13 @@ export const fadeInUp: Variants = {
  */
 export const fadeInUpMobile: Variants = {
   initial: { 
-    opacity: 0, 
-    y: 12,
+    opacity: 0,
   },
   animate: { 
-    opacity: 1, 
-    y: 0,
+    opacity: 1,
   },
   exit: { 
-    opacity: 0, 
-    y: -8,
+    opacity: 0,
   },
 };
 
@@ -157,16 +151,13 @@ export const fadeInUpMobile: Variants = {
  */
 export const fadeInDown: Variants = {
   initial: { 
-    opacity: 0, 
-    y: -24,
+    opacity: 0,
   },
   animate: { 
-    opacity: 1, 
-    y: 0,
+    opacity: 1,
   },
   exit: { 
-    opacity: 0, 
-    y: 12,
+    opacity: 0,
   },
 };
 
@@ -175,16 +166,13 @@ export const fadeInDown: Variants = {
  */
 export const scaleIn: Variants = {
   initial: { 
-    opacity: 0, 
-    scale: 0.95,
+    opacity: 0,
   },
   animate: { 
-    opacity: 1, 
-    scale: 1,
+    opacity: 1,
   },
   exit: { 
-    opacity: 0, 
-    scale: 0.95,
+    opacity: 0,
   },
 };
 
@@ -193,16 +181,13 @@ export const scaleIn: Variants = {
  */
 export const slideInLeft: Variants = {
   initial: { 
-    opacity: 0, 
-    x: -32,
+    opacity: 0,
   },
   animate: { 
-    opacity: 1, 
-    x: 0,
+    opacity: 1,
   },
   exit: { 
-    opacity: 0, 
-    x: 32,
+    opacity: 0,
   },
 };
 
@@ -211,16 +196,13 @@ export const slideInLeft: Variants = {
  */
 export const slideInRight: Variants = {
   initial: { 
-    opacity: 0, 
-    x: 32,
+    opacity: 0,
   },
   animate: { 
-    opacity: 1, 
-    x: 0,
+    opacity: 1,
   },
   exit: { 
     opacity: 0, 
-    x: -32,
   },
 };
 
@@ -325,10 +307,8 @@ export const getAccessibleTransition = (
  * Hover lift: elevar elemento suavemente
  */
 export const hoverLift = {
-  rest: { y: 0, scale: 1 },
+  rest: { },
   hover: { 
-    y: -4, 
-    scale: 1.02,
     transition: transition.fast,
   },
 };
@@ -337,9 +317,8 @@ export const hoverLift = {
  * Hover scale: crecer suavemente
  */
 export const hoverScale = {
-  rest: { scale: 1 },
+  rest: { },
   hover: { 
-    scale: 1.05,
     transition: transition.fast,
   },
 };
@@ -348,7 +327,6 @@ export const hoverScale = {
  * Tap scale: feedback al hacer clic
  */
 export const tapScale = {
-  scale: 0.98,
   transition: { duration: 0.1 },
 };
 
@@ -390,10 +368,9 @@ export const viewport = {
  * Crea una variante fadeInUp con delay personalizado
  */
 export const createFadeInUp = (delay: number = 0): Variants => ({
-  initial: { opacity: 0, y: 24 },
+  initial: { opacity: 0 },
   animate: { 
-    opacity: 1, 
-    y: 0,
+    opacity: 1,
     transition: {
       ...transition.default,
       delay,
@@ -405,10 +382,9 @@ export const createFadeInUp = (delay: number = 0): Variants => ({
  * Crea una variante scaleIn con delay personalizado
  */
 export const createScaleIn = (delay: number = 0): Variants => ({
-  initial: { opacity: 0, scale: 0.95 },
+  initial: { opacity: 0 },
   animate: { 
-    opacity: 1, 
-    scale: 1,
+    opacity: 1,
     transition: {
       ...transition.default,
       delay,

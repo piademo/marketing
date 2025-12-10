@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import Button from "@/components/ui/Button";
 import Container from "@/components/ui/Container";
 import Badge from "@/components/ui/Badge";
-import TiltCard from "@/components/ui/TiltCard";
+import ProDashboardDemo from "@/components/ui/ProDashboardDemo";
 import {
   fadeInUpMobile,
   staggerContainerHero,
@@ -125,20 +125,11 @@ export default function Hero() {
           }
           className="mt-16 lg:mt-20"
         >
-          <TiltCard className="mx-auto max-w-5xl rounded-2xl">
-            <div className="relative">
-              <div className="shadow-[0_18px_45px_rgba(15,23,42,0.12)] dark:shadow-strong aspect-video overflow-hidden rounded-2xl border border-neutral-200/80 bg-card dark:border-white/10 dark:bg-gradient-to-br dark:from-neutral-900 dark:via-neutral-950 dark:to-neutral-900">
-                <div className="flex h-full items-center justify-center text-neutral-700 dark:text-neutral-400">
-                  <div className="text-center">
-                    <div className="mb-4 text-6xl">📅</div>
-                    <p className="text-sm text-neutral-700 dark:text-neutral-300">
-                      Vista previa del panel de gestión
-                    </p>
-                  </div>
-                </div>
-              </div>
+          <div className="mx-auto max-w-5xl">
+            <div className="aspect-video rounded-2xl">
+              <ProDashboardDemo />
             </div>
-          </TiltCard>
+          </div>
         </motion.div>
       </Container>
     </section>
