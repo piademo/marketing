@@ -7,6 +7,7 @@ import Button from "@/components/ui/Button";
 import Container from "@/components/ui/Container";
 import Badge from "@/components/ui/Badge";
 import ProDashboardDemo from "@/components/ui/ProDashboardDemo";
+import { cn } from "@/lib/utils";
 import {
   fadeInUpMobile,
   staggerContainerHero,
@@ -114,20 +115,39 @@ export default function Hero() {
           </motion.div>
         </motion.div>
 
-        {/* Hero Image / Mockup con efecto Tilt 3D */}
+        {/* Hero Image / Demo del panel Pro */}
         <motion.div
-          initial={prefersReducedMotion ? undefined : { opacity: 0, y: 32 }}
-          animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 32 }}
+          animate={prefersReducedMotion ? false : { opacity: 1, y: 0 }}
           transition={
-            prefersReducedMotion
-              ? undefined
-              : { ...transition.default, delay: 0.2 }
+            prefersReducedMotion ? undefined : { ...transition.default, delay: 0.2 }
           }
           className="mt-16 lg:mt-20"
         >
-          <div className="mx-auto max-w-5xl">
-            <div className="aspect-video rounded-2xl">
-              <ProDashboardDemo />
+          {/* Versión móvil: preview en formato teléfono vertical */}
+          <div className="flex justify-center md:hidden">
+            <div
+              className={cn(
+                "relative w-full max-w-[360px] aspect-[9/16]",
+                "rounded-[32px] overflow-hidden",
+                "border border-black/20 bg-slate-900/95 shadow-[0_24px_80px_rgba(0,0,0,0.85)]",
+                "dark:border-white/12 dark:bg-[#020617]/95",
+              )}
+            >
+              <ProDashboardDemo mode="mobile" />
+            </div>
+          </div>
+
+          {/* Versión escritorio: preview panorámica tipo dashboard */}
+          <div className="hidden md:flex justify-center">
+            <div
+              className={cn(
+                "w-full max-w-5xl aspect-video rounded-2xl overflow-hidden",
+                "border border-white/10 bg-black/40 shadow-[0_32px_90px_rgba(0,0,0,0.9)]",
+                "dark:border-slate-800/80 dark:bg-[#020617]/90",
+              )}
+            >
+              <ProDashboardDemo mode="auto" />
             </div>
           </div>
         </motion.div>
