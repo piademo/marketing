@@ -73,6 +73,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { Analytics } from '@vercel/analytics/react';
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -86,6 +88,7 @@ export default function RootLayout({
           <Header />
           <main className="flex-1 relative z-10 pt-20 sm:pt-24 lg:pt-28">{children}</main>
           <Footer />
+          <Analytics />
         </AppThemeProvider>
       </body>
     </html>

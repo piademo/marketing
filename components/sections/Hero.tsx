@@ -14,6 +14,7 @@ import {
   transition,
   usePrefersReducedMotion,
 } from "@/lib/motion";
+import { track } from '@vercel/analytics';
 
 export default function Hero() {
   const prefersReducedMotion = usePrefersReducedMotion();
@@ -75,13 +76,14 @@ export default function Hero() {
           >
             <Button
               as="link"
-              href="/contacto"
+              href="/demo"
               size="lg"
               icon={ArrowRight}
               iconPosition="right"
+              onClick={() => track('cta_try_bookfast_click', { location: 'hero' })}
               className="relative overflow-hidden bg-gradient-to-r from-primary via-primary/80 to-secondary hover:from-primary/60 hover:to-secondary/60 text-white border-0 shadow-lg animated-gradient"
             >
-              Empezar gratis
+              Probar BookFast
             </Button>
             <Button
               as="link"

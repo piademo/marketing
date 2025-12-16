@@ -8,6 +8,7 @@ import Button from "@/components/ui/Button";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import { Scissors, UserCheck, ChevronDown } from "lucide-react";
 import { usePrefersReducedMotion } from "@/lib/motion";
+import { track } from '@vercel/analytics';
 
 const navItems = [
   { name: "Producto", href: "/funcionalidades" },
@@ -145,9 +146,9 @@ export default function Header() {
   const shellTransition = prefersReducedMotion
     ? undefined
     : {
-        transition:
-          "width 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1)",
-      };
+      transition:
+        "width 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1)",
+    };
 
   const innerTransition = prefersReducedMotion
     ? undefined
@@ -327,6 +328,18 @@ export default function Header() {
                 <ThemeToggle />
               </div>
 
+              <div className="mr-3 hidden md:block">
+                <Button
+                  as="link"
+                  href="https://pro.bookfast.es"
+                  variant="ghost"
+                  size="sm"
+                  className="text-neutral-600 hover:text-foreground dark:text-neutral-400 dark:hover:text-white"
+                >
+                  Acceder
+                </Button>
+              </div>
+
               {/* CTA desplegable (solo desktop) */}
               <div
                 className="relative hidden md:block"
@@ -335,7 +348,7 @@ export default function Header() {
               >
                 <Button
                   as="link"
-                  href="/contacto"
+                  href="/demo"
                   size="md"
                   className={cn(
                     "text-xs font-bold tracking-wide",
@@ -344,7 +357,7 @@ export default function Header() {
                     "transition-all duration-150 animated-gradient",
                   )}
                 >
-                  Empezar
+                  Probar BookFast
                 </Button>
 
                 {ctaOpen && (
@@ -382,7 +395,10 @@ export default function Header() {
               {/* CTA móvil con menú desplegable */}
               <div ref={ctaButtonRef} className="relative md:hidden">
                 <Button
-                  onClick={() => setCtaOpen((open) => !open)}
+                  onClick={() => {
+                    setCtaOpen((open) => !open);
+                    track('cta_try_bookfast_open', { location: 'header_mobile' });
+                  }}
                   size="md"
                   className={cn(
                     "text-xs font-bold tracking-wide",
@@ -391,7 +407,7 @@ export default function Header() {
                     "transition-all duration-150 animated-gradient",
                   )}
                 >
-                  Empezar
+                  Probar BookFast
                 </Button>
 
                 {ctaOpen && (
@@ -403,11 +419,14 @@ export default function Header() {
                   >
                     <div className="flex flex-col gap-1 text-sm">
                       <Link
-                        href="/contacto"
+                        href="/demo"
                         className="flex w-full items-center justify-end rounded-xl px-3 py-2 text-neutral-800 transition-colors hover:bg-white/10 hover:text-neutral-950 dark:text-neutral-200 dark:hover:text-white"
-                        onClick={() => setCtaOpen(false)}
+                        onClick={() => {
+                          setCtaOpen(false);
+                          track('cta_try_bookfast_click', { location: 'header_dropdown' });
+                        }}
                       >
-                        <span className="text-right">Empezar ahora</span>
+                        <span className="text-right">Probar BookFast</span>
                       </Link>
                       <Link
                         href="https://pro.bookfast.es"
@@ -527,8 +546,23 @@ export default function Header() {
 
             <div className="mt-2 flex items-center justify-between gap-3 border-t border-neutral-200 pt-3 dark:border-neutral-800">
               <ThemeToggle />
-              <Button as="link" href="/contacto" size="sm" className="flex-1 relative overflow-hidden bg-gradient-to-r from-primary via-primary/80 to-secondary hover:from-primary/60 hover:to-secondary/60 text-white border-0 shadow-md animated-gradient">
-                Empezar gratis
+              <Button
+                as="link"
+                href="https://pro.bookfast.es"
+                variant="ghost"
+                size="sm"
+                className="text-neutral-600 dark:text-neutral-400"
+              >
+                Acceder
+              </Button>
+              <Button
+                as="link"
+                href="/demo"
+                size="sm"
+                onClick={() => track('cta_try_bookfast_click', { location: 'header_mobile_menu' })}
+                className="flex-1 relative overflow-hidden bg-gradient-to-r from-primary via-primary/80 to-secondary hover:from-primary/60 hover:to-secondary/60 text-white border-0 shadow-md animated-gradient"
+              >
+                Probar BookFast
               </Button>
             </div>
           </div>

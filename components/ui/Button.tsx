@@ -26,6 +26,7 @@ interface ButtonAsLink extends BaseButtonProps {
   as: 'link';
   href: string;
   external?: boolean;
+  onClick?: () => void;
 }
 
 type ButtonProps = ButtonAsButton | ButtonAsLink;
@@ -64,7 +65,7 @@ export default function Button({
   );
 
   if (props.as === 'link') {
-    const { href, external } = props;
+    const { href, external, onClick } = props;
     if (external) {
       return (
         <a
@@ -72,13 +73,14 @@ export default function Button({
           target="_blank"
           rel="noopener noreferrer"
           className={baseClasses}
+          onClick={onClick}
         >
           {content}
         </a>
       );
     }
     return (
-      <Link href={href} className={baseClasses}>
+      <Link href={href} className={baseClasses} onClick={onClick}>
         {content}
       </Link>
     );

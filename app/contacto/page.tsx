@@ -6,6 +6,7 @@ import Container from '@/components/ui/Container';
 import Input from '@/components/ui/Input';
 import Textarea from '@/components/ui/Textarea';
 import Button from '@/components/ui/Button';
+import { track } from '@vercel/analytics';
 
 export default function ContactoPage() {
   const [formData, setFormData] = useState({
@@ -16,10 +17,39 @@ export default function ContactoPage() {
     mensaje: '',
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implementar envío de formulario
-    console.log('Form submitted:', formData);
+    setStatus('submitting');
+    track('lead_submit_attempt');
+
+    try {
+      const res = await fetch('/api/lead', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!res.ok) throw new Error('Error en envío');
+
+      setStatus('success');
+      track('lead_submit_success');
+      // Reset form opcional
+      setFormData({
+        nombre: '',
+        email: '',
+        telefono: '',
+        negocio: '',
+        mensaje: '',
+      });
+    } catch (error) {
+      console.error(error);
+      setStatus('error');
+      track('lead_submit_error', { code: 'api_error' });
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -102,10 +132,23 @@ export default function ContactoPage() {
                   fullWidth
                   icon={Send}
                   iconPosition="right"
-                  className="relative overflow-hidden bg-gradient-to-r from-primary via-primary/80 to-secondary hover:from-primary/60 hover:to-secondary/60 bg-opacity-70 border border-white/60 shadow-sm backdrop-blur-sm animated-gradient"
+                  disabled={status === 'submitting'}
+                  className="relative overflow-hidden bg-gradient-to-r from-primary via-primary/80 to-secondary hover:from-primary/60 hover:to-secondary/60 bg-opacity-70 border border-white/60 shadow-sm backdrop-blur-sm animated-gradient disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Enviar mensaje
+                  {status === 'submitting' ? 'Enviando...' : 'Enviar mensaje'}
                 </Button>
+
+                {status === 'success' && (
+                  <div className="rounded-lg bg-green-500/10 p-4 text-sm text-green-600 dark:text-green-400 border border-green-500/20 text-center">
+                    ✅ Mensaje enviado correctamente. Te contactaremos pronto.
+                  </div>
+                )}
+
+                {status === 'error' && (
+                  <div className="rounded-lg bg-red-500/10 p-4 text-sm text-red-600 dark:text-red-400 border border-red-500/20 text-center">
+                    ❌ Hubo un error al enviar. Por favor, inténtalo de nuevo.
+                  </div>
+                )}
 
                 <p className="text-sm text-neutral-500 dark:text-neutral-400 text-center">
                   Te responderemos en menos de 24 horas laborables

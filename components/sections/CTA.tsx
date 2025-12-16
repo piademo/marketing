@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import Button from '@/components/ui/Button';
 import Container from '@/components/ui/Container';
 import { transition, viewport, usePrefersReducedMotion } from '@/lib/motion';
+import { track } from '@vercel/analytics';
 
 interface CTAProps {
   title?: string;
@@ -19,8 +20,8 @@ interface CTAProps {
 export default function CTA({
   title = '¿Sigues gestionando citas por WhatsApp?',
   description = 'Únete a 500+ barberos que han recuperado 10 horas libres a la semana.',
-  primaryButtonText = 'Crear cuenta gratis',
-  primaryButtonHref = '/contacto',
+  primaryButtonText = 'Probar BookFast',
+  primaryButtonHref = '/demo',
   secondaryButtonText = 'Hablar con ventas',
   secondaryButtonHref = '/contacto',
 }: CTAProps) {
@@ -76,6 +77,7 @@ export default function CTA({
                 size="lg"
                 icon={ArrowRight}
                 iconPosition="right"
+                onClick={() => track('cta_try_bookfast_click', { location: 'cta' })}
                 className="relative overflow-hidden bg-gradient-to-r from-primary via-primary/80 to-secondary hover:from-primary/60 hover:to-secondary/60 text-white border-0 shadow-lg animated-gradient text-sm sm:text-base"
               >
                 {primaryButtonText}
