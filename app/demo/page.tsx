@@ -39,12 +39,12 @@ export default function DemoPage() {
                     <TextReveal>
                         <div className="flex flex-col items-center gap-4">
                             <h2 className="text-2xl font-bold text-foreground dark:text-white">
-                                ¿Lo tienes claro?
+                                Lleva tu negocio al siguiente nivel
                             </h2>
                             <DemoCTA />
                             <p className="text-sm text-neutral-500 dark:text-neutral-400 max-w-sm text-center">
-                                Si ya eres cliente, accede a tu panel profesional. <br className="hidden sm:block" />
-                                Para empezar con BookFast, contáctanos.
+                                Acceso exclusivo para clientes BookFast. <br className="hidden sm:block" />
+                                ¿Aún no tienes cuenta? Contáctanos para empezar.
                             </p>
                         </div>
                     </TextReveal>

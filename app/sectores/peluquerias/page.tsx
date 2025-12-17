@@ -6,9 +6,9 @@ import Card, { CardHeader, CardTitle, CardDescription } from '@/components/ui/Ca
 import CTA from '@/components/sections/CTA';
 
 export const metadata: Metadata = {
-  title: 'Software de Gestión para Peluquerías y Salones de Belleza',
+  title: 'Software para Peluquerías | Agenda, Color y Clientes – BookFast',
   description:
-    'Agenda digital para salones de belleza que gestionan color, tratamientos y clientes exigentes. El software de gestión para peluquerías que cuida cada detalle.',
+    'Gestiona citas, color y tratamientos en tu peluquería con BookFast. Agenda digital y control total de tu salón.',
 };
 
 const problems = [
@@ -69,7 +69,7 @@ export default function PeluqueriasPage() {
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
             <div>
               <h1 className="text-display-md sm:text-display-lg mb-6">
-                Gestión premium para salones que <span className="gradient-text">marcan tendencia</span>.
+                Software para <span className="gradient-text">Peluquerías</span>: Gestión premium que marca tendencia.
               </h1>
               <p className="text-lg text-neutral-700 dark:text-neutral-300 mb-8">
                 Software de gestión para peluquerías que cuidan el detalle: agenda digital, historial de color y tratamientos, y una

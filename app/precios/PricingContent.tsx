@@ -67,11 +67,7 @@ export default function PricingContent() {
       <Container>
         <div className="mx-auto mb-10 max-w-3xl text-center">
           <h1 className="text-display-sm sm:text-display-md mb-4 text-foreground dark:text-white text-balance">
-            Precios pensados para{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary/60 to-secondary animated-gradient gradient-text">
-              recuperarse con una sola cita salvada
-            </span>
-            .
+            Precios del software BookFast
           </h1>
           <p className="text-lg text-neutral-700 dark:text-neutral-300 text-balance">
             Elige el plan que mejor encaje con tu equipo. Sin permanencia, sin sorpresas y con todo el
@@ -104,11 +100,10 @@ export default function PricingContent() {
               onClick={() => setBilling(isYearly ? "monthly" : "yearly")}
             >
               <span
-                className={`inline-flex h-7 w-9 items-center justify-center rounded-full text-xs font-semibold text-neutral-900 shadow transition-transform ${
-                  isYearly
+                className={`inline-flex h-7 w-9 items-center justify-center rounded-full text-xs font-semibold text-neutral-900 shadow transition-transform ${isYearly
                     ? "translate-x-9 bg-emerald-400 shadow-[0_0_18px_rgba(16,185,129,0.7)]"
                     : "translate-x-0 bg-white shadow-[0_0_12px_rgba(255,255,255,0.4)]"
-                }`}
+                  }`}
               />
             </button>
             <button

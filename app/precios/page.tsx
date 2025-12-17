@@ -3,9 +3,9 @@ import CTA from '@/components/sections/CTA';
 import PricingContent from './PricingContent';
 
 export const metadata: Metadata = {
-  title: 'Precios del Software de Reservas BookFast',
+  title: 'Precios del Software BookFast | Planes para Barberías y Estética',
   description:
-    'Descubre el precio del software de reservas BookFast. Planes claros, sin permanencia y con soporte incluido para tu negocio de belleza.',
+    'Consulta los precios de BookFast. Planes flexibles para barberías y centros de estética con agenda online y automatización.',
 };
 
 export default function PreciosPage() {

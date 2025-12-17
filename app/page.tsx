@@ -6,6 +6,13 @@ import HowItWorks from '@/components/sections/HowItWorks';
 import CTA from '@/components/sections/CTA';
 import TextReveal from '@/components/ui/TextReveal';
 
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Software para Barberías y Centros de Estética | BookFast',
+  description: 'BookFast es el software de gestión de citas y clientes para barberías y centros de estética. Agenda online, automatización y menos no-shows.',
+};
+
 export default function Home() {
   return (
     <>

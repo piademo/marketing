@@ -40,7 +40,7 @@ export default function Hero() {
             >
               <Sparkles className="mr-2 h-3.5 w-3.5 text-[#f97316] dark:text-primary-400" />
               <span className="font-medium text-foreground dark:text-primary-50">
-                La plataforma #1 para Barberías Modernas
+                Software para Barberías y Centros de Estética
               </span>
             </Badge>
           </motion.div>
@@ -51,11 +51,11 @@ export default function Hero() {
             transition={prefersReducedMotion ? undefined : transition.default}
             className="mb-6 max-w-4xl text-balance text-display-md font-bold tracking-tight text-foreground sm:text-display-lg"
           >
-            Tu agenda llena,{" "}
+            Agenda llena y{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary/60 to-secondary animated-gradient gradient-text">
-              cero llamadas perdidas
+              cero estrés
             </span>{" "}
-            y adiós al papel.
+            en tu Barbería o Centro de Estética.
           </motion.h1>
 
           {/* Subhead */}
@@ -64,8 +64,8 @@ export default function Hero() {
             transition={prefersReducedMotion ? undefined : transition.fast}
             className="mb-10 max-w-2xl text-balance text-lg text-neutral-700 dark:text-neutral-300 sm:text-xl"
           >
-            BookFast automatiza tus citas y recordatorios por WhatsApp para que
-            dejes de perder el 20% de tus ingresos en &quot;no-shows&quot;.
+            El sistema que gestiona tu agenda y atiende a tus clientes por ti.
+            Elimina los &quot;no-shows&quot; y recupera tu tiempo libre.
           </motion.p>
 
           {/* CTAs */}

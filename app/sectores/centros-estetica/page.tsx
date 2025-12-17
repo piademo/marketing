@@ -6,9 +6,9 @@ import Card, { CardHeader, CardTitle, CardDescription } from '@/components/ui/Ca
 import CTA from '@/components/sections/CTA';
 
 export const metadata: Metadata = {
-  title: 'Software para Centros de Estética y Clínicas | Bonos y Citas',
+  title: 'Software para Centros de Estética | Bonos y Citas – BookFast',
   description:
-    'Programa para centros de estética y clínicas que controla bonos, sesiones y cabinas. El software más sencillo y seguro para digitalizar tu centro.',
+    'Programa para centros de estética y clínicas que controla bonos, sesiones y cabinas. El software más sencillo y seguro.',
 };
 
 const problems = [
@@ -69,8 +69,7 @@ export default function CentrosEsteticaPage() {
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
             <div>
               <h1 className="text-display-md sm:text-display-lg mb-6">
-                Organización y paz mental para tu{' '}
-                <span className="gradient-text">Centro de Estética</span>.
+                Software para <span className="gradient-text">Centros de Estética</span>: Organización y paz mental.
               </h1>
               <p className="text-lg text-neutral-300 mb-8">
                 Software para centros de estética y clínicas que necesitan controlar bonos, cabinas y aparatología sin perder la

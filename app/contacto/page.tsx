@@ -65,11 +65,12 @@ export default function ContactoPage() {
         <Container>
           <div className="mx-auto max-w-3xl text-center mb-16">
             <h1 className="text-display-md sm:text-display-lg mb-4 text-foreground dark:text-white">
-              Hablemos de tu negocio
+              Empieza con BookFast
             </h1>
             <p className="text-lg sm:text-xl text-neutral-700 dark:text-neutral-300">
-              Estamos aquí para ayudarte. Cuéntanos qué necesitas y te responderemos lo antes
-              posible.
+              Cuéntanos tu negocio y te ayudamos a empezar con BookFast de forma rápida y guiada.
+              Nuestro equipo te acompaña en la configuración inicial para que empieces a recibir
+              reservas cuanto antes.
             </p>
           </div>
 
@@ -135,12 +136,16 @@ export default function ContactoPage() {
                   disabled={status === 'submitting'}
                   className="relative overflow-hidden bg-gradient-to-r from-primary via-primary/80 to-secondary hover:from-primary/60 hover:to-secondary/60 bg-opacity-70 border border-white/60 shadow-sm backdrop-blur-sm animated-gradient disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {status === 'submitting' ? 'Enviando...' : 'Enviar mensaje'}
+                  {status === 'submitting' ? 'Enviando...' : 'Quiero empezar con BookFast'}
                 </Button>
 
                 {status === 'success' && (
                   <div className="rounded-lg bg-green-500/10 p-4 text-sm text-green-600 dark:text-green-400 border border-green-500/20 text-center">
-                    ✅ Mensaje enviado correctamente. Te contactaremos pronto.
+                    <div className="text-left space-y-2">
+                      <p className="font-bold">Hemos recibido tu solicitud</p>
+                      <p>Nuestro equipo revisará tu información y se pondrá en contacto contigo en breve para ayudarte a empezar con BookFast.</p>
+                      <p className="text-xs opacity-90 pt-2">Normalmente respondemos en menos de 24 horas laborables.</p>
+                    </div>
                   </div>
                 )}
 

@@ -6,9 +6,9 @@ import Card, { CardHeader, CardTitle, CardDescription } from '@/components/ui/Ca
 import CTA from '@/components/sections/CTA';
 
 export const metadata: Metadata = {
-  title: 'Software para Barberías y Barber Shops | Agenda y Citas Online',
+  title: 'Software para Barberías | Agenda Online y Gestión de Citas – BookFast',
   description:
-    'La app de citas para barberías que elimina los no-shows y organiza tus sillones y walk-ins. Prueba hoy el mejor programa para barberías modernas.',
+    'Gestiona citas, clientes y agenda de tu barbería con BookFast. Menos llamadas, menos no-shows y más tiempo para cortar.',
 };
 
 const problems = [
@@ -69,7 +69,7 @@ export default function BarberiasPage() {
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
             <div>
               <h1 className="text-display-md sm:text-display-lg mb-6">
-                El copiloto digital que tu <span className="gradient-text">Barbería</span> necesita.
+                Software para <span className="gradient-text">Barberías</span>: El copiloto digital que necesitas.
               </h1>
               <p className="text-lg text-neutral-700 dark:text-neutral-300 mb-8">
                 Programa para barberías pensado para el ritmo real de tu Barber Shop: walk-ins, Corte y Barba, clientes fieles y días

@@ -18,9 +18,9 @@ import Card, { CardHeader, CardTitle, CardDescription } from '@/components/ui/Ca
 import CTA from '@/components/sections/CTA';
 
 export const metadata: Metadata = {
-  title: 'Características del Sistema de Reservas BookFast',
+  title: 'Funcionalidades del Software BookFast | Agenda, Clientes y Automatización',
   description:
-    'Conoce las características clave del sistema de reservas BookFast: agenda visual, marketing automático y caja sin errores para tu negocio de belleza.',
+    'Descubre todas las funcionalidades de BookFast: agenda online, gestión de clientes, recordatorios automáticos y más.',
 };
 
 const featureCategories = [
@@ -138,7 +138,7 @@ export default function FuncionalidadesPage() {
         <Container>
           <div className="mx-auto max-w-3xl text-center mb-16">
             <h1 className="text-display-md sm:text-display-lg mb-4">
-              Todo lo que necesitas en un solo lugar
+              Funcionalidades del software BookFast
             </h1>
             <p className="text-lg text-neutral-700 dark:text-neutral-300 sm:text-xl">
               Funcionalidades profesionales diseñadas para hacer crecer tu negocio de belleza.
@@ -156,11 +156,10 @@ export default function FuncionalidadesPage() {
                 </div>
 
                 <div
-                  className={`mt-10 md:mt-0 grid gap-8 md:w-2/3 ${
-                    category.features.length === 2
+                  className={`mt-10 md:mt-0 grid gap-8 md:w-2/3 ${category.features.length === 2
                       ? 'md:grid-cols-2'
                       : 'sm:grid-cols-2 lg:grid-cols-3'
-                  }`}
+                    }`}
                 >
                   {category.features.map((feature) => (
                     <Card key={feature.title} hover>
