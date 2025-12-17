@@ -42,8 +42,9 @@ export default function DemoPage() {
                                 ¿Lo tienes claro?
                             </h2>
                             <DemoCTA />
-                            <p className="text-sm text-neutral-500 dark:text-neutral-400">
-                                Prueba gratis 14 días. Sin tarjeta de crédito.
+                            <p className="text-sm text-neutral-500 dark:text-neutral-400 max-w-sm text-center">
+                                Si ya eres cliente, accede a tu panel profesional. <br className="hidden sm:block" />
+                                Para empezar con BookFast, contáctanos.
                             </p>
                         </div>
                     </TextReveal>

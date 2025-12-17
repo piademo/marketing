@@ -343,12 +343,11 @@ export default function Header() {
               {/* CTA desplegable (solo desktop) */}
               <div
                 className="relative hidden md:block"
-                onMouseEnter={handleCtaEnter}
-                onMouseLeave={handleCtaLeave}
               >
                 <Button
                   as="link"
                   href="/demo"
+                  onClick={() => track('cta_try_bookfast_click', { location: 'header' })}
                   size="md"
                   className={cn(
                     "text-xs font-bold tracking-wide",
@@ -359,37 +358,6 @@ export default function Header() {
                 >
                   Probar BookFast
                 </Button>
-
-                {ctaOpen && (
-                  <div
-                    style={{
-                      transition:
-                        "opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)",
-                    }}
-                    className={cn(
-                      "absolute right-0 top-[calc(100%+20px)] w-44 origin-top rounded-xl p-1.5",
-                      "border border-black/10 bg-white/95 shadow-[0_22px_55px_rgba(15,23,42,0.18)] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)] backdrop-blur-2xl dark:border-white/20 dark:bg-[#050505]/30 dark:shadow-none",
-                      "pointer-events-auto translate-y-0 scale-100 opacity-100",
-                    )}
-                    onMouseEnter={handleCtaEnter}
-                    onMouseLeave={handleCtaLeave}
-                  >
-                    <div className="relative z-10 flex flex-col gap-1 text-sm">
-                      <Link
-                        href="/contacto"
-                        className="group flex w-full items-center justify-end rounded-xl px-3 py-2 text-neutral-800 transition-colors hover:bg-white/10 hover:text-neutral-950 dark:text-neutral-200 dark:hover:text-white"
-                      >
-                        <span className="text-right">Empezar ahora</span>
-                      </Link>
-                      <Link
-                        href="https://pro.bookfast.es"
-                        className="group flex w-full items-center justify-end rounded-xl px-3 py-2 text-neutral-800 transition-colors hover:bg-white/10 hover:text-neutral-950 dark:text-neutral-200 dark:hover:text-white"
-                      >
-                        <span className="text-right">Iniciar sesión</span>
-                      </Link>
-                    </div>
-                  </div>
-                )}
               </div>
 
               {/* CTA móvil con menú desplegable */}
