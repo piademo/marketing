@@ -60,20 +60,30 @@ export function isValidUnlockToken(token: string, secret: string) {
 }
 
 export function shouldLockForHost(hostHeader: string | null | undefined) {
-  const enabled = process.env.SITE_LOCK_ENABLED === 'true';
-  if (!enabled) return false;
-
-  const key = process.env.SITE_LOCK_KEY ?? '';
-  // Si no hay clave configurada, no bloqueamos (evita dejar el sitio inaccesible por error).
-  if (!key) return false;
-
   const hostWithPort = (hostHeader ?? '').trim();
   const hostname = hostWithPort.split(':')[0].toLowerCase();
   if (!hostname) return false;
 
+  // En local nunca bloqueamos (para desarrollo).
   if (isLocalHost(hostname)) return false;
 
   const publicHosts = parseHosts(process.env.SITE_LOCK_HOSTS);
-  return publicHosts.includes(hostname);
+  const isPublicHost = publicHosts.includes(hostname);
+  if (!isPublicHost) return false;
+
+  /**
+   * Seguridad "fail-closed":
+   * - En producción, en hosts públicos, bloqueamos por defecto.
+   * - Para desactivar explícitamente el bloqueo: SITE_LOCK_ENABLED=false
+   * - En local se ignora igualmente.
+   */
+  const enabledEnv = process.env.SITE_LOCK_ENABLED;
+  if (enabledEnv === 'false') return false;
+
+  const isProd = process.env.NODE_ENV === 'production';
+  if (isProd) return true;
+
+  // En no-producción, solo bloqueamos si lo activas explícitamente.
+  return enabledEnv === 'true';
 }
 
