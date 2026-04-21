@@ -5,6 +5,9 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SpotlightBackground from '@/components/ui/SpotlightBackground';
 import { AppThemeProvider } from '@/components/layout/ThemeProvider';
+import ComingSoon from '@/components/sections/ComingSoon';
+import { cookies, headers } from 'next/headers';
+import { getSiteLockCookieName, isValidUnlockToken, shouldLockForHost } from '@/lib/site-lock';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -75,11 +78,35 @@ export const metadata: Metadata = {
 
 import { Analytics } from '@vercel/analytics/react';
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const host = (await headers()).get('host');
+  const shouldLock = shouldLockForHost(host);
+
+  if (shouldLock) {
+    const cookieStore = await cookies();
+    const rawToken = cookieStore.get(getSiteLockCookieName())?.value ?? '';
+    const key = process.env.SITE_LOCK_KEY ?? '';
+    const secret = process.env.SITE_LOCK_SECRET ?? '';
+    const signingSecret = secret || key;
+
+    const unlocked = rawToken ? isValidUnlockToken(rawToken, signingSecret) : false;
+
+    if (!unlocked) {
+      // Importante: no renderizamos Header/Footer/children, así el contenido no viaja al navegador público.
+      return (
+        <html lang="es" suppressHydrationWarning className={`${inter.variable} overflow-x-hidden`}>
+          <body className="min-h-screen overflow-x-hidden">
+            <ComingSoon />
+          </body>
+        </html>
+      );
+    }
+  }
+
   return (
     <html lang="es" suppressHydrationWarning className={`${inter.variable} overflow-x-hidden`}>
       <body className="flex min-h-screen flex-col overflow-x-hidden">
