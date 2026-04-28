@@ -327,6 +327,9 @@
   .desktop-only  { @apply hidden sm:block; }
   .snap-section  { scroll-snap-align: start; }
 
+  .no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+
   /* ============================================ */
   /* PREFERS-REDUCED-MOTION                       */
   /* ============================================ */

@@ -30,8 +30,8 @@ export default function DemoPage() {
                         </p>
                     </TextReveal>
 
-                    {/* Demo Wrapper */}
-                    <div className="w-full max-w-6xl aspect-video rounded-2xl overflow-hidden border border-white/10 bg-black/40 shadow-[0_32px_90px_rgba(0,0,0,0.9)] dark:border-slate-800/80 dark:bg-[#020617]/90 mb-12 relative z-10">
+                    {/* Demo Wrapper — portrait on mobile, landscape on desktop */}
+                    <div className="w-full max-w-[390px] aspect-[9/16] sm:max-w-6xl sm:aspect-video rounded-2xl overflow-hidden border border-white/10 bg-black shadow-[0_32px_90px_rgba(0,0,0,0.9)] dark:border-slate-800/80 mb-12 relative z-10">
                         <ProDashboardDemo mode="auto" />
                     </div>
 
