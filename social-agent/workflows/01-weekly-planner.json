@@ -1,0 +1,187 @@
+{
+  "name": "BookFast — 01 Planificador Semanal",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [{ "field": "weeks", "weeksInterval": 1, "triggerAtDay": [1], "triggerAtHour": 8, "triggerAtMinute": 0 }]
+        }
+      },
+      "id": "a1b2c3d4-0001",
+      "name": "Lunes 8am",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const now = new Date();\nconst monday = new Date(now);\nmonday.setDate(now.getDate() - now.getDay() + 1);\nconst sunday = new Date(monday);\nsunday.setDate(monday.getDate() + 6);\n\nconst fmt = (d) => d.toISOString().split('T')[0];\n\nreturn [{\n  json: {\n    start_date: fmt(monday),\n    end_date: fmt(sunday),\n    current_week: `Semana ${Math.ceil((monday - new Date(monday.getFullYear(), 0, 1)) / 604800000)}`,\n    date_range: `${fmt(monday)} al ${fmt(sunday)}`,\n    year: monday.getFullYear()\n  }\n}];"
+      },
+      "id": "a1b2c3d4-0002",
+      "name": "Calcular semana actual",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "anthropic-version", "value": "2023-06-01" },
+            { "name": "content-type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "model",
+              "value": "claude-sonnet-4-6"
+            },
+            {
+              "name": "max_tokens",
+              "value": "8096"
+            },
+            {
+              "name": "system",
+              "value": "Eres el director de marketing de BookFast, software de gestión de citas para peluquerías, barberías y centros de estética en España. Tu misión es planificar contenido de redes sociales semanal que sea viral, auténtico y efectivo para convertir profesionales del sector belleza en usuarios de BookFast.\n\nCONTEXTO DE MARCA:\n- Colores: Azul #0ea5e9 (principal), Morado #a855f7 (acento)\n- Tono: profesional pero cercano, habla de 'tú'\n- Target: dueños/as de salones de 25-50 años\n- Pilares de contenido: Educación (30%), Producto (25%), Social Proof (20%), Tendencias (15%), Comunidad (10%)\n\nPLATAFORMAS:\n- Instagram: 3 posts + 2 Reels\n- TikTok: 4 vídeos cortos (15-60s)\n- Facebook: 3 posts\n- Twitter/X: 7 posts diarios\n\nResponde ÚNICAMENTE con JSON válido. Sin markdown. Sin explicaciones."
+            },
+            {
+              "name": "messages",
+              "value": "=[{\"role\":\"user\",\"content\":\"Genera el calendario de contenido para la semana del {{$json.start_date}} al {{$json.end_date}} ({{$json.current_week}}, {{$json.year}})\\n\\nIncluye al menos:\\n- 2 piezas sobre funcionalidades del producto\\n- 1 pieza de educación sobre gestión de salones\\n- 1 pieza de tendencias del sector belleza\\n- 1 pieza de social proof o estadísticas\\n- Variedad de formatos\\n\\nPara cada pieza:\\n{\\\"id\\\": \\\"bf_YYYYWNN_NNN\\\", \\\"date\\\": \\\"YYYY-MM-DD\\\", \\\"time\\\": \\\"HH:MM\\\", \\\"platforms\\\": [], \\\"type\\\": \\\"imagen_estatica|carrusel|reel_video|tiktok_video|post_texto\\\", \\\"pillar\\\": \\\"...\\\", \\\"topic\\\": \\\"...\\\", \\\"hook\\\": \\\"...\\\", \\\"key_points\\\": [], \\\"hashtags\\\": [], \\\"cta\\\": \\\"...\\\", \\\"image_prompt\\\": \\\"...\\\", \\\"video_notes\\\": null|\\\"...\\\", \\\"status\\\": \\\"pending\\\"}\\n\\nRespuesta: {\\\"week\\\": \\\"...\\\", \\\"pieces\\\": [...]}\"}]"
+            }
+          ]
+        }
+      },
+      "id": "a1b2c3d4-0003",
+      "name": "Claude — Generar Calendario",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [680, 300],
+      "credentials": {
+        "httpHeaderAuth": { "id": "anthropic-cred", "name": "Anthropic API" }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const response = $input.first().json;\nconst content = response.content[0].text;\n\n// Extraer JSON de la respuesta\nlet calendar;\ntry {\n  // Buscar JSON en la respuesta\n  const jsonMatch = content.match(/\\{[\\s\\S]*\\}/);\n  calendar = JSON.parse(jsonMatch ? jsonMatch[0] : content);\n} catch(e) {\n  throw new Error('Error parsing Claude response: ' + e.message + '\\nContent: ' + content.substring(0, 500));\n}\n\n// Retornar una fila por pieza de contenido\nreturn calendar.pieces.map(piece => ({ json: { ...piece, week: calendar.week } }));"
+      },
+      "id": "a1b2c3d4-0004",
+      "name": "Parsear Calendario",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict" },
+          "conditions": [
+            {
+              "id": "cond-video",
+              "leftValue": "={{ $json.type }}",
+              "rightValue": "reel_video",
+              "operator": { "type": "string", "operation": "contains" }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "a1b2c3d4-0005",
+      "name": "¿Es vídeo?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1120, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://hooks.n8n.io/bookfast/video-creator",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "content_id", "value": "={{ $json.id }}" },
+            { "name": "topic", "value": "={{ $json.topic }}" },
+            { "name": "hook", "value": "={{ $json.hook }}" },
+            { "name": "key_points", "value": "={{ JSON.stringify($json.key_points) }}" },
+            { "name": "platform", "value": "={{ $json.platforms[0] }}" },
+            { "name": "scheduled_date", "value": "={{ $json.date }}" },
+            { "name": "scheduled_time", "value": "={{ $json.time }}" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a1b2c3d4-0006",
+      "name": "→ Trigger Video Creator",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1340, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://hooks.n8n.io/bookfast/image-creator",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "content_id", "value": "={{ $json.id }}" },
+            { "name": "topic", "value": "={{ $json.topic }}" },
+            { "name": "hook", "value": "={{ $json.hook }}" },
+            { "name": "key_points", "value": "={{ JSON.stringify($json.key_points) }}" },
+            { "name": "hashtags", "value": "={{ JSON.stringify($json.hashtags) }}" },
+            { "name": "cta", "value": "={{ $json.cta }}" },
+            { "name": "platforms", "value": "={{ JSON.stringify($json.platforms) }}" },
+            { "name": "type", "value": "={{ $json.type }}" },
+            { "name": "image_prompt", "value": "={{ $json.image_prompt }}" },
+            { "name": "scheduled_date", "value": "={{ $json.date }}" },
+            { "name": "scheduled_time", "value": "={{ $json.time }}" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a1b2c3d4-0007",
+      "name": "→ Trigger Image Creator",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1340, 400]
+    },
+    {
+      "parameters": {
+        "fromEmail": "automation@bookfast.es",
+        "toEmail": "marketing@bookfast.es",
+        "subject": "📅 Calendario BookFast — Semana {{ $('Calcular semana actual').item.json.current_week }}",
+        "emailType": "html",
+        "message": "<h2>Calendario generado para la semana {{ $('Calcular semana actual').item.json.date_range }}</h2><p>Se han programado {{ $('Parsear Calendario').all().length }} piezas de contenido.</p><p>Los workflows de generación ya están en marcha.</p>"
+      },
+      "id": "a1b2c3d4-0008",
+      "name": "Notificación Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [1560, 300]
+    }
+  ],
+  "connections": {
+    "Lunes 8am": { "main": [[{ "node": "Calcular semana actual", "type": "main", "index": 0 }]] },
+    "Calcular semana actual": { "main": [[{ "node": "Claude — Generar Calendario", "type": "main", "index": 0 }]] },
+    "Claude — Generar Calendario": { "main": [[{ "node": "Parsear Calendario", "type": "main", "index": 0 }]] },
+    "Parsear Calendario": { "main": [[{ "node": "¿Es vídeo?", "type": "main", "index": 0 }]] },
+    "¿Es vídeo?": {
+      "main": [
+        [{ "node": "→ Trigger Video Creator", "type": "main", "index": 0 }],
+        [{ "node": "→ Trigger Image Creator", "type": "main", "index": 0 }]
+      ]
+    },
+    "→ Trigger Video Creator": { "main": [[{ "node": "Notificación Email", "type": "main", "index": 0 }]] },
+    "→ Trigger Image Creator": { "main": [[{ "node": "Notificación Email", "type": "main", "index": 0 }]] }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "id": "bookfast-wf-001",
+  "tags": [{ "name": "bookfast" }, { "name": "social-agent" }]
+}

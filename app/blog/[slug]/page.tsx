@@ -6,10 +6,30 @@ import Badge from '@/components/ui/Badge';
 import CTA from '@/components/sections/CTA';
 import { getPostBySlug, getAllPosts } from '@/lib/blog-data';
 
-export const metadata: Metadata = {
-  title: 'Post del Blog',
-  description: 'Artículo del blog de BookFast',
-};
+export async function generateMetadata(
+  { params }: { params: Promise<{ slug: string }> }
+): Promise<Metadata> {
+  const { slug } = await params;
+  const post = getPostBySlug(slug);
+  if (!post) return { title: 'Artículo no encontrado | BookFast' };
+
+  return {
+    title: post.title,
+    description: post.excerpt,
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      type: 'article',
+      publishedTime: post.date,
+      authors: [post.author],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.excerpt,
+    },
+  };
+}
 
 export function generateStaticParams() {
   const posts = getAllPosts();

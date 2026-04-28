@@ -160,9 +160,9 @@ export default function PricingContent() {
           </div>
 
           {/* Professional (destacado) */}
-          <div className="relative flex flex-col rounded-3xl border border-primary-500/40 bg-gradient-to-br from-primary/20 via-primary/80 to-secondary/15 p-6 shadow-[0_20px_55px_rgba(249,115,22,0.18)] dark:bg-neutral-900/80 dark:shadow-primary-500/30 md:scale-105 animated-gradient">
-            <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-[#f97316]/10 px-3 py-1 text-xs font-semibold text-[#f97316] border border-[#f97316]/40 dark:bg-primary-500/10 dark:border-primary-500/40 dark:text-primary-200">
-              <span className="h-2 w-2 rounded-full bg-[#f97316] dark:bg-primary-400" />
+          <div className="relative flex flex-col rounded-3xl border border-primary-500/40 bg-gradient-to-br from-primary/20 via-primary/80 to-secondary/15 p-6 shadow-[0_20px_55px_rgba(14,165,233,0.20),0_8px_20px_rgba(168,85,247,0.10)] dark:bg-neutral-900/80 dark:shadow-primary-500/30 md:scale-105 animated-gradient">
+            <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-primary-100 px-3 py-1 text-xs font-semibold text-primary-700 border border-primary-200 dark:bg-primary-500/10 dark:border-primary-500/40 dark:text-primary-200">
+              <span className="h-2 w-2 rounded-full bg-primary-500 dark:bg-primary-400" />
               <span>Más popular</span>
             </div>
             <div className="mb-2 text-sm font-semibold text-white">Professional</div>

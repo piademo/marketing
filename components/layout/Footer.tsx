@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Instagram, Linkedin, Twitter, Mail } from 'lucide-react';
 import Container from '@/components/ui/Container';
+import { BookfastLogo } from '@/components/ui/BookfastLogo';
 
 const footerLinks = {
   producto: {
@@ -16,8 +17,9 @@ const footerLinks = {
   soluciones: {
     title: 'Soluciones',
     links: [
-      { name: 'Peluquerías', href: '/sectores/peluquerias' },
       { name: 'Barberías', href: '/sectores/barberias' },
+      { name: 'Peluquerías', href: '/sectores/peluquerias' },
+      { name: 'Centros de Estética', href: '/sectores/centros-estetica' },
     ],
   },
   recursos: {
@@ -40,9 +42,9 @@ const footerLinks = {
 };
 
 const socialLinks = [
-  { name: 'Instagram', icon: Instagram, href: '#' },
-  { name: 'LinkedIn', icon: Linkedin, href: '#' },
-  { name: 'Twitter', icon: Twitter, href: '#' },
+  { name: 'Instagram', icon: Instagram, href: 'https://www.instagram.com/bookfast.es/' },
+  { name: 'LinkedIn', icon: Linkedin, href: 'https://www.linkedin.com/company/bookfast/' },
+  { name: 'Twitter', icon: Twitter, href: 'https://x.com/bookfastes' },
   { name: 'Email', icon: Mail, href: 'mailto:hola@bookfast.es' },
 ];
 
@@ -57,12 +59,7 @@ export default function Footer() {
           <div className="grid grid-cols-2 gap-8 lg:grid-cols-6">
             {/* Brand */}
             <div className="col-span-2">
-              <Link href="/" className="flex items-center space-x-2">
-                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary via-primary/80 to-secondary text-white font-bold text-lg animated-gradient">
-                  B
-                </div>
-                <span className="text-xl font-bold text-foreground">BookFast</span>
-              </Link>
+              <BookfastLogo size={36} wordmarkClassName="text-xl" />
               <p className="mt-4 text-sm text-neutral-600 dark:text-neutral-400 max-w-xs">
                 Software profesional de gestión de citas para peluquerías, barberías y centros de
                 estética.

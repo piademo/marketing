@@ -119,14 +119,17 @@ export const fadeIn: Variants = {
  * Fade In desde abajo (entrada suave)
  */
 export const fadeInUp: Variants = {
-  initial: { 
+  initial: {
     opacity: 0,
+    y: 20,
   },
-  animate: { 
+  animate: {
     opacity: 1,
+    y: 0,
   },
-  exit: { 
+  exit: {
     opacity: 0,
+    y: -8,
   },
 };
 
@@ -135,13 +138,15 @@ export const fadeInUp: Variants = {
  * Perfecto para above-the-fold en mobile
  */
 export const fadeInUpMobile: Variants = {
-  initial: { 
+  initial: {
     opacity: 0,
+    y: 10,
   },
-  animate: { 
+  animate: {
     opacity: 1,
+    y: 0,
   },
-  exit: { 
+  exit: {
     opacity: 0,
   },
 };
@@ -150,14 +155,17 @@ export const fadeInUpMobile: Variants = {
  * Fade In desde arriba
  */
 export const fadeInDown: Variants = {
-  initial: { 
+  initial: {
     opacity: 0,
+    y: -20,
   },
-  animate: { 
+  animate: {
     opacity: 1,
+    y: 0,
   },
-  exit: { 
+  exit: {
     opacity: 0,
+    y: 8,
   },
 };
 
@@ -165,14 +173,17 @@ export const fadeInDown: Variants = {
  * Scale In (para cards, modales)
  */
 export const scaleIn: Variants = {
-  initial: { 
+  initial: {
     opacity: 0,
+    scale: 0.96,
   },
-  animate: { 
+  animate: {
     opacity: 1,
+    scale: 1,
   },
-  exit: { 
+  exit: {
     opacity: 0,
+    scale: 0.96,
   },
 };
 
@@ -180,14 +191,17 @@ export const scaleIn: Variants = {
  * Slide In desde la izquierda
  */
 export const slideInLeft: Variants = {
-  initial: { 
+  initial: {
     opacity: 0,
+    x: -24,
   },
-  animate: { 
+  animate: {
     opacity: 1,
+    x: 0,
   },
-  exit: { 
+  exit: {
     opacity: 0,
+    x: -12,
   },
 };
 
@@ -195,14 +209,17 @@ export const slideInLeft: Variants = {
  * Slide In desde la derecha
  */
 export const slideInRight: Variants = {
-  initial: { 
+  initial: {
     opacity: 0,
+    x: 24,
   },
-  animate: { 
+  animate: {
     opacity: 1,
+    x: 0,
   },
-  exit: { 
-    opacity: 0, 
+  exit: {
+    opacity: 0,
+    x: 12,
   },
 };
 
@@ -368,9 +385,10 @@ export const viewport = {
  * Crea una variante fadeInUp con delay personalizado
  */
 export const createFadeInUp = (delay: number = 0): Variants => ({
-  initial: { opacity: 0 },
-  animate: { 
+  initial: { opacity: 0, y: 20 },
+  animate: {
     opacity: 1,
+    y: 0,
     transition: {
       ...transition.default,
       delay,

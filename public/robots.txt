@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+Disallow: /api/
+Disallow: /unlock
+Disallow: /locked
+Disallow: /gracias
+
+Sitemap: https://bookfast.es/sitemap.xml

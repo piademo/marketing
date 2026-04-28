@@ -1,0 +1,389 @@
+{
+  "name": "BookFast — 04 Publicador Multi-Plataforma",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "bookfast/social-publisher",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode"
+      },
+      "id": "d1e2f3a4-0001",
+      "name": "Webhook Entrada",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 400],
+      "webhookId": "bookfast-social-publisher"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={ \"status\": \"publishing\", \"content_id\": \"{{ $json.body.content_id }}\" }"
+      },
+      "id": "d1e2f3a4-0002",
+      "name": "Responder Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [460, 600]
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $input.first().json.body;\nconst platforms = Array.isArray(body.platforms) ? body.platforms : JSON.parse(body.platforms || '[]');\nconst now = new Date();\nconst scheduled = body.scheduled_date && body.scheduled_time \n  ? new Date(`${body.scheduled_date}T${body.scheduled_time}:00`)\n  : now;\n\n// Calcular delay en ms si está programado en el futuro\nconst delayMs = Math.max(0, scheduled - now);\n\nreturn [{\n  json: {\n    content_id: body.content_id,\n    content_type: body.content_type,  // 'image' | 'video'\n    image_url: body.image_url || null,\n    video_url: body.video_url || null,\n    copy: typeof body.copy === 'string' ? JSON.parse(body.copy) : body.copy,\n    platforms: platforms,\n    delay_ms: delayMs,\n    should_post_instagram: platforms.includes('instagram'),\n    should_post_tiktok: platforms.includes('tiktok'),\n    should_post_facebook: platforms.includes('facebook'),\n    should_post_twitter: platforms.includes('twitter') || platforms.includes('x'),\n    hashtags: typeof body.hashtags === 'string' ? JSON.parse(body.hashtags || '[]') : (body.hashtags || [])\n  }\n}];"
+      },
+      "id": "d1e2f3a4-0003",
+      "name": "Preparar datos",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 400]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {},
+          "conditions": [
+            {
+              "id": "cond-delay",
+              "leftValue": "={{ $json.delay_ms }}",
+              "rightValue": 60000,
+              "operator": { "type": "number", "operation": "gte" }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "d1e2f3a4-0004",
+      "name": "¿Hay delay?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [680, 400]
+    },
+    {
+      "parameters": {
+        "resume": "specificTime",
+        "dateTime": "={{ new Date(Date.now() + $json.delay_ms).toISOString() }}"
+      },
+      "id": "d1e2f3a4-0005",
+      "name": "Esperar hora programada",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [900, 300]
+    },
+
+    {
+      "parameters": {
+        "conditions": {
+          "options": {},
+          "conditions": [
+            {
+              "id": "cond-ig",
+              "leftValue": "={{ $json.should_post_instagram }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "equal" }
+            }
+          ]
+        }
+      },
+      "id": "d1e2f3a4-0006",
+      "name": "¿Post en Instagram?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1120, 200]
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $input.first().json;\nconst isVideo = data.content_type === 'video';\nconst mediaUrl = isVideo ? data.video_url : data.image_url;\nconst caption = data.copy?.instagram_caption || data.copy?.facebook_caption || '';\nconst hashtags = (data.hashtags || []).join(' ');\n\n// Paso 1: Crear container de media\nconst containerBody = isVideo\n  ? { media_type: 'REELS', video_url: mediaUrl, caption: `${caption}\\n\\n${hashtags}`, share_to_feed: true }\n  : { image_url: mediaUrl, caption: `${caption}\\n\\n${hashtags}` };\n\nreturn [{ json: { ...data, ig_container_body: containerBody, media_url: mediaUrl, caption_full: `${caption}\\n\\n${hashtags}` } }];"
+      },
+      "id": "d1e2f3a4-0007",
+      "name": "IG — Preparar Media",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1340, 100]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $vars.META_IG_ACCOUNT_ID }}/media",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpQueryAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.ig_container_body) }}",
+        "options": {}
+      },
+      "id": "d1e2f3a4-0008",
+      "name": "IG — Crear Container",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1560, 100],
+      "credentials": {
+        "httpQueryAuth": { "id": "meta-graph-cred", "name": "Meta Graph API" }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 30,
+        "unit": "seconds"
+      },
+      "id": "d1e2f3a4-0009",
+      "name": "IG — Esperar procesamiento",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [1780, 100]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $vars.META_IG_ACCOUNT_ID }}/media_publish",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpQueryAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "creation_id", "value": "={{ $('IG — Crear Container').item.json.id }}" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d1e2f3a4-0010",
+      "name": "IG — Publicar",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2000, 100],
+      "credentials": {
+        "httpQueryAuth": { "id": "meta-graph-cred", "name": "Meta Graph API" }
+      }
+    },
+
+    {
+      "parameters": {
+        "conditions": {
+          "options": {},
+          "conditions": [
+            {
+              "id": "cond-fb",
+              "leftValue": "={{ $json.should_post_facebook }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "equal" }
+            }
+          ]
+        }
+      },
+      "id": "d1e2f3a4-0011",
+      "name": "¿Post en Facebook?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1120, 400]
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $input.first().json;\nconst isVideo = data.content_type === 'video';\nconst caption = data.copy?.facebook_description || data.copy?.facebook_caption || data.copy?.instagram_caption || '';\n\nreturn [{\n  json: {\n    ...data,\n    fb_endpoint: isVideo ? 'videos' : 'photos',\n    fb_body: isVideo\n      ? { file_url: data.video_url, description: caption }\n      : { url: data.image_url, message: caption }\n  }\n}];"
+      },
+      "id": "d1e2f3a4-0012",
+      "name": "FB — Preparar Post",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1340, 400]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $vars.META_FB_PAGE_ID }}/{{ $json.fb_endpoint }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpQueryAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.fb_body) }}",
+        "options": {}
+      },
+      "id": "d1e2f3a4-0013",
+      "name": "FB — Publicar",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1560, 400],
+      "credentials": {
+        "httpQueryAuth": { "id": "meta-graph-cred", "name": "Meta Graph API" }
+      }
+    },
+
+    {
+      "parameters": {
+        "conditions": {
+          "options": {},
+          "conditions": [
+            {
+              "id": "cond-tiktok",
+              "leftValue": "={{ $json.should_post_tiktok }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "equal" }
+            }
+          ]
+        }
+      },
+      "id": "d1e2f3a4-0014",
+      "name": "¿Post en TikTok?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1120, 600]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://open.tiktokapis.com/v2/post/publish/video/init/",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "content-type", "value": "application/json; charset=UTF-8" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"post_info\": {\n    \"title\": {{ JSON.stringify((($json.copy && $json.copy.tiktok_description) || '').substring(0, 150)) }},\n    \"privacy_level\": \"PUBLIC_TO_EVERYONE\",\n    \"disable_duet\": false,\n    \"disable_comment\": false,\n    \"disable_stitch\": false,\n    \"video_cover_timestamp_ms\": 1000\n  },\n  \"source_info\": {\n    \"source\": \"PULL_FROM_URL\",\n    \"video_url\": {{ JSON.stringify($json.video_url) }}\n  }\n}",
+        "options": {}
+      },
+      "id": "d1e2f3a4-0015",
+      "name": "TikTok — Publicar Vídeo",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1340, 600],
+      "credentials": {
+        "httpHeaderAuth": { "id": "tiktok-cred", "name": "TikTok API" }
+      }
+    },
+
+    {
+      "parameters": {
+        "conditions": {
+          "options": {},
+          "conditions": [
+            {
+              "id": "cond-twitter",
+              "leftValue": "={{ $json.should_post_twitter }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "equal" }
+            }
+          ]
+        }
+      },
+      "id": "d1e2f3a4-0016",
+      "name": "¿Post en Twitter/X?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1120, 800]
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $input.first().json;\nconst text = data.copy?.twitter_text || data.copy?.instagram_caption || '';\n// Twitter/X limita a 280 chars\nconst tweetText = text.substring(0, 277) + (text.length > 277 ? '...' : '');\n\nreturn [{ json: { ...data, tweet_text: tweetText } }];"
+      },
+      "id": "d1e2f3a4-0017",
+      "name": "Twitter — Preparar Tweet",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1340, 800]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.twitter.com/2/tweets",
+        "authentication": "oAuth1Api",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={ \"text\": {{ JSON.stringify($json.tweet_text) }} }",
+        "options": {}
+      },
+      "id": "d1e2f3a4-0018",
+      "name": "Twitter — Publicar",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1560, 800],
+      "credentials": {
+        "oAuth1Api": { "id": "twitter-oauth-cred", "name": "Twitter OAuth 1.0a" }
+      }
+    },
+
+    {
+      "parameters": {
+        "jsCode": "// Recopilar resultados de todas las publicaciones\nconst results = {\n  content_id: $('Preparar datos').item.json.content_id,\n  published_at: new Date().toISOString(),\n  platforms: {}\n};\n\ntry { results.platforms.instagram = $('IG — Publicar').item.json.id; } catch(e) { results.platforms.instagram = 'skipped'; }\ntry { results.platforms.facebook = $('FB — Publicar').item.json.id; } catch(e) { results.platforms.facebook = 'skipped'; }\ntry { results.platforms.tiktok = $('TikTok — Publicar Vídeo').item.json.publish_id || 'ok'; } catch(e) { results.platforms.tiktok = 'skipped'; }\ntry { results.platforms.twitter = $('Twitter — Publicar').item.json.data?.id || 'ok'; } catch(e) { results.platforms.twitter = 'skipped'; }\n\nreturn [{ json: results }];"
+      },
+      "id": "d1e2f3a4-0019",
+      "name": "Recopilar Resultados",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1780, 500]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://hooks.slack.com/bookfast-marketing",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"blocks\": [\n    {\n      \"type\": \"section\",\n      \"text\": {\n        \"type\": \"mrkdwn\",\n        \"text\": \"✅ *Contenido publicado* — `{{ $json.content_id }}`\\n📱 Instagram: `{{ $json.platforms.instagram }}`\\n📘 Facebook: `{{ $json.platforms.facebook }}`\\n🎵 TikTok: `{{ $json.platforms.tiktok }}`\\n🐦 Twitter: `{{ $json.platforms.twitter }}`\"\n      }\n    }\n  ]\n}",
+        "options": {}
+      },
+      "id": "d1e2f3a4-0020",
+      "name": "Notificación Slack",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2000, 500]
+    }
+  ],
+  "connections": {
+    "Webhook Entrada": {
+      "main": [
+        [
+          { "node": "Preparar datos", "type": "main", "index": 0 },
+          { "node": "Responder Webhook", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Preparar datos": { "main": [[{ "node": "¿Hay delay?", "type": "main", "index": 0 }]] },
+    "¿Hay delay?": {
+      "main": [
+        [{ "node": "Esperar hora programada", "type": "main", "index": 0 }],
+        [{ "node": "¿Post en Instagram?", "type": "main", "index": 0 }, { "node": "¿Post en Facebook?", "type": "main", "index": 0 }, { "node": "¿Post en TikTok?", "type": "main", "index": 0 }, { "node": "¿Post en Twitter/X?", "type": "main", "index": 0 }]
+      ]
+    },
+    "Esperar hora programada": {
+      "main": [[{ "node": "¿Post en Instagram?", "type": "main", "index": 0 }, { "node": "¿Post en Facebook?", "type": "main", "index": 0 }, { "node": "¿Post en TikTok?", "type": "main", "index": 0 }, { "node": "¿Post en Twitter/X?", "type": "main", "index": 0 }]]
+    },
+    "¿Post en Instagram?": {
+      "main": [
+        [{ "node": "IG — Preparar Media", "type": "main", "index": 0 }],
+        []
+      ]
+    },
+    "IG — Preparar Media": { "main": [[{ "node": "IG — Crear Container", "type": "main", "index": 0 }]] },
+    "IG — Crear Container": { "main": [[{ "node": "IG — Esperar procesamiento", "type": "main", "index": 0 }]] },
+    "IG — Esperar procesamiento": { "main": [[{ "node": "IG — Publicar", "type": "main", "index": 0 }]] },
+    "IG — Publicar": { "main": [[{ "node": "Recopilar Resultados", "type": "main", "index": 0 }]] },
+    "¿Post en Facebook?": {
+      "main": [
+        [{ "node": "FB — Preparar Post", "type": "main", "index": 0 }],
+        []
+      ]
+    },
+    "FB — Preparar Post": { "main": [[{ "node": "FB — Publicar", "type": "main", "index": 0 }]] },
+    "FB — Publicar": { "main": [[{ "node": "Recopilar Resultados", "type": "main", "index": 0 }]] },
+    "¿Post en TikTok?": {
+      "main": [
+        [{ "node": "TikTok — Publicar Vídeo", "type": "main", "index": 0 }],
+        []
+      ]
+    },
+    "TikTok — Publicar Vídeo": { "main": [[{ "node": "Recopilar Resultados", "type": "main", "index": 0 }]] },
+    "¿Post en Twitter/X?": {
+      "main": [
+        [{ "node": "Twitter — Preparar Tweet", "type": "main", "index": 0 }],
+        []
+      ]
+    },
+    "Twitter — Preparar Tweet": { "main": [[{ "node": "Twitter — Publicar", "type": "main", "index": 0 }]] },
+    "Twitter — Publicar": { "main": [[{ "node": "Recopilar Resultados", "type": "main", "index": 0 }]] },
+    "Recopilar Resultados": { "main": [[{ "node": "Notificación Slack", "type": "main", "index": 0 }]] }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "id": "bookfast-wf-004",
+  "tags": [{ "name": "bookfast" }, { "name": "social-agent" }]
+}

@@ -4,1120 +4,673 @@ import * as React from "react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  LayoutGrid,
-  CalendarDays,
-  Users,
-  Scissors,
-  Settings,
   BarChart3,
-  MessageCircleMore,
-  Clock,
-  Euro,
-  Activity,
-  LogOut,
+  Users,
+  CalendarDays,
+  MessageCircle,
+  MoreHorizontal,
+  Bell,
+  Search,
+  ChevronLeft,
+  ChevronRight,
+  SlidersHorizontal,
+  X,
+  Scissors,
   WalletCards,
+  Megaphone,
+  Settings,
+  Download,
+  Pencil,
+  Trash2,
+  Archive,
+  UserPlus,
+  Star,
+  Clock,
+  ChevronDown,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { transition } from "@/lib/motion";
+import { BookfastLogoMark } from "@/components/ui/BookfastLogo";
 
-type Section =
-  | "dashboard"
-  | "agenda"
-  | "clientes"
-  | "staff"
-  | "chats"
-  | "monedero"
-  | "ajustes";
+type Section = "estadisticas" | "agenda" | "clientes" | "chats";
+type ProDashboardDemoProps = { className?: string; mode?: "auto" | "mobile" };
 
-type ProDashboardDemoProps = {
-  className?: string;
-  /**
-   * auto   = usa breakpoints (sidebar en md+)
-   * mobile = fuerza siempre la versión móvil (sin sidebar)
-   */
-  mode?: "auto" | "mobile";
-};
+const TEAL = "#4FA1D8";
 
-export default function ProDashboardDemo({
-  className,
-  mode = "auto",
-}: ProDashboardDemoProps) {
-  const [section, setSection] = useState<Section>("dashboard");
-  const [range, setRange] = useState<"hoy" | "semana" | "mes">("hoy");
+export default function ProDashboardDemo({ className, mode = "auto" }: ProDashboardDemoProps) {
+  const [section, setSection] = useState<Section>("agenda");
+  const [showMas, setShowMas] = useState(false);
+
+  const sectionTitle: Record<Section, string> = {
+    estadisticas: "Estadísticas",
+    agenda: "Agenda",
+    clientes: "Clientes",
+    chats: "Chats",
+  };
+
+  const go = (s: Section) => { setSection(s); setShowMas(false); };
 
   return (
-    <div
-      className={cn(
-        "relative flex h-full w-full overflow-hidden rounded-2xl",
-        // Light
-        "bg-slate-50 text-slate-900 border border-slate-200 shadow-sm",
-        // Dark
-        "dark:bg-[#050816] dark:text-slate-50 dark:border-slate-800/80 dark:shadow-none",
-        className,
-      )}
-    >
-      {/* Sidebar escritorio (solo mode=auto + md+) */}
-      <aside
-        className={cn(
-          "h-full w-14 flex-col items-center gap-3 border-r px-2 py-3 text-[10px]",
-          "bg-slate-100/90 border-slate-200/80 text-slate-500",
-          "dark:bg-[#050814] dark:border-slate-800/80 dark:text-slate-400",
-          mode === "auto" ? "hidden md:flex" : "hidden",
-        )}
-      >
-        {/* Avatar tenant */}
-        <div className="mb-2 flex h-8 w-8 items-center justify-center rounded-full bg-sky-500 text-[11px] font-semibold text-white shadow-[0_0_18px_rgba(56,189,248,0.7)]">
-          B
-        </div>
+    <div className={cn("relative flex h-full w-full overflow-hidden bg-black text-white", className)}>
 
-        {/* Navegación principal */}
-        <NavIcon
-          active={section === "dashboard"}
-          onClick={() => setSection("dashboard")}
-        >
-          <LayoutGrid className="h-4 w-4" />
-        </NavIcon>
-        <NavIcon
-          active={section === "agenda"}
-          onClick={() => setSection("agenda")}
-        >
-          <CalendarDays className="h-4 w-4" />
-        </NavIcon>
-        <NavIcon
-          active={section === "clientes"}
-          onClick={() => setSection("clientes")}
-        >
-          <Users className="h-4 w-4" />
-        </NavIcon>
-        <NavIcon
-          active={section === "staff"}
-          onClick={() => setSection("staff")}
-        >
-          <Scissors className="h-4 w-4" />
-        </NavIcon>
-        <NavIcon
-          active={section === "chats"}
-          onClick={() => setSection("chats")}
-        >
-          <MessageCircleMore className="h-4 w-4" />
-        </NavIcon>
-        <NavIcon
-          active={section === "monedero"}
-          onClick={() => setSection("monedero")}
-        >
-          <WalletCards className="h-4 w-4" />
-        </NavIcon>
-        <NavIcon
-          active={section === "ajustes"}
-          onClick={() => setSection("ajustes")}
-        >
-          <Settings className="h-4 w-4" />
-        </NavIcon>
-
-        {/* Extra / logout */}
-        <NavIcon onClick={() => setSection("dashboard")}>
-          <BarChart3 className="h-4 w-4" />
-        </NavIcon>
-
-        <div className="mt-auto">
-          <NavIcon onClick={() => setSection("dashboard")}>
-            <LogOut className="h-4 w-4" />
-          </NavIcon>
-        </div>
+      {/* Desktop sidebar — auto mode only */}
+      <aside className={cn(
+        "h-full w-14 flex-col items-center gap-3 border-r px-2 py-4",
+        "bg-[#0A0A0A] border-[#222]",
+        mode === "auto" ? "hidden md:flex" : "hidden",
+      )}>
+        <div className="mb-3"><BookfastLogoMark size={28} /></div>
+        {([
+          ["estadisticas", BarChart3],
+          ["clientes", Users],
+          ["agenda", CalendarDays],
+          ["chats", MessageCircle],
+        ] as [Section, React.ElementType][]).map(([id, Icon]) => (
+          <button
+            key={id}
+            onClick={() => go(id)}
+            className={cn(
+              "flex h-9 w-9 items-center justify-center rounded-xl transition-colors",
+              section === id ? "text-[#4FA1D8]" : "text-[#555] hover:text-[#888]",
+            )}
+            style={section === id ? { background: TEAL + "22" } : {}}
+          >
+            <Icon className="h-4 w-4" />
+          </button>
+        ))}
       </aside>
 
-      {/* Contenedor principal */}
+      {/* Main column */}
       <div className="flex min-w-0 flex-1 flex-col">
-        {/* Top nav móvil (tabs) → siempre visible en mode=mobile, solo móvil en auto */}
-        <div
-          className={cn(
-            "flex border-b px-3 pt-2 pb-1 text-[11px]",
-            "border-slate-200 bg-slate-50/95",
-            "dark:border-slate-800 dark:bg-[#050816]/95",
-            mode === "auto" ? "md:hidden" : "",
-          )}
-        >
-          <div className="flex w-full flex-col gap-2">
-            {/* Identidad */}
-            <div className="flex items-center justify-between gap-2">
-              <div className="flex items-center gap-2 text-[12px] font-semibold">
-                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-sky-500 text-[11px] font-semibold text-white shadow-[0_0_12px_rgba(56,189,248,0.7)]">
-                  B
-                </span>
-                <span>BookFast Pro</span>
-              </div>
-            </div>
 
-            {/* Tabs horizontales scrollables */}
-            <div className="flex gap-1 overflow-x-auto pb-1 text-[10px] no-scrollbar">
-              <TopTab
-                active={section === "dashboard"}
-                onClick={() => setSection("dashboard")}
-              >
-                Dash
-              </TopTab>
-              <TopTab
-                active={section === "agenda"}
-                onClick={() => setSection("agenda")}
-              >
-                Agenda
-              </TopTab>
-              <TopTab
-                active={section === "clientes"}
-                onClick={() => setSection("clientes")}
-              >
-                Clientes
-              </TopTab>
-              <TopTab
-                active={section === "staff"}
-                onClick={() => setSection("staff")}
-              >
-                Staff
-              </TopTab>
-              <TopTab
-                active={section === "chats"}
-                onClick={() => setSection("chats")}
-              >
-                Chats
-              </TopTab>
-              <TopTab
-                active={section === "monedero"}
-                onClick={() => setSection("monedero")}
-              >
-                Monedero
-              </TopTab>
-              <TopTab
-                active={section === "ajustes"}
-                onClick={() => setSection("ajustes")}
-              >
-                Ajustes
-              </TopTab>
-            </div>
+        {/* Mobile top bar */}
+        <header className={cn(
+          "flex flex-shrink-0 items-center justify-between px-4 py-3",
+          mode === "auto" ? "md:hidden" : "",
+        )}>
+          <div
+            className="flex h-9 w-9 items-center justify-center rounded-full"
+            style={{ background: TEAL }}
+          >
+            <span className="text-[13px] font-bold text-white">JC</span>
           </div>
-        </div>
+          <h1 className="text-[17px] font-bold">{sectionTitle[section]}</h1>
+          <div
+            className="flex h-9 w-9 items-center justify-center rounded-full"
+            style={{ background: TEAL }}
+          >
+            <BookfastLogoMark size={18} />
+          </div>
+        </header>
 
-        {/* Main content */}
-        <main className="flex-1 overflow-hidden px-4 py-3 md:px-5 md:py-4">
+        {/* Content area */}
+        <main className="flex-1 overflow-hidden">
           <AnimatePresence mode="wait">
-            {section === "dashboard" && (
-              <motion.div
-                key="dashboard"
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={transition.fast}
-                className="flex h-full flex-col gap-3"
-              >
-                <DashboardSection range={range} onRangeChange={setRange} />
-              </motion.div>
-            )}
-
-            {section === "agenda" && (
-              <motion.div
-                key="agenda"
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={transition.fast}
-                className="flex h-full flex-col gap-3"
-              >
-                <AgendaSection />
-              </motion.div>
-            )}
-
-            {section === "clientes" && (
-              <motion.div
-                key="clientes"
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={transition.fast}
-                className="flex h-full flex-col gap-3"
-              >
-                <ClientesSection />
-              </motion.div>
-            )}
-
-            {section === "staff" && (
-              <motion.div
-                key="staff"
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={transition.fast}
-                className="flex h-full flex-col gap-3"
-              >
-                <StaffSection />
-              </motion.div>
-            )}
-
-            {section === "chats" && (
-              <motion.div
-                key="chats"
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={transition.fast}
-                className="flex h-full flex-col gap-3"
-              >
-                <ChatsSection />
-              </motion.div>
-            )}
-
-            {section === "monedero" && (
-              <motion.div
-                key="monedero"
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={transition.fast}
-                className="flex h-full flex-col gap-3"
-              >
-                <MonederoSection />
-              </motion.div>
-            )}
-
-            {section === "ajustes" && (
-              <motion.div
-                key="ajustes"
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={transition.fast}
-                className="flex h-full flex-col gap-3"
-              >
-                <AjustesSection />
-              </motion.div>
-            )}
+            <motion.div
+              key={section}
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -4 }}
+              transition={transition.fast}
+              className="h-full overflow-y-auto"
+            >
+              {section === "estadisticas" && <EstadisticasSection />}
+              {section === "agenda" && <AgendaSection />}
+              {section === "clientes" && <ClientesSection />}
+              {section === "chats" && <ChatsSection />}
+            </motion.div>
           </AnimatePresence>
         </main>
-      </div>
-    </div>
-  );
-}
 
-/* ─────────────────────────────
-   SECCIONES PRINCIPALES
-   ───────────────────────────── */
+        {/* Bottom tab bar */}
+        <nav className={cn(
+          "flex flex-shrink-0 items-end border-t border-[#1C1C1E] bg-black px-1 pb-3 pt-2",
+          mode === "auto" ? "md:hidden" : "",
+        )}>
+          <BottomTab
+            icon={BarChart3} label="Stats"
+            active={section === "estadisticas" && !showMas}
+            onClick={() => go("estadisticas")}
+          />
+          <BottomTab
+            icon={Users} label="Clientes"
+            active={section === "clientes" && !showMas}
+            onClick={() => go("clientes")}
+          />
 
-function DashboardSection({
-  range,
-  onRangeChange,
-}: {
-  range: "hoy" | "semana" | "mes";
-  onRangeChange: (r: "hoy" | "semana" | "mes") => void;
-}) {
-  return (
-    <>
-      {/* Top bar */}
-      <div className="flex items-center justify-between">
-        <h2 className="text-base font-semibold tracking-tight">Dashboard</h2>
-
-        <div className="hidden items-center gap-2 text-[11px] text-slate-600 dark:text-slate-300 md:flex">
-          <span className="rounded-full bg-emerald-500/10 px-2 py-0.5 text-emerald-500 dark:text-emerald-300">
-            Día tranquilo
-          </span>
-          <div className="flex items-center gap-1 rounded-full bg-slate-100 px-0.5 py-0.5 text-[10px] dark:bg-slate-900">
-            <RangePill
-              label="Hoy"
-              active={range === "hoy"}
-              onClick={() => onRangeChange("hoy")}
-            />
-            <RangePill
-              label="Semana"
-              active={range === "semana"}
-              onClick={() => onRangeChange("semana")}
-            />
-            <RangePill
-              label="Mes"
-              active={range === "mes"}
-              onClick={() => onRangeChange("mes")}
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Contenido */}
-      <section className="grid flex-1 grid-cols-1 gap-3 md:grid-cols-4">
-        {/* Saludo + métricas */}
-        <Card className="col-span-1 md:col-span-2">
-          <div className="mb-4">
-            <p className="text-sm font-semibold">
-              Hola, Sergi <span className="ml-1">👋</span>
-            </p>
-            <p className="mt-1 text-[11px] text-slate-500 dark:text-slate-400">
-              Miércoles, 10 de diciembre
-            </p>
-          </div>
-
-          <div className="grid grid-cols-3 gap-2 text-[11px]">
-            <MiniStat
-              label="Reservas hoy"
-              value="0"
-              badge="Nuevo"
-              badgeColor="emerald"
-            />
-            <MiniStat
-              label="Ingresos hoy"
-              value="0,00 €"
-              Icon={Euro}
-              badgeColor="sky"
-            />
-            <MiniStat
-              label="Ocupación hoy"
-              value="0%"
-              Icon={Activity}
-              badgeColor="violet"
-            />
-          </div>
-        </Card>
-
-        <Card>
-          <p className="text-[10px] uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
-            Ticket hoy
-          </p>
-          <p className="mt-3 text-lg font-semibold">0,00 €</p>
-          <p className="mt-1 text-[11px] text-slate-500 dark:text-slate-400">
-            Sin reservas confirmadas todavía.
-          </p>
-        </Card>
-
-        <Card>
-          <p className="text-[10px] uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
-            Objetivo mensual
-          </p>
-          <p className="mt-3 text-lg font-semibold">3.000 €</p>
-          <p className="mt-1 text-[11px] text-slate-500 dark:text-slate-400">
-            Aún no hay datos de este mes.
-          </p>
-        </Card>
-
-        {/* Próximas reservas & Staff & Performance & Acciones */}
-        <Card className="col-span-1 md:col-span-2">
-          <div className="mb-2 flex items-center justify-between text-[11px]">
-            <div className="flex items-center gap-2">
-              <span className="font-medium">Próximas reservas</span>
-              <div className="flex gap-1 rounded-full bg-slate-100 px-0.5 py-0.5 text-[10px] dark:bg-slate-900">
-                <SmallPill active>Hoy</SmallPill>
-                <SmallPill>Mañana</SmallPill>
-              </div>
+          {/* Center FAB */}
+          <button
+            onClick={() => go("agenda")}
+            className="flex flex-1 flex-col items-center pb-0.5"
+          >
+            <div
+              className="flex h-12 w-12 items-center justify-center rounded-full transition-all"
+              style={{
+                background: section === "agenda" && !showMas ? TEAL : "#1C1C1E",
+                boxShadow: section === "agenda" && !showMas ? "0 0 20px rgba(79,161,216,0.45)" : "none",
+              }}
+            >
+              <CalendarDays className="h-5 w-5 text-white" />
             </div>
-            <button className="text-[11px] text-emerald-500 dark:text-emerald-300">
-              Ver agenda →
-            </button>
-          </div>
-          <div className="flex h-16 items-center justify-center rounded-xl border border-dashed border-slate-200 text-[11px] text-slate-500 dark:border-slate-700 dark:text-slate-400">
-            <CalendarDays className="mr-2 h-4 w-4" />
-            Sin reservas próximas
-          </div>
-        </Card>
-
-        <Card>
-          <div className="mb-2 flex items-center justify-between text-[11px]">
-            <span className="font-medium">Staff hoy</span>
-            <span className="text-slate-500 dark:text-slate-400">
-              0 activos
-            </span>
-          </div>
-          <div className="flex h-16 flex-col items-center justify-center text-[11px] text-slate-500 dark:text-slate-400">
-            <Scissors className="mb-1 h-4 w-4" />
-            <span>Sin staff activo</span>
-            <button className="mt-1 text-[11px] text-emerald-500 dark:text-emerald-300">
-              Añadir staff →
-            </button>
-          </div>
-        </Card>
-
-        <Card className="hidden md:flex md:col-span-2 md:flex-col">
-          <div className="mb-2 flex items-center justify-between text-[11px]">
-            <div>
-              <p className="font-medium">Performance</p>
-              <p className="mt-0.5 text-[10px] text-slate-500 dark:text-slate-400">
-                Reservas diarias · Últimos 7 días
-              </p>
-            </div>
-            <div className="flex gap-1 rounded-full bg-slate-100 px-0.5 py-0.5 text-[10px] dark:bg-slate-900">
-              <SmallPill active>7d</SmallPill>
-              <SmallPill>30d</SmallPill>
-            </div>
-          </div>
-
-          <div className="mt-2 flex-1 rounded-xl bg-slate-100/80 px-3 py-2 dark:bg-slate-950/40">
-            <div className="flex h-16 items-end gap-1">
-              {[0, 0, 0, 0, 0].map((_, i) => (
-                <div
-                  key={i}
-                  className="flex-1 rounded-sm bg-slate-300/80 dark:bg-slate-800/80"
-                  style={{ height: `${30 + i * 4}%` }}
-                />
-              ))}
-            </div>
-            <div className="mt-1 flex justify-between text-[9px] text-slate-500 dark:text-slate-400">
-              <span>L</span>
-              <span>M</span>
-              <span>X</span>
-              <span>J</span>
-              <span>V</span>
-            </div>
-          </div>
-        </Card>
-
-        <Card className="flex flex-col">
-          <p className="mb-2 text-sm font-medium">Acciones</p>
-
-          <button className="mb-3 flex h-8 w-full items-center justify-between rounded-full bg-gradient-to-r from-sky-500 via-emerald-400 to-teal-400 px-3 text-[11px] font-medium text-slate-950 shadow-[0_0_18px_rgba(34,197,235,0.7)]">
-            <span>+ Nueva cita</span>
-            <ArrowRightTiny />
           </button>
 
-          <div className="mb-2 space-y-1 text-[11px]">
-            <QuickRow label="Clientes" />
-            <QuickRow label="Agenda" />
-          </div>
-
-          <div className="mt-auto border-t border-slate-200 pt-2 text-[10px] text-slate-500 dark:border-slate-700 dark:text-slate-400">
-            Acceso rápido: + Cliente · + Staff · + Servicio
-          </div>
-        </Card>
-      </section>
-    </>
-  );
-}
-
-function AgendaSection() {
-  const slots = [
-    { time: "10:00", cliente: "Carlos", servicio: "Corte + barba" },
-    { time: "11:00", cliente: "Ana", servicio: "Color + peinado" },
-    { time: "12:00", cliente: "Libre", servicio: "Hueco libre" },
-  ];
-
-  return (
-    <>
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-base font-semibold tracking-tight">Agenda</h2>
-          <p className="text-[11px] text-slate-500 dark:text-slate-400">
-            Vista rápida de hoy
-          </p>
-        </div>
-        <div className="hidden items-center gap-1 rounded-full bg-slate-100 px-1 py-0.5 text-[10px] dark:bg-slate-900 md:flex">
-          <SmallPill active>Hoy</SmallPill>
-          <SmallPill>Mañana</SmallPill>
-        </div>
+          <BottomTab
+            icon={MessageCircle} label="Chats"
+            active={section === "chats" && !showMas}
+            onClick={() => go("chats")}
+          />
+          <BottomTab
+            icon={MoreHorizontal} label="Más"
+            active={showMas}
+            onClick={() => setShowMas(!showMas)}
+          />
+        </nav>
       </div>
 
-      <Card className="flex-1">
-        <div className="mb-2 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400">
-          <span>Turnos de hoy</span>
-          <span>0/8 huecos ocupados</span>
-        </div>
-
-        <div className="grid flex-1 grid-cols-1 gap-2 md:grid-cols-2">
-          {slots.map((slot) => (
-            <div
-              key={slot.time}
-              className={cn(
-                "flex flex-col justify-between rounded-xl border px-3 py-2 text-[11px] transition-all",
-                "border-slate-200 bg-slate-50 hover:border-sky-400 hover:bg-sky-50",
-                "dark:border-slate-700 dark:bg-slate-950/40 dark:hover:border-sky-500 dark:hover:bg-slate-900/60",
-              )}
+      {/* "Más opciones" bottom sheet */}
+      <AnimatePresence>
+        {showMas && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute inset-0 z-20"
+          >
+            <div className="absolute inset-0 bg-black/60" onClick={() => setShowMas(false)} />
+            <motion.div
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              transition={{ type: "spring", damping: 28, stiffness: 320 }}
+              className="absolute bottom-0 left-0 right-0 rounded-t-3xl bg-[#1C1C1E] px-5 pb-10 pt-3"
             >
-              <div className="mb-1 flex items-center justify-between">
-                <span className="font-medium">{slot.time}</span>
-                <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] text-slate-500 dark:bg-slate-800 dark:text-slate-300">
-                  {slot.cliente === "Libre" ? "Disponible" : "Reservado"}
-                </span>
-              </div>
-              <div className="text-slate-700 dark:text-slate-200">
-                {slot.cliente}
-              </div>
-              <div className="text-[10px] text-slate-500 dark:text-slate-400">
-                {slot.servicio}
-              </div>
-            </div>
-          ))}
-        </div>
-      </Card>
-    </>
-  );
-}
-
-function ClientesSection() {
-  const clientes = [
-    { nombre: "Carlos López", visitas: 8, proximo: "Hoy · 10:00" },
-    { nombre: "Ana Martínez", visitas: 5, proximo: "Hoy · 11:00" },
-    { nombre: "Marcos Ruiz", visitas: 2, proximo: "Mañana · 17:30" },
-  ];
-
-  return (
-    <>
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-base font-semibold tracking-tight">Clientes</h2>
-          <p className="text-[11px] text-slate-500 dark:text-slate-400">
-            Tus mejores clientes a un vistazo
-          </p>
-        </div>
-        <div className="hidden rounded-full bg-slate-100 px-3 py-1.5 text-[11px] text-slate-500 dark:bg-slate-900 dark:text-slate-300 md:block">
-          Buscar cliente…
-        </div>
-      </div>
-
-      <Card className="flex-1">
-        <div className="mb-2 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400">
-          <span>Clientes activos</span>
-          <span>+3 esta semana</span>
-        </div>
-
-        <div className="space-y-2">
-          {clientes.map((c) => (
-            <div
-              key={c.nombre}
-              className={cn(
-                "flex items-center justify-between rounded-xl px-3 py-2 text-[11px]",
-                "bg-slate-50 hover:bg-slate-100",
-                "dark:bg-slate-950/40 dark:hover:bg-slate-900/70",
-              )}
-            >
-              <div className="flex items-center gap-2">
-                <div className="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-slate-500 to-slate-800 text-[11px] font-medium text-white">
-                  {c.nombre[0]}
-                </div>
-                <div>
-                  <p className="font-medium text-slate-800 dark:text-slate-100">
-                    {c.nombre}
-                  </p>
-                  <p className="text-[10px] text-slate-500 dark:text-slate-400">
-                    Próxima cita · {c.proximo}
-                  </p>
-                </div>
-              </div>
-              <span className="rounded-full bg-sky-500/10 px-2 py-0.5 text-[10px] text-sky-600 dark:bg-sky-500/20 dark:text-sky-300">
-                {c.visitas} visitas
-              </span>
-            </div>
-          ))}
-        </div>
-      </Card>
-    </>
-  );
-}
-
-function StaffSection() {
-  const staff = [
-    { nombre: "Javier", rol: "Barbero senior" },
-    { nombre: "Lucía", rol: "Colorista" },
-    { nombre: "Diego", rol: "Barbero junior" },
-  ];
-
-  return (
-    <>
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-base font-semibold tracking-tight">Staff</h2>
-          <p className="text-[11px] text-slate-500 dark:text-slate-400">
-            Configura quién atiende cada silla
-          </p>
-        </div>
-        <button className="hidden rounded-full bg-slate-900 px-3 py-1.5 text-[11px] text-slate-100 dark:bg-slate-100 dark:text-slate-900 md:block">
-          + Añadir staff
-        </button>
-      </div>
-
-      <Card className="flex-1">
-        <div className="space-y-2">
-          {staff.map((s) => (
-            <div
-              key={s.nombre}
-              className={cn(
-                "flex items-center justify-between rounded-xl px-3 py-2 text-[11px]",
-                "bg-slate-50 hover:bg-slate-100",
-                "dark:bg-slate-950/40 dark:hover:bg-slate-900/70",
-              )}
-            >
-              <div className="flex items-center gap-2">
-                <div className="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-emerald-500 to-sky-500 text-[11px] font-medium text-white">
-                  {s.nombre[0]}
-                </div>
-                <div>
-                  <p className="font-medium text-slate-800 dark:text-slate-100">
-                    {s.nombre}
-                  </p>
-                  <p className="text-[10px] text-slate-500 dark:text-slate-400">
-                    {s.rol}
-                  </p>
-                </div>
-              </div>
-              <span className="text-[10px] text-emerald-500 dark:text-emerald-300">
-                Hoy disponible
-              </span>
-            </div>
-          ))}
-        </div>
-      </Card>
-    </>
-  );
-}
-
-function ChatsSection() {
-  const chats = [
-    {
-      nombre: "Carlos · WhatsApp",
-      preview: "¿Puedo cambiar mi cita de hoy?",
-      estado: "Sin responder",
-    },
-    {
-      nombre: "Ana · Instagram",
-      preview: "¿Tenéis hueco para dos el sábado?",
-      estado: "Respondido",
-    },
-    {
-      nombre: "Walk-in · Webchat",
-      preview: "Quiero reservar para esta tarde",
-      estado: "Sin responder",
-    },
-  ];
-
-  return (
-    <>
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-base font-semibold tracking-tight">Chats</h2>
-          <p className="text-[11px] text-slate-500 dark:text-slate-400">
-            Conversaciones unificadas (WhatsApp, Instagram y Web)
-          </p>
-        </div>
-        <span className="hidden rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] text-emerald-600 dark:bg-emerald-500/15 dark:text-emerald-300 md:inline">
-          IA activada
-        </span>
-      </div>
-
-      <Card className="flex-1">
-        <div className="mb-2 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400">
-          <span>Chats de hoy</span>
-          <span>3 abiertos</span>
-        </div>
-
-        <div className="space-y-2">
-          {chats.map((chat, idx) => (
-            <div
-              key={idx}
-              className={cn(
-                "flex items-center justify-between rounded-xl px-3 py-2 text-[11px]",
-                "bg-slate-50 hover:bg-slate-100",
-                "dark:bg-slate-950/40 dark:hover:bg-slate-900/70",
-              )}
-            >
-              <div className="flex flex-1 items-center gap-2">
-                <div className="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-sky-500 to-violet-500 text-[10px] font-medium text-white">
-                  {chat.nombre.charAt(0)}
-                </div>
-                <div className="min-w-0">
-                  <p className="truncate text-[11px] font-medium text-slate-800 dark:text-slate-100">
-                    {chat.nombre}
-                  </p>
-                  <p className="truncate text-[10px] text-slate-500 dark:text-slate-400">
-                    {chat.preview}
-                  </p>
-                </div>
-              </div>
-              <span
-                className={cn(
-                  "ml-2 rounded-full px-2 py-0.5 text-[10px]",
-                  chat.estado === "Sin responder"
-                    ? "bg-rose-500/10 text-rose-500 dark:bg-rose-500/15 dark:text-rose-300"
-                    : "bg-emerald-500/10 text-emerald-600 dark:bg-emerald-500/15 dark:text-emerald-300",
-                )}
-              >
-                {chat.estado}
-              </span>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-3 rounded-xl bg-slate-100 px-3 py-2 text-[10px] text-slate-600 dark:bg-slate-900 dark:text-slate-300">
-          La versión real permite responder desde el panel, asignar chats a
-          staff y activar respuestas automáticas con IA.
-        </div>
-      </Card>
-    </>
-  );
-}
-
-function MonederoSection() {
-  const movimientos = [
-    { concepto: "Suscripción BookFast Pro", fecha: "1 dic", importe: "-39,00 €" },
-    { concepto: "Señal online · Ana", fecha: "28 nov", importe: "+10,00 €" },
-    { concepto: "Señal online · Carlos", fecha: "25 nov", importe: "+15,00 €" },
-  ];
-
-  return (
-    <>
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-base font-semibold tracking-tight">Monedero</h2>
-          <p className="text-[11px] text-slate-500 dark:text-slate-400">
-            Controla pagos, señales y suscripciones
-          </p>
-        </div>
-        <span className="hidden rounded-full bg-sky-500/10 px-2 py-0.5 text-[10px] text-sky-600 dark:bg-sky-500/15 dark:text-sky-300 md:inline">
-          Stripe conectado
-        </span>
-      </div>
-
-      <section className="grid flex-1 grid-cols-1 gap-3 md:grid-cols-3">
-        <Card className="md:col-span-1">
-          <p className="text-[10px] uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
-            Saldo disponible
-          </p>
-          <p className="mt-3 text-2xl font-semibold">0,00 €</p>
-          <p className="mt-1 text-[11px] text-slate-500 dark:text-slate-400">
-            El saldo se ingresa automáticamente en tu cuenta bancaria.
-          </p>
-        </Card>
-
-        <Card className="md:col-span-2">
-          <div className="mb-2 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400">
-            <span>Últimos movimientos</span>
-            <span>Vista demo</span>
-          </div>
-
-          <div className="space-y-1">
-            {movimientos.map((m, idx) => (
-              <div
-                key={idx}
-                className={cn(
-                  "flex items-center justify-between rounded-xl px-3 py-2 text-[11px]",
-                  "bg-slate-50 hover:bg-slate-100",
-                  "dark:bg-slate-950/40 dark:hover:bg-slate-900/70",
-                )}
-              >
-                <div>
-                  <p className="text-[11px] font-medium text-slate-800 dark:text-slate-100">
-                    {m.concepto}
-                  </p>
-                  <p className="text-[10px] text-slate-500 dark:text-slate-400">
-                    {m.fecha}
-                  </p>
-                </div>
-                <span
-                  className={cn(
-                    "ml-2 text-[11px] font-semibold",
-                    m.importe.startsWith("+")
-                      ? "text-emerald-500 dark:text-emerald-300"
-                      : "text-rose-500 dark:text-rose-300",
-                  )}
+              <div className="mx-auto mb-5 h-1 w-10 rounded-full bg-[#3A3A3C]" />
+              <div className="mb-5 flex items-center justify-between">
+                <span className="text-[17px] font-bold">Más opciones</span>
+                <button
+                  onClick={() => setShowMas(false)}
+                  className="rounded-full bg-[#2C2C2E] p-1.5"
                 >
-                  {m.importe}
-                </span>
+                  <X className="h-4 w-4 text-[#8E8E93]" />
+                </button>
               </div>
-            ))}
-          </div>
-
-          <div className="mt-3 rounded-xl bg-slate-100 px-3 py-2 text-[10px] text-slate-600 dark:bg-slate-900 dark:text-slate-300">
-            El monedero real muestra devoluciones, señales, suscripciones y
-            estadísticas de ingresos por canal.
-          </div>
-        </Card>
-      </section>
-    </>
-  );
-}
-
-function AjustesSection() {
-  const ajustes = [
-    {
-      nombre: "Confirmación por WhatsApp",
-      descripcion: "Envía mensaje automático al reservar.",
-      activo: true,
-    },
-    {
-      nombre: "Cobro de señal online",
-      descripcion: "Pide pago parcial para bloquear la cita.",
-      activo: false,
-    },
-    {
-      nombre: "Recordatorios +24h",
-      descripcion: "Reduce no-shows con avisos previos.",
-      activo: true,
-    },
-    {
-      nombre: "Lista de espera inteligente",
-      descripcion: "Rellena huecos cancelados automáticamente.",
-      activo: true,
-    },
-  ];
-
-  return (
-    <>
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-base font-semibold tracking-tight">Ajustes</h2>
-          <p className="text-[11px] text-slate-500 dark:text-slate-400">
-            Reglas clave de tu sistema de reservas
-          </p>
-        </div>
-        <button className="hidden rounded-full bg-slate-900 px-3 py-1.5 text-[11px] text-slate-100 dark:bg-slate-100 dark:text-slate-900 md:block">
-          Abrir en Pro
-        </button>
-      </div>
-
-      <Card className="flex-1">
-        <div className="space-y-2">
-          {ajustes.map((ajuste, idx) => (
-            <div
-              key={idx}
-              className={cn(
-                "flex items-center justify-between rounded-xl px-3 py-2 text-[11px]",
-                "bg-slate-50 hover:bg-slate-100",
-                "dark:bg-slate-950/40 dark:hover:bg-slate-900/70",
-              )}
-            >
-              <div className="flex-1">
-                <p className="font-medium text-slate-800 dark:text-slate-100">
-                  {ajuste.nombre}
-                </p>
-                <p className="text-[10px] text-slate-500 dark:text-slate-400">
-                  {ajuste.descripcion}
-                </p>
+              <div className="grid grid-cols-3 gap-3">
+                {([
+                  [Scissors, "Servicios"],
+                  [Users, "Staff"],
+                  [WalletCards, "Monedero"],
+                  [Megaphone, "Marketing"],
+                  [Settings, "Ajustes"],
+                ] as [React.ElementType, string][]).map(([Icon, label]) => (
+                  <button
+                    key={label}
+                    className="flex flex-col items-center gap-2 rounded-2xl bg-[#2C2C2E] px-3 py-4"
+                  >
+                    <Icon className="h-6 w-6 text-[#8E8E93]" />
+                    <span className="text-[12px] text-[#8E8E93]">{label}</span>
+                  </button>
+                ))}
               </div>
-              <TogglePill active={ajuste.activo} />
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-3 rounded-xl bg-slate-100 px-3 py-2 text-[10px] text-slate-600 dark:bg-slate-900 dark:text-slate-300">
-          En el panel real puedes configurar horarios, buffers, reglas de
-          cancelación, métodos de pago y más.
-        </div>
-      </Card>
-    </>
-  );
-}
-
-/* ─────────────────────────────
-   SUBCOMPONENTES
-   ───────────────────────────── */
-
-function NavIcon({
-  children,
-  active,
-  onClick,
-}: {
-  children: React.ReactNode;
-  active?: boolean;
-  onClick?: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={cn(
-        "flex h-8 w-8 items-center justify-center rounded-xl border text-slate-500 transition-colors",
-        "border-transparent bg-transparent hover:bg-slate-200/80",
-        "dark:text-slate-400 dark:hover:bg-slate-800/80",
-        active &&
-          "bg-sky-500/10 text-sky-600 border-sky-400/70 shadow-[0_0_14px_rgba(56,189,248,0.8)] dark:text-sky-300",
-      )}
-    >
-      {children}
-    </button>
-  );
-}
-
-function TopTab({
-  children,
-  active,
-  onClick,
-}: {
-  children: React.ReactNode;
-  active?: boolean;
-  onClick?: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={cn(
-        "whitespace-nowrap rounded-full px-2.5 py-0.5",
-        active
-          ? "bg-slate-900 text-slate-50 dark:bg-slate-50 dark:text-slate-900"
-          : "text-slate-600 dark:text-slate-300",
-      )}
-    >
-      {children}
-    </button>
-  );
-}
-
-function Card({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
-  return (
-    <div
-      className={cn(
-        "flex flex-col rounded-2xl border px-4 py-3",
-        "border-slate-200/80 bg-white/95 shadow-sm",
-        "dark:border-slate-800/80 dark:bg-slate-950/40 dark:shadow-[0_14px_40px_rgba(0,0,0,0.7)]",
-        className,
-      )}
-    >
-      {children}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
 
-function MiniStat({
-  label,
-  value,
-  badge,
-  badgeColor,
-  Icon,
-}: {
-  label: string;
-  value: string;
-  badge?: string;
-  badgeColor?: "emerald" | "sky" | "violet";
-  Icon?: React.ComponentType<{ className?: string }>;
-}) {
-  const badgeClasses =
-    badgeColor === "emerald"
-      ? "bg-emerald-500/10 text-emerald-500"
-      : badgeColor === "sky"
-      ? "bg-sky-500/10 text-sky-500"
-      : "bg-violet-500/10 text-violet-500";
+/* ─────────────────────────────────────────────────
+   ESTADÍSTICAS
+───────────────────────────────────────────────── */
 
-  const IconComp = Icon;
+function EstadisticasSection() {
+  return (
+    <div className="space-y-3 px-4 pb-4">
+      {/* Date + filter */}
+      <div className="flex items-center justify-between">
+        <span className="text-[15px] font-semibold">Martes, 28 de abril</span>
+        <button className="flex items-center gap-1.5 rounded-xl bg-[#1C1C1E] px-3 py-1.5 text-[13px]">
+          Hoy <ChevronDown className="h-3.5 w-3.5 text-[#8E8E93]" />
+        </button>
+      </div>
+
+      {/* 4 stat tiles */}
+      <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
+        <StatTile color="#34C759" value="4" label="RESERVAS HOY" />
+        <StatTile color={TEAL} value="143,00 €" label="INGRESOS HOY" />
+        <StatTile color={TEAL} value="8%" label="OCUPACIÓN HOY" extra="5 prof." />
+        <StatTile color="#BF5AF2" value="35,75 €" label="TICKET HOY" />
+      </div>
+
+      {/* Staff hoy */}
+      <div className="rounded-2xl bg-[#1C1C1E] p-4">
+        <div className="mb-2 flex items-center justify-between">
+          <span className="text-[17px] font-bold">Staff hoy</span>
+          <span className="text-[13px] text-[#8E8E93]">5 activos</span>
+        </div>
+        {([
+          { name: "Carlos Martínez", ini: "C", color: "#BF5AF2", citas: 1, pct: "6%" },
+          { name: "David Hernández",  ini: "D", color: TEAL,     citas: 0, pct: "0%" },
+          { name: "Javier López",     ini: "J", color: "#FF375F", citas: 1, pct: "12%" },
+          { name: "Josep Calafat",    ini: "J", color: "#FF9F0A", citas: 1, pct: "6%" },
+        ] as { name: string; ini: string; color: string; citas: number; pct: string }[]).map((s, i, arr) => (
+          <React.Fragment key={s.name}>
+            <div className="flex items-center gap-3 py-2.5">
+              <div
+                className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full text-[14px] font-semibold text-white"
+                style={{ background: s.color }}
+              >
+                {s.ini}
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-[14px] font-medium truncate">{s.name}</p>
+                <p className="text-[12px] text-[#8E8E93]">{s.citas} cita{s.citas !== 1 ? "s" : ""}</p>
+              </div>
+              <span className="text-[14px] font-medium text-[#8E8E93]">{s.pct}</span>
+            </div>
+            {i < arr.length - 1 && <div className="h-px bg-[#2C2C2E]" />}
+          </React.Fragment>
+        ))}
+      </div>
+
+      {/* Performance */}
+      <div className="rounded-2xl bg-[#1C1C1E] p-4">
+        <div className="mb-3 flex items-center justify-between">
+          <span className="text-[17px] font-bold">Performance</span>
+          <div className="flex gap-1">
+            <span className="rounded-full bg-[#3A3A3C] px-3 py-1 text-[12px] text-white">7d</span>
+            <span className="rounded-full px-3 py-1 text-[12px] text-[#8E8E93]">30d</span>
+          </div>
+        </div>
+        <div className="flex items-baseline justify-between">
+          <div>
+            <p className="text-[15px] font-semibold">Reservas diarias</p>
+            <p className="text-[12px] text-[#8E8E93]">Últimos 7 días</p>
+          </div>
+          <div className="text-right">
+            <p className="text-[20px] font-bold">22</p>
+            <p className="text-[11px] text-[#8E8E93]">total</p>
+          </div>
+        </div>
+        {/* Bars */}
+        <div className="mt-3 flex items-end gap-1">
+          {[
+            { day: "22", val: 0 },
+            { day: "23", val: 4 },
+            { day: "24", val: 5 },
+            { day: "25", val: 4 },
+            { day: "26", val: 5 },
+            { day: "27", val: 1 },
+            { day: "28", val: 3 },
+          ].map(({ day, val }) => (
+            <div key={day} className="flex flex-1 flex-col items-center gap-1">
+              <div
+                className="w-full rounded-t"
+                style={{ height: `${Math.max(val * 7, 3)}px`, background: val > 0 ? TEAL : "#2C2C2E" }}
+              />
+              <p className="text-[9px] text-[#8E8E93]">{day}</p>
+              <p className="text-[9px] font-medium">{val}</p>
+            </div>
+          ))}
+        </div>
+        {/* Bottom stats */}
+        <div className="mt-3 flex justify-around border-t border-[#2C2C2E] pt-3">
+          <div className="text-center">
+            <p className="text-[13px] font-semibold" style={{ color: "#34C759" }}>4.702,00 €</p>
+            <p className="text-[10px] text-[#8E8E93]">Ingresos 7d</p>
+          </div>
+          <div className="text-center">
+            <p className="text-[13px] font-semibold" style={{ color: TEAL }}>3.1</p>
+            <p className="text-[10px] text-[#8E8E93]">Media/día 7d</p>
+          </div>
+          <div className="text-center">
+            <p className="text-[13px] font-semibold" style={{ color: "#BF5AF2" }}>22,39 €</p>
+            <p className="text-[10px] text-[#8E8E93]">Ticket 7d</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────
+   AGENDA
+───────────────────────────────────────────────── */
+
+function AgendaSection() {
+  const [activeDay, setActiveDay] = useState(0);
+
+  const days = [
+    { abbr: "MA", num: "28", count: 4 },
+    { abbr: "MI", num: "29", count: 5 },
+    { abbr: "JU", num: "30", count: 5 },
+    { abbr: "VI", num: "1",  count: 5 },
+    { abbr: "SÁ", num: "2",  count: 1 },
+    { abbr: "DO", num: "3",  count: 3 },
+    { abbr: "LU", num: "4",  count: 0 },
+    { abbr: "MA", num: "5",  count: 0 },
+  ];
+
+  const appointments = [
+    {
+      time: "11:00 - 12:15",
+      client: "Álvaro Delgado Torres",
+      service: "Pack Premium (Corte + Barba + Cejas) • 75 min • Josep Calafat",
+      border: "#0A84FF", dot: "#0A84FF",
+    },
+    {
+      time: "12:00 - 13:15",
+      client: "Emilio Delgado Torres",
+      service: "Pack Premium (Corte + Barba + Cejas) • 75 min • Socio Co-Founder",
+      border: "#BF5AF2", dot: "#FF2D55",
+    },
+    {
+      time: "13:00 - 13:25",
+      client: "Gabriel Pérez Medina",
+      service: "Diseño Especial (Líneas/Dibujos) • 25 min • Javier López",
+      border: "#34C759", dot: "#34C759",
+    },
+    {
+      time: "14:00 - 14:50",
+      client: "Alejandro Prieto Prieto",
+      service: "Corte + Barba • 50 min • Carlos Martínez",
+      border: "#FF3B30", dot: "#FF3B30",
+    },
+  ];
 
   return (
-    <div className="rounded-xl bg-slate-100/90 px-3 py-2 text-slate-800 dark:bg-slate-950/60 dark:text-slate-50">
-      <div className="flex items-center justify-between text-[10px]">
-        <p className="uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
-          {label}
-        </p>
-        {badge && (
-          <span
-            className={cn(
-              "rounded-full px-1.5 py-0.5 text-[9px]",
-              badgeClasses,
-            )}
+    <div className="flex h-full flex-col">
+      {/* Filter row */}
+      <div className="flex flex-shrink-0 items-center gap-1.5 px-4 pb-3">
+        <button className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-[#1C1C1E]">
+          <Bell className="h-4 w-4 text-[#8E8E93]" />
+        </button>
+        <button className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-[#1C1C1E]">
+          <CalendarDays className="h-4 w-4 text-[#8E8E93]" />
+        </button>
+        <div className="flex flex-1 items-center justify-between rounded-full bg-[#1C1C1E] px-3 py-2">
+          <ChevronLeft className="h-3.5 w-3.5 text-[#8E8E93]" />
+          <div className="flex items-center gap-1.5 text-[12px] text-white">
+            <Users className="h-3 w-3 text-[#8E8E93]" />
+            <span>Todos 27</span>
+          </div>
+          <ChevronRight className="h-3.5 w-3.5 text-[#8E8E93]" />
+        </div>
+        <button className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-[#1C1C1E]">
+          <Search className="h-4 w-4 text-[#8E8E93]" />
+        </button>
+        <button className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-[#1C1C1E]">
+          <SlidersHorizontal className="h-4 w-4 text-[#8E8E93]" />
+        </button>
+      </div>
+
+      {/* Date strip */}
+      <div className="flex flex-shrink-0 gap-1.5 overflow-x-auto px-4 pb-3 no-scrollbar">
+        {days.map((d, i) => (
+          <button
+            key={i}
+            onClick={() => setActiveDay(i)}
+            className="flex flex-shrink-0 flex-col items-center rounded-2xl px-3 py-2 transition-all"
+            style={{ background: i === activeDay ? TEAL : "transparent" }}
           >
-            {badge}
+            <span className={cn("text-[10px] font-medium uppercase", i === activeDay ? "text-white/80" : "text-[#8E8E93]")}>
+              {d.abbr}
+            </span>
+            <span className={cn("text-[18px] font-bold leading-tight", i === activeDay ? "text-white" : "text-white")}>
+              {d.num}
+            </span>
+            {d.count > 0 ? (
+              <span
+                className="mt-0.5 min-w-[16px] rounded-full px-1 text-[9px] font-semibold leading-4 text-center"
+                style={{
+                  background: i === activeDay ? "rgba(255,255,255,0.2)" : "#2C2C2E",
+                  color: i === activeDay ? "white" : "#8E8E93",
+                }}
+              >
+                {d.count}
+              </span>
+            ) : <span className="mt-0.5 h-4" />}
+          </button>
+        ))}
+      </div>
+
+      {/* Appointment cards */}
+      <div className="flex-1 space-y-2 overflow-y-auto px-4 pb-4">
+        {activeDay === 0 ? (
+          appointments.map((a, i) => (
+            <div
+              key={i}
+              className="overflow-hidden rounded-2xl"
+              style={{ background: "#231F13", borderLeft: `4px solid ${a.border}` }}
+            >
+              <div className="px-4 py-3">
+                <div className="mb-1.5 flex items-center justify-between">
+                  <span className="text-[13px] font-semibold" style={{ color: TEAL }}>{a.time}</span>
+                  <div className="flex items-center gap-1.5">
+                    <div className="h-2 w-2 rounded-full" style={{ background: a.dot }} />
+                    <span className="text-[12px]" style={{ color: a.dot }}>Confirmada</span>
+                  </div>
+                </div>
+                <p className="text-[15px] font-bold leading-snug">{a.client}</p>
+                <p className="mt-1 text-[12px] leading-relaxed text-[#8E8E93]">{a.service}</p>
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="flex h-32 items-center justify-center text-[14px] text-[#8E8E93]">
+            Sin reservas este día
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────
+   CLIENTES
+───────────────────────────────────────────────── */
+
+function ClientesSection() {
+  const clients = [
+    { name: "Pablo Rojas Ortiz",      tag: "marketing", citas: 1, email: "pablo.ortiz@email.com",   phone: "+34 612000213", date: "6 ene 2025" },
+    { name: "Enrique Reyes Fernández", tag: "marketing", citas: 2, email: "enrique.reyes@email.com", phone: "+34 621000214", date: "12 ene 2025" },
+  ];
+
+  return (
+    <div className="space-y-3 px-4 pb-4">
+      {/* Search */}
+      <div className="flex items-center gap-2 rounded-xl bg-[#1C1C1E] px-3 py-2.5">
+        <Search className="h-4 w-4 flex-shrink-0 text-[#8E8E93]" />
+        <span className="text-[14px] text-[#8E8E93]">Buscar por nombre, email o teléfono...</span>
+      </div>
+
+      {/* Exportar + Nuevo */}
+      <div className="flex gap-2">
+        <button className="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-[#1C1C1E] py-2.5 text-[14px] font-medium">
+          <Download className="h-4 w-4" /> Exportar
+        </button>
+        <button
+          className="flex flex-1 items-center justify-center gap-1.5 rounded-xl py-2.5 text-[14px] font-semibold text-white"
+          style={{ background: TEAL }}
+        >
+          <span className="text-[16px] leading-none">+</span> Nuevo
+        </button>
+      </div>
+
+      {/* Stats grid */}
+      <div className="grid grid-cols-2 gap-2">
+        <ClientStatCard icon={<Users className="h-5 w-5" style={{ color: "#34C759" }} />} label="TOTAL" value="400" />
+        <ClientStatCard icon={<CalendarDays className="h-5 w-5" style={{ color: TEAL }} />} label="RESERVAS" value="400" />
+        <ClientStatCard icon={<Star className="h-5 w-5" style={{ color: "#BF5AF2" }} />} label="VIP" value="118" />
+        <ClientStatCard icon={<Users className="h-5 w-5" style={{ color: "#FF9F0A" }} />} label="SIN CONTACTO" value="0" />
+      </div>
+
+      {/* Filtros avanzados */}
+      <button className="flex w-full items-center gap-2 rounded-xl bg-[#1C1C1E] px-4 py-3">
+        <ChevronRight className="h-3.5 w-3.5 text-[#8E8E93]" />
+        <span className="text-[11px] uppercase tracking-widest text-[#8E8E93]">Filtros avanzados</span>
+      </button>
+
+      {/* Client cards */}
+      {clients.map((c) => (
+        <div key={c.name} className="rounded-2xl bg-[#1C1C1E] p-4">
+          <div className="mb-2.5 flex items-start gap-3">
+            <div className="mt-0.5 h-4 w-4 flex-shrink-0 rounded border border-[#3A3A3C]" />
+            <div className="flex-1 min-w-0">
+              <p className="text-[15px] font-bold">{c.name}</p>
+              <div className="mt-1 flex items-center gap-2">
+                <span className="rounded-full bg-[#2C2C2E] px-2 py-0.5 text-[11px] text-[#8E8E93]">{c.tag}</span>
+                <span className="text-[12px] text-[#8E8E93]">{c.citas} citas</span>
+              </div>
+            </div>
+          </div>
+          <div className="mb-1.5 space-y-1 text-[12px] text-[#8E8E93]">
+            <p>✉ {c.email}</p>
+            <div className="flex items-center gap-4">
+              <p>📞 {c.phone}</p>
+            </div>
+          </div>
+          <div className="mb-3 flex items-center gap-1 text-[12px] text-[#8E8E93]">
+            <Clock className="h-3 w-3" /> <span>{c.date}</span>
+          </div>
+          <div className="flex gap-2">
+            <button className="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-[#2C2C2E] py-2 text-[13px]">
+              <CalendarDays className="h-3.5 w-3.5" /> Historial
+            </button>
+            <button className="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-[#2C2C2E] py-2 text-[13px]">
+              <Pencil className="h-3.5 w-3.5" /> Editar
+            </button>
+            <button className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-[#FF3B30]/20">
+              <Trash2 className="h-4 w-4 text-[#FF3B30]" />
+            </button>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────
+   CHATS
+───────────────────────────────────────────────── */
+
+function ChatsSection() {
+  return (
+    <div className="flex h-full flex-col">
+      <div className="flex-1 space-y-px">
+        {[
+          { name: "BookFast Barbería", preview: "Sin mensajes", time: "Hace 7 días", isGroup: true },
+          { name: "Socio",             preview: "Hola",         time: "Hace 6 días", isGroup: false },
+        ].map((chat) => (
+          <div
+            key={chat.name}
+            className="flex items-center gap-3 bg-[#1C1C1E] px-4 py-3"
+          >
+            <div
+              className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full"
+              style={{ background: TEAL }}
+            >
+              {chat.isGroup
+                ? <Users className="h-5 w-5 text-white" />
+                : <span className="text-[16px] font-bold text-white">S</span>}
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-baseline justify-between">
+                <span className="text-[15px] font-semibold">{chat.name}</span>
+                <span className="flex-shrink-0 text-[12px] text-[#8E8E93]">{chat.time}</span>
+              </div>
+              <p className="text-[13px] text-[#8E8E93]">✓✓ {chat.preview}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Bottom actions */}
+      <div className="flex gap-3 px-4 pb-3 pt-3">
+        <button className="flex flex-1 items-center justify-center gap-2 rounded-2xl bg-[#1C1C1E] py-3 text-[14px] font-medium">
+          <Archive className="h-4 w-4 text-[#8E8E93]" /> Archivados
+        </button>
+        <button className="flex flex-1 items-center justify-center gap-2 rounded-2xl bg-[#1C1C1E] py-3 text-[14px] font-medium">
+          <UserPlus className="h-4 w-4 text-[#8E8E93]" /> Nuevo grupo
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────
+   SUBCOMPONENTES
+───────────────────────────────────────────────── */
+
+function BottomTab({
+  icon: Icon,
+  label,
+  active,
+  onClick,
+}: {
+  icon: React.ElementType;
+  label: string;
+  active?: boolean;
+  onClick?: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="flex flex-1 flex-col items-center gap-0.5 py-1"
+    >
+      <Icon className="h-5 w-5" style={{ color: active ? TEAL : "#555" }} />
+      <span className="text-[10px]" style={{ color: active ? TEAL : "#555" }}>{label}</span>
+    </button>
+  );
+}
+
+function StatTile({
+  color,
+  value,
+  label,
+  extra,
+}: {
+  color: string;
+  value: string;
+  label: string;
+  extra?: string;
+}) {
+  return (
+    <div className="flex min-w-[108px] flex-shrink-0 flex-col rounded-2xl bg-[#1C1C1E] p-3">
+      <div className="mb-2 flex items-center justify-between">
+        <div
+          className="h-7 w-7 rounded-full"
+          style={{ background: color + "33" }}
+        />
+        {extra && (
+          <span className="rounded-full bg-[#2C2C2E] px-1.5 py-0.5 text-[9px] text-[#8E8E93]">
+            {extra}
           </span>
         )}
       </div>
-      <div className="mt-1 flex items-center gap-1">
-        {IconComp && (
-          <IconComp className="h-3.5 w-3.5 text-slate-500 dark:text-slate-300" />
-        )}
-        <p className="text-lg font-semibold">{value}</p>
-      </div>
+      <p className="text-[20px] font-bold leading-tight">{value}</p>
+      <p className="mt-0.5 text-[9px] uppercase tracking-wide text-[#8E8E93]">{label}</p>
     </div>
   );
 }
 
-function SmallPill({
-  children,
-  active,
-}: {
-  children: React.ReactNode;
-  active?: boolean;
-}) {
-  return (
-    <span
-      className={cn(
-        "rounded-full px-2 py-0.5 text-[10px]",
-        active
-          ? "bg-slate-900 text-slate-50 dark:bg-slate-50 dark:text-slate-900"
-          : "text-slate-500 dark:text-slate-400",
-      )}
-    >
-      {children}
-    </span>
-  );
-}
-
-function RangePill({
+function ClientStatCard({
+  icon,
   label,
-  active,
-  onClick,
+  value,
 }: {
+  icon: React.ReactNode;
   label: string;
-  active?: boolean;
-  onClick?: () => void;
+  value: string;
 }) {
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={cn(
-        "rounded-full px-2 py-0.5",
-        active
-          ? "bg-slate-900 text-slate-50 dark:bg-slate-50 dark:text-slate-900"
-          : "text-slate-500 dark:text-slate-300",
-      )}
-    >
-      {label}
-    </button>
-  );
-}
-
-function QuickRow({ label }: { label: string }) {
-  return (
-    <button
-      type="button"
-      className={cn(
-        "flex w-full items-center justify-between rounded-xl px-3 py-1.5 text-left text-[11px]",
-        "bg-slate-100 hover:bg-slate-200",
-        "dark:bg-slate-950/50 dark:text-slate-200 dark:hover:bg-slate-900/80",
-      )}
-    >
-      <span>{label}</span>
-      <Clock className="h-3 w-3 text-slate-500 dark:text-slate-400" />
-    </button>
-  );
-}
-
-function TogglePill({ active }: { active: boolean }) {
-  return (
-    <div
-      className={cn(
-        "flex h-4.5 w-8 items-center rounded-full border bg-slate-200/70 p-0.5 text-[10px] transition-all",
-        "dark:bg-slate-900 dark:border-slate-700",
-        active &&
-          "border-emerald-400/70 bg-emerald-500/20 dark:bg-emerald-500/20",
-      )}
-    >
-      <div
-        className={cn(
-          "h-3 w-3 rounded-full bg-slate-500 transition-transform",
-          active && "translate-x-3 bg-emerald-400",
-        )}
-      />
+    <div className="rounded-2xl bg-[#1C1C1E] p-4">
+      <div className="mb-2 flex items-center gap-2">
+        {icon}
+        <span className="text-[10px] uppercase tracking-wider text-[#8E8E93]">{label}</span>
+      </div>
+      <p className="text-[28px] font-bold">{value}</p>
     </div>
-  );
-}
-
-function ArrowRightTiny() {
-  return (
-    <svg
-      viewBox="0 0 16 16"
-      className="h-3 w-3"
-      aria-hidden="true"
-      focusable="false"
-    >
-      <path
-        d="M5 3.5L10 8L5 12.5"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
   );
 }

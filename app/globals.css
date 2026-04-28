@@ -6,77 +6,47 @@
   :root {
     --font-inter: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
-    /* --- LIGHT MODE: SUNSET THEME --- */
-    /* Fondo: Blanco cálido "Papel" */
+    /* --- LIGHT MODE: BOOKFAST BRAND THEME --- */
+    /* Fondo: Blanco limpio */
     --background: 0 0% 99%;
-    /* Texto: Gris Pizarra Oscuro (Nunca negro puro #000) */
+    /* Texto: Gris Pizarra Oscuro (nunca negro puro) */
     --foreground: 222 47% 11%;
 
-    /* Primary: Naranja Vibrante */
-    --primary: 24 95% 53%;
+    /* Primary: Sky Blue — #0ea5e9 */
+    --primary: 199 89% 48%;
     --primary-foreground: 0 0% 98%;
 
-    /* Secondary: Rosa Fucsia */
-    --secondary: 330 81% 60%;
+    /* Secondary: Purple — #a855f7 */
+    --secondary: 270 91% 65%;
     --secondary-foreground: 0 0% 98%;
 
-    /* Card & Glass (Física de Cristal Claro) */
+    /* Card & Glass */
     --card: 0 0% 100%;
     --card-foreground: 222 47% 11%;
-    --card-border: 240 5.9% 90%; /* Gris suave */
+    --card-border: 214 32% 91%;
 
     /* Inputs & Borders */
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
 
-    /* Sombras Específicas Light (Volumen) */
+    /* Glass */
     --glass-bg: 0 0% 100% / 0.7;
-    --glass-border: 240 5.9% 85%; /* Borde gris visible */
-    --glass-shadow: 0 10px 30px -10px rgba(249, 115, 22, 0.15); /* Sombra anaranjada sutil */
-  }
-
-  /* Botón Professional: gradiente Cyber animado solo en dark */
-  @keyframes cyber-gradient-move {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-
-  .dark .btn-cyber-animated {
-    background-image: linear-gradient(90deg, #22d3ee, #a855f7, #22d3ee);
-    background-size: 220% 220%;
-    animation: cyber-gradient-move 10s ease-in-out infinite;
-    color: #020617 !important; /* casi negro para buen contraste */
+    --glass-border: 214 32% 88%;
+    --glass-shadow: 0 10px 30px -10px rgba(14, 165, 233, 0.12);
   }
 
   /* Gradiente animado ultra-suave como Stripe/Linear/Vercel */
   @keyframes gradient-flow {
-    0% {
-      background-position: 0% 50%;
-    }
-    25% {
-      background-position: 50% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    75% {
-      background-position: 50% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
+    0%   { background-position: 0% 50%; }
+    25%  { background-position: 50% 50%; }
+    50%  { background-position: 100% 50%; }
+    75%  { background-position: 50% 50%; }
+    100% { background-position: 0% 50%; }
   }
 
   .animated-gradient {
-    background-size: 300% 300%; /* ← MÁS AMPLIO = transiciones más suaves */
-    animation: gradient-flow 12s ease-in-out infinite; /* ← ciclo más largo, movimiento más suave */
+    background-size: 300% 300%;
+    animation: gradient-flow 12s ease-in-out infinite;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -87,16 +57,35 @@
 
   /* Blur sutil para textos degradados premium */
   .gradient-text {
-    filter: blur(0.15px); /* SUUUPER sutil pero evita cortes */
+    filter: blur(0.15px);
+  }
+
+  /* Botón Professional: gradiente Cyber animado solo en dark */
+  @keyframes cyber-gradient-move {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .dark .btn-cyber-animated {
+    background-image: linear-gradient(90deg, #22d3ee, #a855f7, #22d3ee);
+    background-size: 220% 220%;
+    animation: cyber-gradient-move 10s ease-in-out infinite;
+    color: #020617 !important;
   }
 
   .dark {
-    /* --- DARK MODE: CYBER THEME (Intacto) --- */
-    --background: 0 0% 3.9%; /* neutral-950 */
+    /* --- DARK MODE: CYBER THEME --- */
+    --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
 
-    --primary: 199 89% 48%; /* Sky Blue */
-    --secondary: 270 50% 40%; /* Purple */
+    /* Primary: Sky Blue — #0ea5e9 */
+    --primary: 199 89% 48%;
+    --primary-foreground: 0 0% 98%;
+
+    /* Secondary: Purple vibrante — #a855f7 */
+    --secondary: 270 91% 65%;
+    --secondary-foreground: 0 0% 98%;
 
     --card: 0 0% 3.9%;
     --card-foreground: 0 0% 98%;
@@ -111,7 +100,7 @@
   }
 
   * {
-    @apply border-neutral-800; /* Borde base oscuro (lo afinaremos para light más adelante) */
+    @apply border-border;
   }
 
   html {
@@ -119,26 +108,16 @@
   }
 
   body {
-    @apply bg-background text-foreground antialiased border border-border;
+    @apply bg-background text-foreground antialiased;
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-semibold tracking-tight text-foreground;
   }
 
-  /* Ajuste tipográfico en móviles: textos un poco más grandes para que la home no se vea comprimida */
   @media (max-width: 640px) {
-    body {
-      font-size: 1.12rem; /* ~16px -> ~18px aprox */
-    }
-
-    h1 {
-      @apply text-4xl;
-    }
-
-    h2 {
-      @apply text-3xl;
-    }
+    h1 { @apply text-4xl; }
+    h2 { @apply text-3xl; }
   }
 }
 
@@ -156,53 +135,70 @@
     @apply mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8;
   }
 
-  /* Secciones: padding optimizado sin altura fija */
-  .section {
-    @apply py-16 sm:py-20 lg:py-24;
-  }
+  /* Secciones */
+  .section    { @apply py-16 sm:py-20 lg:py-24; }
+  .section-sm { @apply py-12 sm:py-16 lg:py-20; }
+  .section-lg { @apply pt-16 pb-20 sm:pt-20 sm:pb-24 lg:pt-20 lg:pb-28; }
 
-  .section-sm {
-    @apply py-12 sm:py-16 lg:py-20;
-  }
+  /* ============================================ */
+  /* BOTONES                                      */
+  /* ============================================ */
 
-  .section-lg {
-    @apply pt-16 pb-20 sm:pt-20 sm:pb-24 lg:pt-20 lg:pb-28;
-  }
-
-  /* Botones base */
   .btn {
-    @apply inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-950 disabled:opacity-50 disabled:cursor-not-allowed rounded-full relative overflow-hidden;
-    /* Transición optimizada: solo transform y opacity */
-    transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), 
+    @apply inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background disabled:opacity-50 disabled:cursor-not-allowed rounded-full relative overflow-hidden;
+    transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1),
                 opacity 0.15s cubic-bezier(0.16, 1, 0.3, 1),
                 background-color 0.15s cubic-bezier(0.16, 1, 0.3, 1),
                 box-shadow 0.15s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
+  /* Primary: sky blue → purple gradient */
   .btn-primary {
-    /* LIGHT por defecto: botón Sunset sólido */
-    @apply btn bg-primary text-primary-foreground hover:bg-primary/90 focus:ring-primary border border-transparent shadow-md shadow-[0_10px_30px_rgba(0,0,0,0.15)];
+    @apply btn text-white border border-transparent shadow-md focus:ring-primary;
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+    background-size: 200% 200%;
   }
 
+  .btn-primary:hover {
+    opacity: 0.92;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(14, 165, 233, 0.30), 0 2px 8px rgba(168, 85, 247, 0.20);
+  }
+
+  .btn-primary:active {
+    transform: scale(0.96) translateY(0);
+    opacity: 0.85;
+    box-shadow: 0 2px 8px rgba(14, 165, 233, 0.20);
+    transition-duration: 0.08s;
+  }
+
+  .btn-outline:active,
+  .btn-ghost:active {
+    transform: scale(0.96);
+    transition-duration: 0.08s;
+  }
+
+  /* Halo de luz animado (GPU) */
   .btn-primary::before {
     content: "";
     position: absolute;
     inset: -120%;
     border-radius: 9999px;
-    opacity: 0.7;
+    opacity: 0.6;
     pointer-events: none;
-    /* LIGHT: halo Sunset (orange/pink) sobre botón naranja */
     background:
-      radial-gradient(circle at 50% 50%, rgba(249, 115, 22, 0.35), transparent 55%),
-      radial-gradient(circle at 100% 0%, rgba(236, 72, 153, 0.35), transparent 55%),
-      conic-gradient(from 0deg at 50% 50%, rgba(249,115,22,0), rgba(236,72,153,0.35), rgba(249,115,22,0));
+      radial-gradient(circle at 50% 50%, rgba(14, 165, 233, 0.30), transparent 55%),
+      radial-gradient(circle at 100% 0%, rgba(168, 85, 247, 0.30), transparent 55%),
+      conic-gradient(from 0deg at 50% 50%, rgba(14,165,233,0), rgba(168,85,247,0.25), rgba(14,165,233,0));
     background-size: 200% 200%;
     animation: liquid-glass 8s ease-in-out infinite;
   }
 
-  /* Overrides específicos para DARK: restaurar cápsula oscura con gradiente cyan/purple en movimiento */
+  /* Dark override: cápsula oscura con gradiente animado */
   .dark .btn-primary {
-    @apply bg-[#050505]/60 text-white border border-white/20 shadow-[0_14px_32px_rgba(0,0,0,0.75)];
+    background: rgba(5, 5, 5, 0.6);
+    border-color: rgba(255,255,255,0.18);
+    box-shadow: 0 14px 32px rgba(0,0,0,0.75);
   }
 
   .dark .btn-primary::before {
@@ -217,40 +213,38 @@
   }
 
   .btn-outline {
-    @apply btn border border-neutral-300 bg-transparent text-neutral-800 hover:bg-neutral-50 hover:text-neutral-950 focus:ring-neutral-400 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:hover:text-white dark:focus:ring-neutral-500;
+    @apply btn border border-neutral-300 bg-transparent text-neutral-700 hover:bg-neutral-50 hover:text-neutral-950 focus:ring-primary dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:hover:text-white dark:focus:ring-neutral-500;
   }
 
   .btn-ghost {
-    @apply btn bg-transparent text-neutral-800 hover:bg-neutral-50 hover:text-neutral-950 focus:ring-neutral-300 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white dark:focus:ring-neutral-500;
+    @apply btn bg-transparent text-neutral-700 hover:bg-neutral-100 hover:text-neutral-950 focus:ring-neutral-300 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white dark:focus:ring-neutral-500;
   }
 
-  .btn-lg {
-    @apply px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base;
-  }
+  .btn-lg { @apply px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base; }
+  .btn-sm { @apply px-3 sm:px-4 py-1 sm:py-1.5 text-xs; }
 
-  .btn-sm {
-    @apply px-3 sm:px-4 py-1 sm:py-1.5 text-xs;
-  }
+  /* ============================================ */
+  /* CARDS                                        */
+  /* ============================================ */
 
-  /* Cards (adaptadas a Light/Dark) */
   .card {
-    @apply rounded-xl sm:rounded-2xl border border-neutral-300 bg-card p-4 sm:p-6 dark:border-neutral-800 dark:bg-neutral-900/20;
-    /* Transición optimizada */
+    @apply rounded-xl sm:rounded-2xl border border-neutral-200 bg-white p-4 sm:p-6 dark:border-neutral-800 dark:bg-neutral-900/20;
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
                 opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
                 border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .card-hover {
-    @apply card hover:-translate-y-1 hover:border-neutral-400 dark:hover:border-primary/40 dark:hover:bg-neutral-900/40;
+    @apply card hover:-translate-y-1 hover:border-neutral-300 dark:hover:border-primary/40 dark:hover:bg-neutral-900/40;
     will-change: transform;
   }
 
-  /* Inputs (Light/Dark) */
+  /* ============================================ */
+  /* INPUTS                                       */
+  /* ============================================ */
+
   .input {
-    /* LIGHT: campo claro, borde suave, texto oscuro */
-    @apply w-full rounded-lg sm:rounded-xl border border-neutral-300 bg-white px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-neutral-900 placeholder:text-neutral-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500;
-    /* Transición solo en border y ring */
+    @apply w-full rounded-lg sm:rounded-xl border border-neutral-200 bg-white px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-neutral-900 placeholder:text-neutral-400 focus:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-400/20;
     transition: border-color 0.15s cubic-bezier(0.16, 1, 0.3, 1),
                 box-shadow 0.15s cubic-bezier(0.16, 1, 0.3, 1);
   }
@@ -263,7 +257,6 @@
     @apply mb-1.5 sm:mb-2 block text-xs sm:text-sm font-medium text-neutral-700;
   }
 
-  /* Overrides Dark Mode para inputs */
   .dark .input {
     @apply border-neutral-800 bg-neutral-900 text-white placeholder:text-neutral-500;
   }
@@ -272,44 +265,52 @@
     @apply text-neutral-300;
   }
 
-  /* Badges */
+  /* ============================================ */
+  /* BADGES                                       */
+  /* ============================================ */
+
   .badge {
     @apply inline-flex items-center rounded-full px-2.5 sm:px-3 py-0.5 sm:py-1 text-xs font-medium;
   }
 
+  /* Light: sky blue tint */
   .badge-primary {
-    @apply badge bg-[#f97316]/10 text-neutral-900 border border-[#f97316]/30;
+    @apply badge bg-primary-100 text-primary-700 border border-primary-200;
   }
 
+  /* Dark: override */
   .dark .badge-primary {
-    @apply badge bg-primary-900/30 text-primary-300 border border-primary-500/20;
+    @apply bg-primary-900/30 text-primary-300 border-primary-500/20;
   }
 
   .badge-success {
-    @apply badge bg-green-900/30 text-green-400 border border-green-500/20;
+    @apply badge bg-green-50 text-green-700 border border-green-200 dark:bg-green-900/30 dark:text-green-400 dark:border-green-500/20;
   }
 
   .badge-warning {
-    @apply badge bg-amber-900/30 text-amber-400 border border-amber-500/20;
-  }
-  
-  .badge-neutral {
-    @apply badge bg-neutral-800 text-neutral-300 border border-neutral-700;
+    @apply badge bg-amber-50 text-amber-700 border border-amber-200 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-500/20;
   }
 
-  /* Links */
+  .badge-neutral {
+    @apply badge bg-neutral-100 text-neutral-700 border border-neutral-200 dark:bg-neutral-800 dark:text-neutral-300 dark:border-neutral-700;
+  }
+
+  /* ============================================ */
+  /* LINKS & GRADIENTS                            */
+  /* ============================================ */
+
   .link {
-    @apply text-primary-400 hover:text-primary-300 underline-offset-4 hover:underline;
+    @apply text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 underline-offset-4 hover:underline;
     transition: color 0.15s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  /* Gradientes */
   .gradient-primary {
-    @apply bg-gradient-to-br from-primary-600 to-primary-800;
+    @apply bg-gradient-to-br from-primary-500 to-secondary-500;
   }
 
+  /* Texto degradado brand: sky blue → purple */
   .gradient-text {
-    @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-primary-500 via-primary-400 to-secondary-500 bg-clip-text text-transparent;
   }
 }
 
@@ -317,46 +318,28 @@
   .animate-in {
     animation: fadeIn 0.5s ease-in-out;
   }
-  
-  /* Utilidad para textos balanceados */
+
   .text-balance {
     text-wrap: balance;
   }
 
-  /* Utilidades responsive para ocultar/mostrar */
-  .mobile-only {
-    @apply block sm:hidden;
-  }
-  
-  .desktop-only {
-    @apply hidden sm:block;
-  }
-
-  /* Snap scroll para secciones */
-  .snap-section {
-    scroll-snap-align: start;
-  }
+  .mobile-only   { @apply block sm:hidden; }
+  .desktop-only  { @apply hidden sm:block; }
+  .snap-section  { scroll-snap-align: start; }
 
   /* ============================================ */
-  /* PREFERS-REDUCED-MOTION: Accesibilidad */
+  /* PREFERS-REDUCED-MOTION                       */
   /* ============================================ */
-  
-  /* Desactiva animaciones complejas para usuarios que prefieren menos movimiento */
+
   @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
+    *, *::before, *::after {
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
     }
 
-    /* Mantener solo transiciones esenciales de opacidad */
-    .btn,
-    .card,
-    .input,
-    .link {
+    .btn, .card, .input, .link {
       transition: opacity 0.15s ease !important;
     }
   }

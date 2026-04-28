@@ -9,6 +9,7 @@ import ThemeToggle from "@/components/ui/ThemeToggle";
 import { Scissors, UserCheck, ChevronDown } from "lucide-react";
 import { usePrefersReducedMotion } from "@/lib/motion";
 import { track } from '@vercel/analytics';
+import { BookfastLogo } from '@/components/ui/BookfastLogo';
 
 const navItems = [
   { name: "Producto", href: "/funcionalidades" },
@@ -184,7 +185,7 @@ export default function Header() {
                 backgroundSize: "200% 200%",
               } as React.CSSProperties}
             />
-            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.05] mix-blend-overlay" />
+            <div className="absolute inset-0 bg-[url('/noise.svg')] opacity-[0.05] mix-blend-overlay" />
           </div>
 
           {/* SHIMMER SUPERFICIAL */}
@@ -207,12 +208,11 @@ export default function Header() {
               isLoaded || prefersReducedMotion ? "opacity-100" : "opacity-0",
             )}
           >
-            <Link
-              href="/"
-              className="ml-2 shrink-0 text-lg font-bold tracking-tight text-foreground drop-shadow-md transition-colors hover:text-foreground/80 md:ml-0"
-            >
-              BookFast
-            </Link>
+            <BookfastLogo
+              size={28}
+              className="ml-2 md:ml-0"
+              wordmarkClassName="text-lg drop-shadow-md"
+            />
 
             <nav
               ref={navRef}

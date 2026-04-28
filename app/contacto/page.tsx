@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
 import Container from '@/components/ui/Container';
 import Input from '@/components/ui/Input';
@@ -17,7 +18,8 @@ export default function ContactoPage() {
     mensaje: '',
   });
 
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'error'>('idle');
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,24 +29,14 @@ export default function ContactoPage() {
     try {
       const res = await fetch('/api/lead', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
 
       if (!res.ok) throw new Error('Error en envío');
 
-      setStatus('success');
       track('lead_submit_success');
-      // Reset form opcional
-      setFormData({
-        nombre: '',
-        email: '',
-        telefono: '',
-        negocio: '',
-        mensaje: '',
-      });
+      router.push('/gracias');
     } catch (error) {
       console.error(error);
       setStatus('error');
@@ -139,16 +131,6 @@ export default function ContactoPage() {
                   {status === 'submitting' ? 'Enviando...' : 'Quiero empezar con BookFast'}
                 </Button>
 
-                {status === 'success' && (
-                  <div className="rounded-lg bg-green-500/10 p-4 text-sm text-green-600 dark:text-green-400 border border-green-500/20 text-center">
-                    <div className="text-left space-y-2">
-                      <p className="font-bold">Hemos recibido tu solicitud</p>
-                      <p>Nuestro equipo revisará tu información y se pondrá en contacto contigo en breve para ayudarte a empezar con BookFast.</p>
-                      <p className="text-xs opacity-90 pt-2">Normalmente respondemos en menos de 24 horas laborables.</p>
-                    </div>
-                  </div>
-                )}
-
                 {status === 'error' && (
                   <div className="rounded-lg bg-red-500/10 p-4 text-sm text-red-600 dark:text-red-400 border border-red-500/20 text-center">
                     ❌ Hubo un error al enviar. Por favor, inténtalo de nuevo.
@@ -170,7 +152,7 @@ export default function ContactoPage() {
 
                 <div className="space-y-6">
                   <div className="flex items-start gap-4">
-                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-[#f97316]/10 text-[#ea580c] dark:bg-primary-500/15 dark:text-primary-300">
+                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-primary-100 text-primary-700 dark:bg-primary-500/15 dark:text-primary-300">
                       <Mail className="h-6 w-6" />
                     </div>
                     <div>
@@ -185,7 +167,7 @@ export default function ContactoPage() {
                   </div>
 
                   <div className="flex items-start gap-4">
-                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-[#f97316]/10 text-[#ea580c] dark:bg-primary-500/15 dark:text-primary-300">
+                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-primary-100 text-primary-700 dark:bg-primary-500/15 dark:text-primary-300">
                       <Phone className="h-6 w-6" />
                     </div>
                     <div>
@@ -201,7 +183,7 @@ export default function ContactoPage() {
                   </div>
 
                   <div className="flex items-start gap-4">
-                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-[#f97316]/10 text-[#ea580c] dark:bg-primary-500/15 dark:text-primary-300">
+                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-primary-100 text-primary-700 dark:bg-primary-500/15 dark:text-primary-300">
                       <MapPin className="h-6 w-6" />
                     </div>
                     <div>

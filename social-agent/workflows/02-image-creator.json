@@ -1,0 +1,208 @@
+{
+  "name": "BookFast — 02 Generador de Imágenes",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "bookfast/image-creator",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode"
+      },
+      "id": "b1c2d3e4-0001",
+      "name": "Webhook Entrada",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "webhookId": "bookfast-image-creator"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "anthropic-version", "value": "2023-06-01" },
+            { "name": "content-type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "model", "value": "claude-haiku-4-5-20251001" },
+            { "name": "max_tokens", "value": "1024" },
+            {
+              "name": "system",
+              "value": "Eres un experto en prompts para Flux Dev (generación de imágenes IA). Creas prompts fotorrealistas para la marca BookFast: software de gestión para peluquerías, barberías y centros de estética.\n\nESTILO: fotografía editorial profesional, iluminación natural, colores azul #0ea5e9 y morado #a855f7 como acentos, ambientes de salón modernos y limpios, personas naturales del sector belleza.\n\nRespuesta: SOLO el prompt en inglés. Sin explicaciones ni formato."
+            },
+            {
+              "name": "messages",
+              "value": "=[{\"role\":\"user\",\"content\":\"Optimiza este prompt para Flux Dev:\\n\\nBase: {{ $json.body.image_prompt }}\\nTema: {{ $json.body.topic }}\\nFormato: {{ $json.body.type }}\\nPlataforma: {{ $json.body.platforms }}\\n\\nEl prompt debe ser fotorrealista, high-quality, con estética BookFast. Máximo 150 palabras.\"}]"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b1c2d3e4-0002",
+      "name": "Claude — Optimizar Prompt",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, 300],
+      "credentials": {
+        "httpHeaderAuth": { "id": "anthropic-cred", "name": "Anthropic API" }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const claudeResponse = $input.first().json;\nconst optimizedPrompt = claudeResponse.content[0].text.trim();\n\nreturn [{\n  json: {\n    ...($('Webhook Entrada').item.json.body),\n    optimized_image_prompt: optimizedPrompt,\n    negative_prompt: 'blurry, low quality, text, watermark, logo, cartoon, illustration, deformed, ugly, dark, cluttered, stock photo cliché, old fashioned'\n  }\n}];"
+      },
+      "id": "b1c2d3e4-0003",
+      "name": "Preparar prompt final",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://fal.run/fal-ai/flux/dev",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "content-type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "prompt", "value": "={{ $json.optimized_image_prompt }}" },
+            { "name": "negative_prompt", "value": "={{ $json.negative_prompt }}" },
+            { "name": "num_images", "value": "1" },
+            { "name": "enable_safety_checker", "value": "true" },
+            { "name": "image_size", "value": "square_hd" },
+            { "name": "num_inference_steps", "value": "28" },
+            { "name": "guidance_scale", "value": "3.5" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b1c2d3e4-0004",
+      "name": "fal.ai — Generar Imagen (Flux)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [900, 300],
+      "credentials": {
+        "httpHeaderAuth": { "id": "falai-cred", "name": "fal.ai API" }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const falResponse = $input.first().json;\nconst imageUrl = falResponse.images[0].url;\n\n// Construir URLs para distintos formatos necesarios\nconst platforms = JSON.parse($('Webhook Entrada').item.json.body.platforms || '[]');\n\nreturn [{\n  json: {\n    content_id: $('Webhook Entrada').item.json.body.content_id,\n    topic: $('Webhook Entrada').item.json.body.topic,\n    hook: $('Webhook Entrada').item.json.body.hook,\n    key_points: JSON.parse($('Webhook Entrada').item.json.body.key_points || '[]'),\n    hashtags: JSON.parse($('Webhook Entrada').item.json.body.hashtags || '[]'),\n    cta: $('Webhook Entrada').item.json.body.cta,\n    platforms: platforms,\n    image_url: imageUrl,\n    scheduled_date: $('Webhook Entrada').item.json.body.scheduled_date,\n    scheduled_time: $('Webhook Entrada').item.json.body.scheduled_time,\n    content_type: 'image'\n  }\n}];"
+      },
+      "id": "b1c2d3e4-0005",
+      "name": "Extraer URL imagen",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1120, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "anthropic-version", "value": "2023-06-01" },
+            { "name": "content-type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "model", "value": "claude-sonnet-4-6" },
+            { "name": "max_tokens", "value": "2048" },
+            {
+              "name": "system",
+              "value": "Eres el copywriter de BookFast. Escribes copy para redes sociales que convierte a dueños de peluquerías, barberías y centros de estética en usuarios de prueba.\n\nREGLAS:\n- Habla de 'tú' siempre. Primera línea: hook de máximo 10 palabras.\n- Sin emojis en exceso (máximo 3-5). Párrafos cortos (máximo 3 líneas).\n- Incluye datos concretos cuando sea posible.\n- CTA al final: 'Pruébalo gratis → bookfast.es'\n- Instagram: hasta 300 palabras. Twitter: máximo 240 chars.\n\nResponde SOLO con JSON: {\"instagram_caption\": \"...\", \"facebook_caption\": \"...\", \"twitter_text\": \"...\", \"hashtags_comment\": \"...\"}"
+            },
+            {
+              "name": "messages",
+              "value": "=[{\"role\":\"user\",\"content\":\"Genera el copy para:\\n\\nTema: {{ $json.topic }}\\nHook: {{ $json.hook }}\\nPuntos clave: {{ JSON.stringify($json.key_points) }}\\nHashtags: {{ JSON.stringify($json.hashtags) }}\\nCTA: {{ $json.cta }}\"}]"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b1c2d3e4-0006",
+      "name": "Claude — Generar Copy",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1340, 300],
+      "credentials": {
+        "httpHeaderAuth": { "id": "anthropic-cred", "name": "Anthropic API" }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const claudeResp = $input.first().json;\nconst copyText = claudeResp.content[0].text.trim();\n\nlet copy;\ntry {\n  const jsonMatch = copyText.match(/\\{[\\s\\S]*\\}/);\n  copy = JSON.parse(jsonMatch ? jsonMatch[0] : copyText);\n} catch(e) {\n  copy = { instagram_caption: copyText, facebook_caption: copyText, twitter_text: copyText, hashtags_comment: '' };\n}\n\nconst imageData = $('Extraer URL imagen').item.json;\n\nreturn [{\n  json: {\n    content_id: imageData.content_id,\n    image_url: imageData.image_url,\n    platforms: imageData.platforms,\n    scheduled_date: imageData.scheduled_date,\n    scheduled_time: imageData.scheduled_time,\n    content_type: 'image',\n    copy: copy,\n    hashtags: imageData.hashtags,\n    ready_to_publish: true\n  }\n}];"
+      },
+      "id": "b1c2d3e4-0007",
+      "name": "Empaquetar contenido",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1560, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://hooks.n8n.io/bookfast/social-publisher",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "id": "b1c2d3e4-0008",
+      "name": "→ Trigger Publisher",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1780, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ status: 'queued', content_id: $('Webhook Entrada').item.json.body.content_id }) }}"
+      },
+      "id": "b1c2d3e4-0009",
+      "name": "Responder Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [460, 500]
+    }
+  ],
+  "connections": {
+    "Webhook Entrada": {
+      "main": [
+        [
+          { "node": "Claude — Optimizar Prompt", "type": "main", "index": 0 },
+          { "node": "Responder Webhook", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Claude — Optimizar Prompt": { "main": [[{ "node": "Preparar prompt final", "type": "main", "index": 0 }]] },
+    "Preparar prompt final": { "main": [[{ "node": "fal.ai — Generar Imagen (Flux)", "type": "main", "index": 0 }]] },
+    "fal.ai — Generar Imagen (Flux)": { "main": [[{ "node": "Extraer URL imagen", "type": "main", "index": 0 }]] },
+    "Extraer URL imagen": { "main": [[{ "node": "Claude — Generar Copy", "type": "main", "index": 0 }]] },
+    "Claude — Generar Copy": { "main": [[{ "node": "Empaquetar contenido", "type": "main", "index": 0 }]] },
+    "Empaquetar contenido": { "main": [[{ "node": "→ Trigger Publisher", "type": "main", "index": 0 }]] }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "id": "bookfast-wf-002",
+  "tags": [{ "name": "bookfast" }, { "name": "social-agent" }]
+}

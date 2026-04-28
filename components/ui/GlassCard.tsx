@@ -27,7 +27,7 @@ export default function GlassCard({
         'dark:bg-card dark:text-card-foreground dark:border-card-border dark:shadow-none',
 
         // ESTADOS HOVER (solo transform y opacity - GPU accelerated):
-        hoverEffect && 'hover:-translate-y-0.5 hover:shadow-[0_24px_60px_rgba(249,115,22,0.14)] dark:hover:bg-card/40 dark:hover:border-card-border',
+        hoverEffect && 'hover:-translate-y-1.5 hover:shadow-[0_28px_70px_rgba(14,165,233,0.18),0_10px_24px_rgba(168,85,247,0.10)] hover:border-primary-200/80 dark:hover:bg-white/5 dark:hover:border-primary/25 dark:hover:shadow-[0_0_40px_rgba(14,165,233,0.08)]',
 
         // VARIANTES DE GRADIENTE
         gradient === 'subtle' && 'bg-gradient-to-br from-primary/10 via-secondary/5 to-transparent dark:from-primary/15 dark:via-secondary/10',
@@ -40,12 +40,12 @@ export default function GlassCard({
       }}
     >
       {/* Capa de Ruido (Noise) para textura realista */}
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-5 mix-blend-overlay pointer-events-none" />
+      <div className="absolute inset-0 bg-[url('/noise.svg')] opacity-5 mix-blend-overlay pointer-events-none" />
       
       {/* Brillo especular superior (borde de luz) */}
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-50" />
 
-      <div className="relative z-10 p-6 h-full">
+      <div className="relative z-10 h-full">
         {children}
       </div>
     </div>

@@ -15,15 +15,17 @@ const resources = [
     icon: FileText,
     title: 'Guía de inicio rápido',
     description: 'Todo lo que necesitas saber para configurar BookFast en menos de 10 minutos.',
-    type: 'PDF',
-    cta: 'Descargar guía',
+    type: 'Guía',
+    cta: 'Ver guía',
+    href: '/como-funciona',
   },
   {
     icon: Video,
-    title: 'Vídeo tutorial completo',
-    description: 'Aprende a usar todas las funcionalidades de BookFast paso a paso.',
-    type: 'Vídeo',
-    cta: 'Ver vídeo',
+    title: 'Demo interactiva',
+    description: 'Explora BookFast en acción: agenda, clientes, caja y recordatorios.',
+    type: 'Demo',
+    cta: 'Abrir demo',
+    href: '/demo',
   },
   {
     icon: HelpCircle,
@@ -31,27 +33,31 @@ const resources = [
     description: 'Respuestas a las dudas más comunes sobre BookFast y su funcionamiento.',
     type: 'FAQ',
     cta: 'Ver preguntas',
+    href: '/contacto',
   },
   {
     icon: Download,
     title: 'Kit de marketing',
-    description: 'Materiales descargables para promocionar tu negocio y las reservas online.',
-    type: 'ZIP',
-    cta: 'Descargar kit',
+    description: 'Materiales para promocionar tu negocio y las reservas online. Pídelo a nuestro equipo.',
+    type: 'Solicitar',
+    cta: 'Solicitar kit',
+    href: '/contacto',
   },
   {
     icon: FileText,
     title: 'Guía de mejores prácticas',
     description: 'Consejos y estrategias para optimizar tu agenda y reducir ausencias.',
-    type: 'PDF',
-    cta: 'Descargar guía',
+    type: 'Blog',
+    cta: 'Leer artículos',
+    href: '/blog',
   },
   {
     icon: Video,
-    title: 'Webinar: Gestión eficiente',
-    description: 'Grabación de nuestro webinar sobre cómo gestionar tu salón de forma eficiente.',
-    type: 'Vídeo',
-    cta: 'Ver webinar',
+    title: 'Hablar con el equipo',
+    description: 'Agenda una videollamada y te mostramos BookFast adaptado a tu negocio.',
+    type: 'Llamada',
+    cta: 'Reservar llamada',
+    href: '/contacto',
   },
 ];
 
@@ -85,7 +91,7 @@ export default function RecursosPage() {
                   <CardDescription>{resource.description}</CardDescription>
                 </CardHeader>
                 <CardFooter>
-                  <Button as="link" href="#" variant="outline" fullWidth>
+                  <Button as="link" href={resource.href} variant="outline" fullWidth>
                     {resource.cta}
                   </Button>
                 </CardFooter>

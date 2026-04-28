@@ -108,9 +108,9 @@ export default function SpotlightBackground() {
         gradient.addColorStop(0.5, "rgba(168, 85, 247, 0.04)"); 
         gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
       } else {
-        // Light Mode: Luz Naranja/Rosa (Sunset)
-        gradient.addColorStop(0, "rgba(249, 115, 22, 0.2)");   
-        gradient.addColorStop(0.3, "rgba(236, 72, 153, 0.1)"); 
+        // Light Mode: Luz Cyan/Azul (brand)
+        gradient.addColorStop(0, "rgba(14, 165, 233, 0.15)");
+        gradient.addColorStop(0.3, "rgba(168, 85, 247, 0.07)");
         gradient.addColorStop(1, "rgba(255, 255, 255, 0)");
       }
 

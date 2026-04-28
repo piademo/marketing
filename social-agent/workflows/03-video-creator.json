@@ -1,0 +1,283 @@
+{
+  "name": "BookFast — 03 Generador de Vídeo AI Presenter",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "bookfast/video-creator",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode"
+      },
+      "id": "c1d2e3f4-0001",
+      "name": "Webhook Entrada",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "webhookId": "bookfast-video-creator"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={ \"status\": \"processing\", \"content_id\": \"{{ $json.body.content_id }}\" }"
+      },
+      "id": "c1d2e3f4-0002",
+      "name": "Responder Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [460, 500]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "anthropic-version", "value": "2023-06-01" },
+            { "name": "content-type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "model", "value": "claude-sonnet-4-6" },
+            { "name": "max_tokens", "value": "3000" },
+            {
+              "name": "system",
+              "value": "Eres Sara, presentadora experta en gestión de negocios del sector belleza y portavoz de BookFast. Escribes scripts naturales para vídeos que grabas tú misma.\n\nPERSONALIDAD: Cercana, entusiasta (pero no exagerada), directa, empática con los retos del sector. Conoces la realidad: los no-shows, los WhatsApps a las 11pm, coordinar el equipo.\n\nESTRUCTURA:\n[HOOK] — Máximo 2 frases. Problema real o pregunta directa.\n[DESARROLLO] — Conversacional, con ejemplos del día a día del sector.\n[DEMO] — Describe lo que se ve en pantalla mientras narras.\n[CTA] — Menciona siempre 'bookfast.es' y 'gratis'.\n\nResponde SOLO con JSON válido:\n{\n  \"duration_seconds\": 60,\n  \"sections\": {\n    \"hook\": \"...\",\n    \"desarrollo\": \"...\",\n    \"demo\": { \"narration\": \"...\", \"screen_action\": \"descripción para el editor\" },\n    \"cta\": \"...\"\n  },\n  \"full_script\": \"script completo para HeyGen\",\n  \"on_screen_text\": [\"texto en pantalla 1\", \"texto en pantalla 2\", \"texto en pantalla 3\"],\n  \"heygen_input_text\": \"solo el texto que Sara dice en voz alta\",\n  \"captions_key_phrases\": [\"frase destacada 1\", \"frase destacada 2\"]\n}"
+            },
+            {
+              "name": "messages",
+              "value": "=[{\"role\":\"user\",\"content\":\"Genera el script para este vídeo:\\n\\nDuración objetivo: {{ $json.body.duration || 60 }}s\\nPlataforma: {{ $json.body.platform }}\\nFeature/tema: {{ $json.body.topic }}\\nHook base: {{ $json.body.hook }}\\nPuntos a cubrir: {{ $json.body.key_points }}\"}]"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c1d2e3f4-0003",
+      "name": "Claude — Generar Script",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, 300],
+      "credentials": {
+        "httpHeaderAuth": { "id": "anthropic-cred", "name": "Anthropic API" }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const claudeResp = $input.first().json;\nconst scriptText = claudeResp.content[0].text.trim();\n\nlet script;\ntry {\n  const jsonMatch = scriptText.match(/\\{[\\s\\S]*\\}/);\n  script = JSON.parse(jsonMatch ? jsonMatch[0] : scriptText);\n} catch(e) {\n  throw new Error('Error parsing script: ' + e.message);\n}\n\n// Determinar el avatar_id según la plataforma\nconst platform = $('Webhook Entrada').item.json.body.platform;\nconst isShortForm = platform === 'tiktok';\n\nreturn [{\n  json: {\n    content_id: $('Webhook Entrada').item.json.body.content_id,\n    topic: $('Webhook Entrada').item.json.body.topic,\n    platform: platform,\n    platforms: [platform],\n    scheduled_date: $('Webhook Entrada').item.json.body.scheduled_date,\n    scheduled_time: $('Webhook Entrada').item.json.body.scheduled_time,\n    script: script,\n    heygen_text: script.heygen_input_text,\n    on_screen_text: script.on_screen_text,\n    // Configuración HeyGen\n    avatar_id: 'Sara_Bookfast_v1',\n    voice_id: 'es-ES-ElviraNeural',\n    background: isShortForm ? 'bg-salon-modern' : 'bg-office-blue',\n    dimension: isShortForm \n      ? { width: 1080, height: 1920 }  // TikTok/Reels 9:16\n      : { width: 1920, height: 1080 }  // YouTube/Facebook 16:9\n  }\n}];"
+      },
+      "id": "c1d2e3f4-0004",
+      "name": "Parsear Script",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.heygen.com/v2/video/generate",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "content-type", "value": "application/json" },
+            { "name": "accept", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"video_inputs\": [\n    {\n      \"character\": {\n        \"type\": \"avatar\",\n        \"avatar_id\": \"{{ $json.avatar_id }}\",\n        \"avatar_style\": \"normal\"\n      },\n      \"voice\": {\n        \"type\": \"text\",\n        \"input_text\": {{ JSON.stringify($json.heygen_text) }},\n        \"voice_id\": \"{{ $json.voice_id }}\",\n        \"speed\": 1.05\n      },\n      \"background\": {\n        \"type\": \"image\",\n        \"url\": \"https://cdn.bookfast.es/heygen/{{ $json.background }}.jpg\"\n      }\n    }\n  ],\n  \"dimension\": {{ JSON.stringify($json.dimension) }},\n  \"title\": \"BookFast - {{ $json.topic }}\",\n  \"caption\": true,\n  \"test\": false\n}",
+        "options": {}
+      },
+      "id": "c1d2e3f4-0005",
+      "name": "HeyGen — Crear Vídeo",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [900, 300],
+      "credentials": {
+        "httpHeaderAuth": { "id": "heygen-cred", "name": "HeyGen API" }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const heygenResp = $input.first().json;\nconst videoId = heygenResp.data?.video_id || heygenResp.video_id;\n\nif (!videoId) {\n  throw new Error('HeyGen no devolvió video_id: ' + JSON.stringify(heygenResp));\n}\n\nreturn [{\n  json: {\n    ...$('Parsear Script').item.json,\n    heygen_video_id: videoId,\n    heygen_status: 'processing',\n    polling_attempts: 0,\n    max_polling_attempts: 30  // 30 intentos × 30s = 15 minutos máx\n  }\n}];"
+      },
+      "id": "c1d2e3f4-0006",
+      "name": "Guardar Video ID",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1120, 300]
+    },
+    {
+      "parameters": {
+        "amount": 30,
+        "unit": "seconds"
+      },
+      "id": "c1d2e3f4-0007",
+      "name": "Esperar 30s",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [1340, 300]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://api.heygen.com/v1/video_status.get?video_id={{ $json.heygen_video_id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "id": "c1d2e3f4-0008",
+      "name": "HeyGen — Check Status",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1560, 300],
+      "credentials": {
+        "httpHeaderAuth": { "id": "heygen-cred", "name": "HeyGen API" }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const statusResp = $input.first().json;\nconst status = statusResp.data?.status || statusResp.status;\nconst videoUrl = statusResp.data?.video_url || statusResp.video_url;\nconst prevData = $('Guardar Video ID').item.json;\n\nreturn [{\n  json: {\n    ...prevData,\n    heygen_status: status,\n    video_url: videoUrl || null,\n    polling_attempts: (prevData.polling_attempts || 0) + 1,\n    is_complete: status === 'completed',\n    is_failed: status === 'failed',\n    should_retry: status !== 'completed' && status !== 'failed' && (prevData.polling_attempts || 0) < prevData.max_polling_attempts\n  }\n}];"
+      },
+      "id": "c1d2e3f4-0009",
+      "name": "Evaluar Status",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1780, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true },
+          "conditions": [
+            {
+              "id": "cond-complete",
+              "leftValue": "={{ $json.is_complete }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "equal" }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "c1d2e3f4-0010",
+      "name": "¿Vídeo listo?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [2000, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "anthropic-version", "value": "2023-06-01" },
+            { "name": "content-type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "model", "value": "claude-haiku-4-5-20251001" },
+            { "name": "max_tokens", "value": "1500" },
+            {
+              "name": "system",
+              "value": "Eres el copywriter de BookFast. Escribes descripciones para vídeos en redes sociales. Tono cercano, profesional, de 'tú'. Responde SOLO con JSON: {\"instagram_caption\": \"...\", \"tiktok_description\": \"...\", \"facebook_description\": \"...\", \"twitter_text\": \"...\"}"
+            },
+            {
+              "name": "messages",
+              "value": "=[{\"role\":\"user\",\"content\":\"Genera las descripciones para este vídeo:\\n\\nTema: {{ $json.topic }}\\nScript hook: {{ $json.script.sections.hook }}\\nPlataformas: {{ JSON.stringify($json.platforms) }}\\nHashtags de marca: #BookFast #peluqueria #barberia #gestiondecitas\"}]"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c1d2e3f4-0011",
+      "name": "Claude — Copy del Vídeo",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2220, 200],
+      "credentials": {
+        "httpHeaderAuth": { "id": "anthropic-cred", "name": "Anthropic API" }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const copyResp = $input.first().json;\nconst copyText = copyResp.content[0].text.trim();\n\nlet copy;\ntry {\n  const jsonMatch = copyText.match(/\\{[\\s\\S]*\\}/);\n  copy = JSON.parse(jsonMatch ? jsonMatch[0] : copyText);\n} catch(e) {\n  copy = {};\n}\n\nconst videoData = $('Evaluar Status').item.json;\n\nreturn [{\n  json: {\n    content_id: videoData.content_id,\n    video_url: videoData.video_url,\n    platforms: videoData.platforms,\n    scheduled_date: videoData.scheduled_date,\n    scheduled_time: videoData.scheduled_time,\n    content_type: 'video',\n    copy: copy,\n    on_screen_text: videoData.on_screen_text,\n    ready_to_publish: true\n  }\n}];"
+      },
+      "id": "c1d2e3f4-0012",
+      "name": "Empaquetar para Publisher",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2440, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://hooks.n8n.io/bookfast/social-publisher",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "id": "c1d2e3f4-0013",
+      "name": "→ Trigger Publisher",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2660, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://hooks.slack.com/bookfast-alerts",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"text\": \"⚠️ Error generando vídeo {{ $json.content_id }}: {{ $json.heygen_status }}\"\n}",
+        "options": {}
+      },
+      "id": "c1d2e3f4-0014",
+      "name": "Alerta Error Vídeo",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2220, 400]
+    }
+  ],
+  "connections": {
+    "Webhook Entrada": {
+      "main": [
+        [
+          { "node": "Claude — Generar Script", "type": "main", "index": 0 },
+          { "node": "Responder Webhook", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Claude — Generar Script": { "main": [[{ "node": "Parsear Script", "type": "main", "index": 0 }]] },
+    "Parsear Script": { "main": [[{ "node": "HeyGen — Crear Vídeo", "type": "main", "index": 0 }]] },
+    "HeyGen — Crear Vídeo": { "main": [[{ "node": "Guardar Video ID", "type": "main", "index": 0 }]] },
+    "Guardar Video ID": { "main": [[{ "node": "Esperar 30s", "type": "main", "index": 0 }]] },
+    "Esperar 30s": { "main": [[{ "node": "HeyGen — Check Status", "type": "main", "index": 0 }]] },
+    "HeyGen — Check Status": { "main": [[{ "node": "Evaluar Status", "type": "main", "index": 0 }]] },
+    "Evaluar Status": { "main": [[{ "node": "¿Vídeo listo?", "type": "main", "index": 0 }]] },
+    "¿Vídeo listo?": {
+      "main": [
+        [{ "node": "Claude — Copy del Vídeo", "type": "main", "index": 0 }],
+        [{ "node": "Alerta Error Vídeo", "type": "main", "index": 0 }]
+      ]
+    },
+    "Claude — Copy del Vídeo": { "main": [[{ "node": "Empaquetar para Publisher", "type": "main", "index": 0 }]] },
+    "Empaquetar para Publisher": { "main": [[{ "node": "→ Trigger Publisher", "type": "main", "index": 0 }]] }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "id": "bookfast-wf-003",
+  "tags": [{ "name": "bookfast" }, { "name": "social-agent" }]
+}

@@ -53,7 +53,7 @@ export default function Pricing() {
           transition={transition.default}
           className="mx-auto mb-10 sm:mb-12 lg:mb-14 max-w-3xl text-center"
         >
-          <h2 className="text-3xl sm:text-display-sm lg:text-display-md font-semibold tracking-tight text-foreground text-balance">
+          <h2 className="text-3xl sm:text-display-sm lg:text-display-md font-bold tracking-tight text-foreground text-balance">
             Una inversión que recuperas salvando {" "}
             <span className="gradient-text">UNA sola cita</span> al mes.
           </h2>
@@ -107,13 +107,13 @@ export default function Pricing() {
                 duration={18}
                 delay={0}
                 radius={24}
-                colorFrom="#f97316"  /* Sunset naranja */
-                colorTo="#fb7185"    /* Sunset rosa */
+                colorFrom="#0ea5e9"
+                colorTo="#a855f7"
               />
               <GlassCard
                 gradient="subtle"
                 className={cn(
-                  'relative flex flex-col h-full sm:scale-105 rounded-3xl sm:rounded-[1.7rem] border-primary-500/40 dark:bg-neutral-900/80 shadow-[0_20px_55px_rgba(249,115,22,0.18)] dark:shadow-primary-500/30 text-white',
+                  'relative flex flex-col h-full sm:scale-105 rounded-3xl sm:rounded-[1.7rem] border-primary-500/40 dark:bg-neutral-900/80 shadow-[0_20px_55px_rgba(14,165,233,0.20),0_8px_20px_rgba(168,85,247,0.10)] dark:shadow-primary-500/30 text-white',
                   'before:pointer-events-none before:absolute before:inset-0 before:rounded-[1.4rem] sm:before:rounded-[1.7rem] before:border before:border-transparent before:bg-[linear-gradient(135deg,hsl(var(--primary)),hsl(var(--secondary)))] before:opacity-60 before:[mask:linear-gradient(#000,#000)_content-box,linear-gradient(#000,#000)] before:[mask-composite:exclude] before:p-px',
                   'p-4 sm:p-5 lg:p-6',
                 )}

@@ -1,0 +1,131 @@
+{
+  "brand": {
+    "name": "BookFast",
+    "tagline": "Gestión de citas profesional para el sector belleza",
+    "description": "Software SaaS de gestión de citas y clientes para peluquerías, barberías y centros de estética en España",
+    "sectors": ["peluquerías", "barberías", "centros de estética"],
+    "tone_of_voice": {
+      "primary": "profesional y cercano",
+      "adjectives": ["moderno", "confiable", "eficiente", "cercano", "innovador"],
+      "avoid": ["corporativo frío", "tecnicismo excesivo", "anglicismos innecesarios"],
+      "style": "Habla de tú al profesional del sector. Empático con sus retos diarios. Soluciones concretas, no promesas vacías."
+    },
+    "language": "es-ES"
+  },
+  "visual_identity": {
+    "colors": {
+      "primary_blue": "#0ea5e9",
+      "primary_blue_dark": "#0284c7",
+      "secondary_purple": "#a855f7",
+      "secondary_purple_dark": "#9333ea",
+      "gradient_main": "linear-gradient(135deg, #0ea5e9 0%, #a855f7 100%)",
+      "background_light": "#ffffff",
+      "background_dark": "#0a0a0a",
+      "text_primary": "#171717",
+      "text_secondary": "#525252",
+      "surface": "#f5f5f5"
+    },
+    "typography": {
+      "font_family": "Inter",
+      "display_weight": 800,
+      "body_weight": 400,
+      "heading_weight": 700,
+      "letter_spacing_display": "-0.02em"
+    },
+    "visual_style": {
+      "aesthetic": "glass morphism moderno, gradientes suaves, bordes redondeados",
+      "imagery": "fotografía lifestyle del sector belleza, profesionales reales trabajando, ambiente de salón moderno y limpio",
+      "mood": "aspiracional pero alcanzable, tecnología al servicio del artesano",
+      "avoid": "stock photos genéricas, colores neón agresivos, tipografías decorativas, imágenes oscuras o sombrías"
+    },
+    "logo_usage": {
+      "min_clear_space": "1x logo height on all sides",
+      "primary_variant": "isotipo + wordmark en azul sobre fondo blanco",
+      "dark_variant": "isotipo + wordmark en blanco sobre fondo oscuro",
+      "no_go": ["rotaciones", "distorsiones", "colores alternativos", "sombras"]
+    }
+  },
+  "image_generation": {
+    "flux_base_prompt": "Professional photography, modern beauty salon, clean minimal aesthetic, warm studio lighting, shallow depth of field, 4K quality, editorial photography style",
+    "style_keywords": [
+      "professional salon photography",
+      "modern minimalist",
+      "clean white and blue tones",
+      "editorial quality",
+      "warm natural lighting",
+      "candid professional",
+      "Spanish beauty industry"
+    ],
+    "negative_prompt": "blurry, low quality, cartoon, illustration, ugly, deformed, watermark, text overlay, dark and moody, cluttered background, old fashioned",
+    "brand_color_instruction": "Include blue (#0ea5e9) and purple (#a855f7) as accent colors where appropriate. Clean white or very light backgrounds preferred.",
+    "content_scenarios": {
+      "product_demo": "Clean screenshot mockup of BookFast app on modern device, professional presentation, blue gradient background",
+      "lifestyle": "Professional hairdresser or barber at work, modern salon environment, natural candid shot",
+      "abstract_tech": "Abstract representation of booking and scheduling, geometric shapes in blue and purple gradient, minimal clean design",
+      "stats_infographic": "Clean data visualization, blue and purple color scheme, Inter font, white background, professional infographic style",
+      "team_salon": "Group of salon professionals, modern bright salon environment, professional attire, genuine smiles"
+    }
+  },
+  "content_strategy": {
+    "target_audience": {
+      "primary": "Dueños/as de peluquerías, barberías y centros de estética en España (25-50 años)",
+      "secondary": "Gestores de negocios de belleza, directores de franquicias del sector",
+      "pain_points": [
+        "No-shows y cancelaciones de última hora",
+        "Gestión manual de citas por WhatsApp/teléfono",
+        "Dificultad para organizar el equipo",
+        "Falta de visibilidad del negocio online",
+        "Administración de pagos y facturación",
+        "Fidelización de clientes"
+      ]
+    },
+    "value_propositions": [
+      "Reduce no-shows hasta un 80% con recordatorios automáticos",
+      "Agenda online 24/7 sin llamadas ni WhatsApps",
+      "Gestiona todo tu equipo desde un solo panel",
+      "Pagos integrados y facturación automática",
+      "WhatsApp Business integrado",
+      "Empieza en 5 minutos, sin instalaciones"
+    ],
+    "hashtags": {
+      "brand": ["#BookFast", "#BookFastApp"],
+      "sector": ["#peluqueria", "#barberia", "#estetica", "#salon", "#belleza", "#hairsalon", "#barbershop"],
+      "business": ["#gestiondecitas", "#agendaonline", "#negocio", "#emprendimiento", "#pyme"],
+      "trending": ["#software", "#digitalizacion", "#automatizacion", "#app"]
+    }
+  },
+  "platforms": {
+    "instagram": {
+      "formats": {
+        "post": { "ratio": "1:1", "size": "1080x1080", "max_caption": 2200 },
+        "reel": { "ratio": "9:16", "size": "1080x1920", "max_duration": 90 },
+        "story": { "ratio": "9:16", "size": "1080x1920", "max_duration": 15 }
+      },
+      "best_times": ["09:00", "13:00", "18:00"],
+      "content_mix": { "reels": 40, "posts": 40, "stories": 20 }
+    },
+    "tiktok": {
+      "formats": {
+        "video": { "ratio": "9:16", "size": "1080x1920", "min_duration": 10, "max_duration": 60 }
+      },
+      "best_times": ["07:00", "12:00", "19:00", "22:00"],
+      "style_notes": "Más informal y dinámico. Captions en pantalla. Transiciones rápidas. Gancho en los primeros 2 segundos."
+    },
+    "facebook": {
+      "formats": {
+        "post": { "ratio": "1.91:1", "size": "1200x630", "max_caption": 63206 },
+        "video": { "ratio": "16:9", "size": "1280x720", "max_duration": 240 }
+      },
+      "best_times": ["09:00", "15:00"],
+      "audience_notes": "Audiencia ligeramente mayor (35-55). Más texto permitido. Grupos del sector muy activos."
+    },
+    "twitter": {
+      "formats": {
+        "post": { "max_chars": 280 },
+        "image": { "ratio": "16:9", "size": "1200x675" }
+      },
+      "best_times": ["08:00", "12:00", "17:00"],
+      "style_notes": "Conciso, directo, con opinión. Threads para contenido educativo extenso."
+    }
+  }
+}

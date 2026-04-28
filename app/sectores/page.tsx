@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Scissors, UserCheck, ArrowRight, Sparkles } from 'lucide-react';
+import { Scissors, UserCheck, ArrowRight, Sparkles, Flower2 } from 'lucide-react';
 import Container from '@/components/ui/Container';
 import Button from '@/components/ui/Button';
 import GlassCard from '@/components/ui/GlassCard';
@@ -20,9 +20,9 @@ export default function SectoresPage() {
         'Gestión rápida para el ritmo urbano. Control de walk-ins, cortes exprés y recordatorios automáticos para reducir no-shows.',
       href: '/sectores/barberias',
       icon: Scissors,
-      color: 'text-orange-400',
-      bg: 'bg-orange-500/10',
-      border: 'border-orange-500/20',
+      color: 'text-primary-500',
+      bg: 'bg-primary-100',
+      border: 'border-primary-200',
       features: ['Gestión de Walk-ins', 'Recordatorios WhatsApp', 'Caja rápida'],
     },
     {
@@ -36,6 +36,17 @@ export default function SectoresPage() {
       border: 'border-purple-500/20',
       features: ['Historial de Color', 'Gestión de Empleados', 'Bonos y Packs'],
     },
+    {
+      title: 'Centros de Estética',
+      description:
+        'Tratamientos prolongados y cabinas optimizadas. Gestión de bonos, aparatología y ficha de cliente detallada.',
+      href: '/sectores/centros-estetica',
+      icon: Flower2,
+      color: 'text-pink-400',
+      bg: 'bg-pink-500/10',
+      border: 'border-pink-500/20',
+      features: ['Gestión de Bonos', 'Ficha de Tratamiento', 'Control de Cabinas'],
+    },
   ];
 
   return (
@@ -46,7 +57,7 @@ export default function SectoresPage() {
         className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full blur-[120px] pointer-events-none -z-10 dark:hidden"
         style={{
           backgroundImage:
-            'radial-gradient(circle at 50% 0%, rgba(249,115,22,0.32), transparent 60%), radial-gradient(circle at 50% 100%, rgba(236,72,153,0.24), transparent 60%)',
+            'radial-gradient(circle at 50% 0%, rgba(14,165,233,0.32), transparent 60%), radial-gradient(circle at 50% 100%, rgba(168,85,247,0.20), transparent 60%)',
           mixBlendMode: 'normal',
         }}
       />
@@ -59,9 +70,9 @@ export default function SectoresPage() {
           <div className="flex justify-center mb-6">
             <Badge
               variant="neutral"
-              className="bg-[#f97316]/10 text-neutral-900 border-[#f97316]/30 dark:bg-white/5 dark:border-white/10 dark:text-neutral-300 backdrop-blur-md"
+              className="bg-primary-100 text-neutral-900 border-primary-200 dark:bg-white/5 dark:border-white/10 dark:text-neutral-300 backdrop-blur-md"
             >
-              <Sparkles className="w-3 h-3 mr-2 text-[#f97316] dark:text-primary-300" />
+              <Sparkles className="w-3 h-3 mr-2 text-primary-600 dark:text-primary-300" />
               Especialización
             </Badge>
           </div>
@@ -90,12 +101,12 @@ export default function SectoresPage() {
                   <div className={`p-4 rounded-2xl ${sector.bg} ${sector.border} border shadow-inner`}>
                     <sector.icon className={`w-8 h-8 ${sector.color}`} />
                   </div>
-                  <div className="p-2 rounded-full bg-[#f97316]/10 text-[#ea580c] border border-[#f97316]/30 dark:bg-primary/10 dark:text-primary dark:border-primary/20 dark:group-hover:bg-primary/20 dark:group-hover:text-primary-300 transition-colors">
-                    <ArrowRight className="w-5 h-5 text-[#ea580c] group-hover:text-[#c05621] dark:text-primary dark:group-hover:text-primary-300" />
+                  <div className="p-2 rounded-full bg-primary-100 text-primary-700 border border-primary-200 dark:bg-primary/10 dark:text-primary dark:border-primary/20 dark:group-hover:bg-primary/20 dark:group-hover:text-primary-300 transition-colors">
+                    <ArrowRight className="w-5 h-5 text-primary-600 group-hover:text-primary-700 dark:text-primary dark:group-hover:text-primary-300" />
                   </div>
                 </div>
 
-                <h2 className="text-2xl font-bold text-foreground dark:text-white mb-4 group-hover:text-[#ea580c] dark:group-hover:text-primary-300 transition-colors">
+                <h2 className="text-2xl font-bold text-foreground dark:text-white mb-4 group-hover:text-primary-600 dark:group-hover:text-primary-300 transition-colors">
                   {sector.title}
                 </h2>
                 <p className="text-neutral-700 dark:text-neutral-400 leading-relaxed mb-8 flex-grow">{sector.description}</p>
@@ -103,7 +114,7 @@ export default function SectoresPage() {
                 <div className="space-y-3 border-t border-border dark:border-white/5 pt-6 mt-auto">
                   {sector.features.map((feature) => (
                     <div key={feature} className="flex items-center text-sm text-neutral-700 dark:text-neutral-300">
-                      <div className="w-1.5 h-1.5 rounded-full mr-3 bg-[#f97316] shadow-[0_0_8px_rgba(249,115,22,0.5)] dark:bg-primary-500" />
+                      <div className="w-1.5 h-1.5 rounded-full mr-3 bg-primary-500 shadow-[0_0_8px_rgba(14,165,233,0.4)] dark:bg-primary-500" />
                       {feature}
                     </div>
                   ))}

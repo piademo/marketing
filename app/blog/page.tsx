@@ -45,7 +45,7 @@ export default function BlogPage() {
                   <Badge variant="primary">{post.category}</Badge>
                 </div>
 
-                <h2 className="text-xl font-semibold text-foreground dark:text-white mb-2 group-hover:text-[#f97316] dark:group-hover:text-primary-300 transition-colors">
+                <h2 className="text-xl font-semibold text-foreground dark:text-white mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-300 transition-colors">
                   {post.title}
                 </h2>
 

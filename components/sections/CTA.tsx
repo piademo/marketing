@@ -41,7 +41,7 @@ export default function CTA({
           <div className="pointer-events-none absolute -right-16 sm:-right-24 -top-16 sm:-top-24 h-48 sm:h-72 w-48 sm:w-72 rounded-full bg-white/15 blur-3xl" />
           <div className="pointer-events-none absolute -bottom-16 sm:-bottom-24 -left-16 sm:-left-24 h-48 sm:h-72 w-48 sm:w-72 rounded-full bg-white/12 blur-3xl" />
           {/* Noise texture for premium feel */}
-          <div className="pointer-events-none absolute inset-0 opacity-[0.14] mix-blend-soft-light bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+          <div className="pointer-events-none absolute inset-0 opacity-[0.14] mix-blend-soft-light bg-[url('/noise.svg')]" />
 
           <div className="relative mx-auto max-w-3xl text-center">
             <motion.h2
@@ -49,7 +49,7 @@ export default function CTA({
               whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
               viewport={viewport.default}
               transition={prefersReducedMotion ? undefined : { ...transition.fast, delay: 0.05 }}
-              className="text-xl sm:text-display-sm lg:text-display-md mb-3 sm:mb-4 text-white text-balance"
+              className="text-xl sm:text-display-sm lg:text-display-md mb-3 sm:mb-4 font-bold tracking-tight text-white text-balance"
             >
               {title}
             </motion.h2>

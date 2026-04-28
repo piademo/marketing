@@ -172,7 +172,7 @@ export default function PricingMobileCarousel() {
                     ? cn(
                         isDark
                           ? "border-cyan-400/50 shadow-[0_16px_40px_rgba(56,189,248,0.32)]"
-                          : "border-primary-500/60 shadow-[0_16px_40px_rgba(249,115,22,0.32)]",
+                          : "border-primary-400/60 shadow-[0_16px_40px_rgba(14,165,233,0.28),0_6px_16px_rgba(168,85,247,0.14)]",
                       )
                     : "border-white/10 dark:border-white/5 opacity-60 grayscale",
                 )}
@@ -182,8 +182,8 @@ export default function PricingMobileCarousel() {
                     size={180}
                     duration={16}
                     radius={28}
-                    colorFrom={isDark ? "#22d3ee" : "#f97316"}
-                    colorTo={isDark ? "#a855f7" : "#fb7185"}
+                    colorFrom={isDark ? "#22d3ee" : "#0ea5e9"}
+                    colorTo={isDark ? "#a855f7" : "#a855f7"}
                   />
                 )}
 
@@ -258,11 +258,13 @@ export default function PricingMobileCarousel() {
                     className={cn(
                       "w-full text-sm",
                       isActive && plan.highlight ? "bg-white !text-black hover:bg-white btn-cyber-animated" : "",
-                      !isDark && plan.name === 'Professional' && "!text-black",
+                      plan.name === "Professional" &&
+                        (!isActive || !plan.highlight) &&
+                        "!text-white border-white/40 hover:bg-white/10 hover:!text-white",
                     )}
                   >
                     {plan.name === 'Starter' && 'Empezar con Starter'}
-                    {plan.name === 'Professional' && 'Elegir Professional'}
+                    {plan.name === 'Professional' && 'Elegir profesional'}
                     {plan.name === 'Enterprise' && 'Hablar con ventas'}
                   </Button>
                 </div>
