@@ -85,7 +85,7 @@ async function upsertTenantFromSession(session: any) {
   return { tenant, planKey, billingPeriod, addonsRaw };
 }
 
-async function setOrgPlanBestEffort(tenantId: string, planKey: string | null) {
+async function setOrgPlanBestEffort(tenantId: string, planKey: string | null, billingState: string) {
   if (!planKey) return;
   const s = getSupabaseServiceClient();
 
@@ -93,12 +93,18 @@ async function setOrgPlanBestEffort(tenantId: string, planKey: string | null) {
   const { error } = await s.rpc('admin_set_org_plan' as any, {
     p_org_id: tenantId,
     p_plan_key: planKey,
-    p_billing_state: 'active',
+    p_billing_state: billingState,
   } as any);
 
   if (!error) return;
 
   // Fallback: si la RPC no existe, no bloqueamos el alta (pero quedará pendiente de asignar plan).
+}
+
+function isPaidSession(session: any) {
+  // Stripe Checkout: payment_status suele ser 'paid' cuando el cobro inicial ha ido OK.
+  // Aun así, para suscripciones es más fiable escuchar invoice.paid.
+  return String(session?.payment_status ?? '').toLowerCase() === 'paid';
 }
 
 export async function POST(req: Request) {
@@ -125,13 +131,51 @@ export async function POST(req: Request) {
 
       // Solo nos interesa la suscripción
       if (session?.mode === 'subscription') {
-        const enriched = await stripe.checkout.sessions.retrieve(session.id, {
-          expand: ['customer', 'subscription'],
-        });
-
+        // No provisionamos "activo" hasta tener pago confirmado.
+        // Si la sesión ya está pagada, marcamos como active; si no, la dejamos en pending y esperaremos invoice.paid.
+        const enriched = await stripe.checkout.sessions.retrieve(session.id, { expand: ['customer', 'subscription'] });
         const result = await upsertTenantFromSession(enriched);
         if (result?.tenant?.id) {
-          await setOrgPlanBestEffort(result.tenant.id, result.planKey);
+          await setOrgPlanBestEffort(
+            result.tenant.id,
+            result.planKey,
+            isPaidSession(enriched) ? 'active' : 'pending',
+          );
+        }
+      }
+    }
+
+    // Evento más fiable para confirmar cobro inicial de suscripción.
+    if (event.type === 'invoice.paid') {
+      const invoice = event.data.object as any;
+      const subscriptionId = invoice?.subscription;
+      if (subscriptionId) {
+        const subscription = await stripe.subscriptions.retrieve(String(subscriptionId), {
+          expand: ['customer'],
+        });
+
+        const businessName = String(subscription?.metadata?.business_name ?? '').trim();
+        const planKey = String(subscription?.metadata?.plan_key ?? '').trim() || null;
+        const customerEmail = String((subscription as any)?.customer?.email ?? '').trim().toLowerCase();
+
+        if (businessName && customerEmail) {
+          // Reutilizamos la lógica de upsert existente construyendo un "pseudo-session"
+          // con la misma shape que usamos en checkout.
+          const pseudoSession = {
+            metadata: {
+              business_name: businessName,
+              plan_key: planKey ?? '',
+              billing_period: String(subscription?.metadata?.billing_period ?? ''),
+              addons: String(subscription?.metadata?.addons ?? '[]'),
+            },
+            customer_details: { email: customerEmail },
+            customer_email: customerEmail,
+          };
+
+          const result = await upsertTenantFromSession(pseudoSession);
+          if (result?.tenant?.id) {
+            await setOrgPlanBestEffort(result.tenant.id, result.planKey, 'active');
+          }
         }
       }
     }

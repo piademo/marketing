@@ -35,11 +35,11 @@ const PLANS: Array<{
 ];
 
 const ADDONS: Array<{ key: AddonKey; description: string }> = [
-  { key: 'whatsapp_pack', description: 'Packs por consumo para recordatorios y campañas.' },
-  { key: 'sms', description: 'Mensajería por consumo para confirmaciones y recordatorios.' },
-  { key: 'payments', description: 'Activa pagos online y depósitos (incluido en Pro+).' },
-  { key: 'white_label', description: 'Widget sin marca + dominio propio (opcional).' },
-  { key: 'ai', description: 'Automatizaciones con IA (con límites/presupuesto).' },
+  { key: 'whatsapp_pack', description: 'Packs por consumo para recordatorios y campañas. (+19€/mes)' },
+  { key: 'sms', description: 'Mensajería por consumo para confirmaciones y recordatorios. (+9€/mes)' },
+  { key: 'payments', description: 'Activa pagos online y depósitos (incluido en Pro+). (+29€/mes)' },
+  { key: 'white_label', description: 'Widget sin marca + dominio propio (opcional). (+29€/mes)' },
+  { key: 'ai', description: 'Automatizaciones con IA (con límites/presupuesto). (+29€/mes)' },
 ];
 
 export default function AltaClient() {
