@@ -55,7 +55,7 @@ const plans = [
     features: ["Hasta 15 profesionales", "1 local incluido", "Marketing + reportes", "Onboarding asistido"],
     highlight: false,
     priceSuffix: "/mes",
-    cta: "Hablar de Scale",
+    cta: "Empezar con Scale",
     ctaHref: "/alta?plan=scale",
   },
   {

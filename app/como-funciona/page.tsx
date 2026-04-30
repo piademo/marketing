@@ -14,13 +14,13 @@ const steps = [
   {
     number: '01',
     icon: UserPlus,
-    title: 'Crea tu cuenta gratis',
+    title: 'Empieza sin fricción',
     description:
       'Regístrate en menos de 2 minutos con tu email. No necesitas tarjeta de crédito para empezar.',
     details: [
       'Registro rápido y sencillo',
       'Sin compromiso ni permanencia',
-      '14 días de prueba gratuita',
+      'Sin tarjeta para probar',
     ],
   },
   {
@@ -107,8 +107,8 @@ export default function ComoFuncionaPage() {
                   </ul>
 
                   {index === 0 && (
-                    <Button as="link" href="/contacto" size="lg">
-                      Crear cuenta gratis
+                    <Button as="link" href="/demo" size="lg">
+                      Probar BookFast
                     </Button>
                   )}
                 </div>

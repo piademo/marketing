@@ -76,8 +76,8 @@ export default function BarberiasPage() {
                 de locura. Deja que BookFast se encargue de las citas mientras tú marcas estilo en el sillón.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button as="link" href="/contacto" size="lg">
-                  Probar gratis 14 días
+                <Button as="link" href="/demo" size="lg">
+                  Probar BookFast
                 </Button>
                 <Button as="link" href="/como-funciona" variant="outline" size="lg">
                   Ver cómo funciona

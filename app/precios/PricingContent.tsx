@@ -339,7 +339,7 @@ export default function PricingContent() {
             </ul>
             <div className="mt-auto">
               <Button as="link" href="/alta?plan=scale" variant="outline" className="w-full">
-                Hablar de Scale
+                Empezar con Scale
               </Button>
             </div>
           </div>

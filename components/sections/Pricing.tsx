@@ -218,7 +218,7 @@ export default function Pricing() {
                   variant="outline"
                   className="w-full text-sm sm:text-sm border border-border dark:border-neutral-700"
                 >
-                  Hablar de Scale
+                  Empezar con Scale
                 </Button>
               </div>
             </motion.div>
