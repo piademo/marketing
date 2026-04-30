@@ -3,7 +3,9 @@ import type { AddonKey, BillingPeriod, PlanKey } from './plans';
 function requireEnv(name: string) {
   const v = process.env[name];
   if (!v) throw new Error(`Missing ${name}`);
-  return v;
+  const trimmed = v.trim();
+  // Por seguridad ante copy/paste en Vercel: permitir valores envueltos en comillas.
+  return trimmed.replace(/^["'](.+)["']$/, '$1');
 }
 
 export function getMarketingBaseUrl() {

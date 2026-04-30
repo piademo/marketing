@@ -11,6 +11,13 @@ import {
 
 export const dynamic = 'force-dynamic';
 
+function stripeModeFromKey(secretKey: string | undefined) {
+  if (!secretKey) return 'unknown';
+  if (secretKey.startsWith('sk_test_')) return 'test';
+  if (secretKey.startsWith('sk_live_')) return 'live';
+  return 'unknown';
+}
+
 type CheckoutRequest = {
   planKey: PlanKey;
   billingPeriod: BillingPeriod;
@@ -55,9 +62,37 @@ export async function POST(req: Request) {
     const stripe = getStripe();
     const baseUrl = getMarketingBaseUrl();
 
+    const planPriceId = getPlanPriceId(
+      planKey as Exclude<PlanKey, 'free' | 'enterprise'>,
+      billingPeriod,
+    );
+    const addonPriceIds = cleanAddons.map((addon) => getAddonPriceId(addon));
+
+    // Validación previa: si el price no existe en esta cuenta/mode, devolvemos un error claro.
+    // Esto evita 500 opacos y acelera el debugging de TEST vs LIVE / cuenta equivocada.
+    try {
+      await stripe.prices.retrieve(planPriceId);
+      await Promise.all(addonPriceIds.map((pid) => stripe.prices.retrieve(pid)));
+    } catch (e: any) {
+      const mode = stripeModeFromKey(process.env.STRIPE_SECRET_KEY);
+      const msg = e?.message ?? 'Stripe price inválido';
+      return NextResponse.json(
+        {
+          error: `Stripe (${mode}): ${msg}`,
+          details: {
+            planKey,
+            billingPeriod,
+            planPriceId,
+            addonPriceIds,
+          },
+        },
+        { status: 400 },
+      );
+    }
+
     const lineItems = [
-      { price: getPlanPriceId(planKey as Exclude<PlanKey, 'free' | 'enterprise'>, billingPeriod), quantity: 1 },
-      ...cleanAddons.map((addon) => ({ price: getAddonPriceId(addon), quantity: 1 })),
+      { price: planPriceId, quantity: 1 },
+      ...addonPriceIds.map((pid) => ({ price: pid, quantity: 1 })),
     ];
 
     const earlyCoupon = process.env.STRIPE_COUPON_EARLY_ADOPTERS || '';
@@ -101,6 +136,10 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ url: session.url });
   } catch (e: any) {
+    // Log server-side para que aparezca en runtime logs (Vercel).
+    // No exponemos stacktrace al cliente, solo el mensaje.
+    // eslint-disable-next-line no-console
+    console.error('checkout_error', e);
     return NextResponse.json({ error: e?.message ?? 'Error creando checkout' }, { status: 500 });
   }
 }
