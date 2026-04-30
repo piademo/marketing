@@ -9,11 +9,21 @@ import { cn } from "@/lib/utils";
 type BillingPeriod = "monthly" | "yearly";
 
 const basePrices = {
+  free: 0,
   starter: 29,
   professional: 79,
+  scale: 199,
 };
 
-function getPrice(value: number, period: BillingPeriod, plan: "starter" | "professional") {
+type PlanId = keyof typeof basePrices;
+
+function getYearlyMultiplier(plan: PlanId) {
+  if (plan === "professional") return 10; // 2 meses gratis
+  return 12;
+}
+
+function getPrice(value: number, period: BillingPeriod, plan: PlanId) {
+  if (plan === "free") return 0;
   if (period === "yearly" && plan === "professional") {
     // 2 meses gratis: se cobra 10x el precio mensual
     return value * 10;
@@ -28,32 +38,58 @@ function getPrice(value: number, period: BillingPeriod, plan: "starter" | "profe
 const featureRows = [
   {
     label: "Nº de profesionales / locales incluidos",
+    free: "1 profesional",
     starter: "1 profesional",
     professional: "Hasta 5 profesionales",
+    scale: "Hasta 15 profesionales",
     enterprise: "+5 profesionales / multi-centro",
   },
   {
     label: "Agenda online",
+    free: "Básica",
     starter: "Básica",
     professional: "Avanzada por sillón / cabina",
+    scale: "Avanzada + multi-equipo",
     enterprise: "Multi-centro + cabinas avanzadas",
   },
   {
     label: "Recordatorios automáticos",
+    free: "Email (límite)",
     starter: "Email",
     professional: "WhatsApp + email",
+    scale: "WhatsApp + email + campañas",
     enterprise: "WhatsApp + email + campañas",
   },
   {
+    label: "Pagos online y depósitos",
+    free: "—",
+    starter: "Add-on",
+    professional: "Incluido",
+    scale: "Incluido",
+    enterprise: "Incluido + flujos a medida",
+  },
+  {
+    label: "Marketing (campañas)",
+    free: "—",
+    starter: "Básico",
+    professional: "Incluido",
+    scale: "Avanzado",
+    enterprise: "Avanzado + integraciones",
+  },
+  {
     label: "Lista de espera inteligente",
+    free: "—",
     starter: "—",
     professional: "Incluida",
+    scale: "Incluida",
     enterprise: "Incluida + prioridad por ticket",
   },
   {
     label: "Soporte y acompañamiento",
+    free: "Comunidad / email",
     starter: "Soporte estándar",
     professional: "Soporte prioritario",
+    scale: "Onboarding asistido",
     enterprise: "Customer Success dedicado",
   },
 ];
@@ -118,13 +154,49 @@ export default function PricingContent() {
               Anual
             </button>
           </div>
-          <div className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-700 border border-emerald-500/30 dark:text-emerald-300">
-            <span>2 meses gratis en el plan Professional pagando al año</span>
+          <div className="flex flex-col items-center gap-2">
+            <div className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-700 border border-emerald-500/30 dark:text-emerald-300">
+              <span>2 meses gratis en el plan Professional pagando al año</span>
+            </div>
+            <p className="text-[11px] text-neutral-500 dark:text-neutral-400">
+              El plan Free no cambia con el ciclo de facturación.
+            </p>
           </div>
         </div>
 
         {/* Cards de planes */}
-        <div className="grid gap-6 md:grid-cols-3 md:items-stretch mb-16">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 md:items-stretch mb-10">
+          {/* Free */}
+          <div className="relative flex flex-col rounded-3xl border border-border bg-card p-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)] dark:border-neutral-800 dark:bg-neutral-900/70 dark:shadow-sm">
+            <div className="mb-2 text-sm font-semibold text-foreground dark:text-neutral-50">Free</div>
+            <div className="mb-1 flex items-baseline gap-1">
+              <span className="text-3xl font-semibold text-foreground dark:text-white">Gratis</span>
+              <span className="text-sm text-neutral-600 dark:text-neutral-400">para empezar</span>
+            </div>
+            <p className="mb-6 text-sm text-neutral-700 dark:text-neutral-400">
+              Para coger tracción: reservas online, agenda básica y tus primeros recordatorios.
+            </p>
+            <ul className="mb-6 space-y-2 text-sm text-neutral-800 dark:text-neutral-200">
+              <li className="flex items-start gap-2">
+                <Check className="mt-0.5 h-4 w-4 text-emerald-400" />
+                <span>1 profesional</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <Check className="mt-0.5 h-4 w-4 text-emerald-400" />
+                <span>Link de reservas para Instagram y WhatsApp</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <Check className="mt-0.5 h-4 w-4 text-emerald-400" />
+                <span>Recordatorios por email (límite mensual)</span>
+              </li>
+            </ul>
+            <div className="mt-auto">
+              <Button as="link" href="/demo" variant="outline" className="w-full">
+                Empezar gratis
+              </Button>
+            </div>
+          </div>
+
           {/* Starter */}
           <div className="relative flex flex-col rounded-3xl border border-border bg-card p-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)] dark:border-neutral-800 dark:bg-neutral-900/70 dark:shadow-sm">
             <div className="mb-2 text-sm font-semibold text-foreground dark:text-neutral-50">Starter</div>
@@ -151,9 +223,13 @@ export default function PricingContent() {
                 <Check className="mt-0.5 h-4 w-4 text-emerald-400" />
                 <span>Recordatorios por email</span>
               </li>
+              <li className="flex items-start gap-2">
+                <Check className="mt-0.5 h-4 w-4 text-emerald-400" />
+                <span>Pagos online y depósitos (add-on)</span>
+              </li>
             </ul>
             <div className="mt-auto">
-              <Button as="link" href="/contacto" variant="outline" className="w-full">
+              <Button as="link" href="/alta?plan=starter" variant="outline" className="w-full">
                 Empezar con Starter
               </Button>
             </div>
@@ -199,6 +275,10 @@ export default function PricingContent() {
               </li>
               <li className="flex items-start gap-2">
                 <Check className="mt-0.5 h-4 w-4 text-emerald-400" />
+                <span>Pagos online y depósitos incluidos</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <Check className="mt-0.5 h-4 w-4 text-emerald-400" />
                 <span>Lista de espera inteligente</span>
               </li>
               <li className="flex items-start gap-2">
@@ -209,11 +289,57 @@ export default function PricingContent() {
             <div className="mt-auto">
               <Button
                 as="link"
-                href="/contacto"
+                href="/alta?plan=professional"
                 variant="primary"
                 className="w-full relative overflow-hidden bg-gradient-to-r from-primary via-primary/80 to-secondary hover:from-primary/60 hover:to-secondary/60 text-white border-0 shadow-lg animated-gradient"
               >
                 Elegir plan Professional
+              </Button>
+            </div>
+          </div>
+
+        </div>
+
+        {/* Scale + Enterprise row */}
+        <div className="grid gap-6 lg:grid-cols-2 mb-16">
+          {/* Scale */}
+          <div className="relative flex flex-col rounded-3xl border border-border bg-card p-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)] dark:border-neutral-800 dark:bg-neutral-900/70 dark:shadow-sm">
+            <div className="mb-2 text-sm font-semibold text-foreground dark:text-neutral-50">Scale</div>
+            <div className="mb-1 flex items-baseline gap-1">
+              <span className="text-3xl font-semibold text-foreground dark:text-white">
+                {getPrice(basePrices.scale, billing, "scale")}€
+              </span>
+              <span className="text-sm text-neutral-600 dark:text-neutral-400">{isYearly ? "/año" : "/mes"}</span>
+            </div>
+            {isYearly && (
+              <p className="mb-3 text-[11px] text-neutral-600 dark:text-neutral-400">
+                Facturación anual: {getYearlyMultiplier("scale")} meses.
+              </p>
+            )}
+            <p className="mb-6 text-sm text-neutral-700 dark:text-neutral-400">
+              Para equipos grandes: reporting avanzado, permisos y onboarding asistido.
+            </p>
+            <ul className="mb-6 space-y-2 text-sm text-neutral-800 dark:text-neutral-200">
+              <li className="flex items-start gap-2">
+                <Check className="mt-0.5 h-4 w-4 text-emerald-400" />
+                <span>Hasta 15 profesionales</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <Check className="mt-0.5 h-4 w-4 text-emerald-400" />
+                <span>1 local incluido (locales extra como add-on)</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <Check className="mt-0.5 h-4 w-4 text-emerald-400" />
+                <span>Marketing avanzado + reportes</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <Check className="mt-0.5 h-4 w-4 text-emerald-400" />
+                <span>Onboarding asistido</span>
+              </li>
+            </ul>
+            <div className="mt-auto">
+              <Button as="link" href="/alta?plan=scale" variant="outline" className="w-full">
+                Hablar de Scale
               </Button>
             </div>
           </div>
@@ -231,7 +357,7 @@ export default function PricingContent() {
             <ul className="mb-6 space-y-2 text-sm text-neutral-800 dark:text-neutral-200">
               <li className="flex items-start gap-2">
                 <Check className="mt-0.5 h-4 w-4 text-emerald-400" />
-                <span>Más de 5 locales o equipos</span>
+                <span>Multi-sede (multi-centro)</span>
               </li>
               <li className="flex items-start gap-2">
                 <Check className="mt-0.5 h-4 w-4 text-emerald-400" />
@@ -239,7 +365,7 @@ export default function PricingContent() {
               </li>
               <li className="flex items-start gap-2">
                 <Check className="mt-0.5 h-4 w-4 text-emerald-400" />
-                <span>Integraciones a medida</span>
+                <span>Integraciones a medida + SLA</span>
               </li>
             </ul>
             <div className="mt-auto">
@@ -260,12 +386,20 @@ export default function PricingContent() {
               <p className="text-neutral-800 dark:text-neutral-200 font-medium">{row.label}</p>
               <div className="grid grid-cols-1 gap-2">
                 <div className="flex items-baseline justify-between gap-3">
+                  <span className="text-xs uppercase tracking-wide text-neutral-500">Free</span>
+                  <span className="text-neutral-800 dark:text-neutral-200 text-right">{row.free}</span>
+                </div>
+                <div className="flex items-baseline justify-between gap-3">
                   <span className="text-xs uppercase tracking-wide text-neutral-500">Starter</span>
                   <span className="text-neutral-800 dark:text-neutral-200 text-right">{row.starter}</span>
                 </div>
                 <div className="flex items-baseline justify-between gap-3">
                   <span className="text-xs uppercase tracking-wide text-neutral-500">Professional</span>
                   <span className="text-neutral-800 dark:text-neutral-200 text-right">{row.professional}</span>
+                </div>
+                <div className="flex items-baseline justify-between gap-3">
+                  <span className="text-xs uppercase tracking-wide text-neutral-500">Scale</span>
+                  <span className="text-neutral-800 dark:text-neutral-200 text-right">{row.scale}</span>
                 </div>
                 <div className="flex items-baseline justify-between gap-3">
                   <span className="text-xs uppercase tracking-wide text-neutral-500">Enterprise</span>
@@ -282,8 +416,10 @@ export default function PricingContent() {
             <thead>
               <tr className="border-b border-neutral-800">
                 <th className="py-3 px-4 text-neutral-600 dark:text-neutral-400 font-medium">Características</th>
+                <th className="py-3 px-4 text-center font-medium text-foreground dark:text-white">Free</th>
                 <th className="py-3 px-4 text-center font-medium text-foreground dark:text-white">Starter</th>
                 <th className="py-3 px-4 text-center font-medium text-foreground dark:text-white">Professional</th>
+                <th className="py-3 px-4 text-center font-medium text-foreground dark:text-white">Scale</th>
                 <th className="py-3 px-4 text-center font-medium text-foreground dark:text-white">Enterprise</th>
               </tr>
             </thead>
@@ -291,13 +427,61 @@ export default function PricingContent() {
               {featureRows.map((row) => (
                 <tr key={row.label} className="border-b border-neutral-900/60 last:border-0">
                   <td className="py-3 px-4 text-neutral-700 dark:text-neutral-300">{row.label}</td>
+                  <td className="py-3 px-4 text-center text-neutral-800 dark:text-neutral-200">{row.free}</td>
                   <td className="py-3 px-4 text-center text-neutral-800 dark:text-neutral-200">{row.starter}</td>
                   <td className="py-3 px-4 text-center text-neutral-800 dark:text-neutral-200">{row.professional}</td>
+                  <td className="py-3 px-4 text-center text-neutral-800 dark:text-neutral-200">{row.scale}</td>
                   <td className="py-3 px-4 text-center text-neutral-800 dark:text-neutral-200">{row.enterprise}</td>
                 </tr>
               ))}
             </tbody>
           </table>
+        </div>
+
+        {/* Add-ons / Upsells */}
+        <div className="mt-14 rounded-3xl border border-border bg-card p-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)] dark:border-neutral-800 dark:bg-neutral-900/60 dark:shadow-sm">
+          <div className="mb-4">
+            <h2 className="text-xl font-semibold text-foreground dark:text-white">Add-ons</h2>
+            <p className="text-sm text-neutral-600 dark:text-neutral-400 mt-1">
+              Activa solo lo que necesitas. Ideal para empezar barato y escalar cuando te funcione.
+            </p>
+          </div>
+          <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4 text-sm">
+            {[
+              {
+                title: "WhatsApp Pack",
+                desc: "Packs por consumo (S/M/L) para recordatorios y campañas.",
+              },
+              {
+                title: "SMS",
+                desc: "Mensajería por consumo para confirmaciones y recordatorios.",
+              },
+              {
+                title: "Pagos online + depósitos",
+                desc: "Activa cobros y depósitos para reducir no-shows (incluido en Pro+).",
+              },
+              {
+                title: "White‑label",
+                desc: "Branding y widget sin BookFast + dominio propio (opcional).",
+              },
+            ].map((item) => (
+              <div
+                key={item.title}
+                className="rounded-2xl border border-border bg-background/30 p-4 dark:border-neutral-800 dark:bg-neutral-950/30"
+              >
+                <p className="font-medium text-foreground dark:text-white">{item.title}</p>
+                <p className="mt-1 text-neutral-600 dark:text-neutral-400">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-5 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+            <p className="text-[11px] text-neutral-500 dark:text-neutral-400">
+              *Los límites exactos (emails/WhatsApp) pueden ajustarse durante el lanzamiento.
+            </p>
+            <Button as="link" href="/contacto" variant="outline" className="sm:w-auto w-full">
+              Preguntar por add-ons
+            </Button>
+          </div>
         </div>
       </Container>
     </section>

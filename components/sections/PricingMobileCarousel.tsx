@@ -12,11 +12,24 @@ import { spring } from "@/lib/motion";
 // Planes sincronizados con la sección de Pricing principal
 const plans = [
   {
+    name: "Free",
+    price: "Gratis",
+    description: "Perfecto para coger volumen con reservas online.",
+    features: ["1 profesional", "Link de reservas (IG/WhatsApp)", "Recordatorios email (límite)"],
+    highlight: false,
+    priceSuffix: "para empezar",
+    cta: "Empezar gratis",
+    ctaHref: "/demo",
+  },
+  {
     name: "Starter",
     price: "29€",
     description: "Ideal para 1-2 profesionales.",
     features: ["1 profesional incluido", "Agenda online básica", "Recordatorios por email"],
     highlight: false,
+    priceSuffix: "/mes",
+    cta: "Empezar con Starter",
+    ctaHref: "/alta?plan=starter",
   },
   {
     name: "Professional",
@@ -26,17 +39,34 @@ const plans = [
       "Hasta 5 profesionales",
       "Agenda avanzada",
       "WhatsApp automáticos",
+      "Pagos online y depósitos",
       "Lista de espera",
       "Soporte prioritario",
     ],
     highlight: true, // Lleva BorderBeam y glow
+    priceSuffix: "/mes",
+    cta: "Elegir Professional",
+    ctaHref: "/alta?plan=professional",
+  },
+  {
+    name: "Scale",
+    price: "199€",
+    description: "Para equipos grandes.",
+    features: ["Hasta 15 profesionales", "1 local incluido", "Marketing + reportes", "Onboarding asistido"],
+    highlight: false,
+    priceSuffix: "/mes",
+    cta: "Hablar de Scale",
+    ctaHref: "/alta?plan=scale",
   },
   {
     name: "Enterprise",
     price: "Personalizado",
     description: "Cadenas y grupos.",
-    features: ["+5 locales o equipos", "Onboarding personalizado", "Integraciones a medida"],
+    features: ["Multi-sede", "Onboarding personalizado", "Integraciones a medida + SLA"],
     highlight: false,
+    priceSuffix: "",
+    cta: "Hablar con ventas",
+    ctaHref: "/contacto",
   },
 ];
 
@@ -48,8 +78,8 @@ export default function PricingMobileCarousel() {
   const isDark = resolvedTheme === "dark";
 
   // Índice infinito: puede crecer/ decrecer sin hacer reset a 0..N
-  // Empezamos en 1 para que el plan central sea Professional
-  const [index, setIndex] = useState(1);
+  // Empezamos en 2 para que el plan central sea Professional
+  const [index, setIndex] = useState(2);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -219,9 +249,11 @@ export default function PricingMobileCarousel() {
                       >
                         {plan.price}
                       </span>
-                      <span className="text-sm text-neutral-500 dark:text-neutral-400">
-                        /mes
-                      </span>
+                      {plan.priceSuffix ? (
+                        <span className="text-sm text-neutral-500 dark:text-neutral-400">
+                          {plan.priceSuffix}
+                        </span>
+                      ) : null}
                     </div>
                     <p className="mt-2 text-sm text-neutral-700 dark:text-neutral-300">
                       {plan.description}
@@ -253,7 +285,7 @@ export default function PricingMobileCarousel() {
                   {/* CTA */}
                   <Button
                     as="link"
-                    href="/contacto"
+                    href={plan.ctaHref}
                     variant={isActive && plan.highlight ? "primary" : "outline"}
                     className={cn(
                       "w-full text-sm",
@@ -263,9 +295,7 @@ export default function PricingMobileCarousel() {
                         "!text-white border-white/40 hover:bg-white/10 hover:!text-white",
                     )}
                   >
-                    {plan.name === 'Starter' && 'Empezar con Starter'}
-                    {plan.name === 'Professional' && 'Elegir profesional'}
-                    {plan.name === 'Enterprise' && 'Hablar con ventas'}
+                    {plan.cta}
                   </Button>
                 </div>
               </div>
